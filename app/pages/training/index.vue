@@ -1,0 +1,4 @@
+<template>
+    <NoAdminPage>
+    </NoAdminPage>
+</template>

@@ -1,0 +1,96 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@theme static {
+  --font-sans: Roboto, sans-serif;;
+  
+  --color-CustomColor-900: rgb(10, 10, 10);
+  --color-CustomLight: #FFF;
+  --color-dashcolor: #E5E7EB44;
+
+}
+
+:root {
+  --ui-primary: #0F0F0F;
+  --ui-text: #0F0F0F;
+}
+
+/*div {
+  transition: background-color 4s ease-in-out;
+}*/
+
+.dark {
+  --ui-primary: #0F0F0F;
+  --ui-text: white;
+}
+
+.shadowNav {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.bgHero:before, .bgCategorie:before {
+  content: "";
+  background-color: transparent;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.68' numOctaves='10' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 182px;
+  opacity: 0.15;
+  top: 0; 
+  left: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.bgHero {
+  background-color: #EEE;
+  background-image: radial-gradient(circle, #888 2px, transparent 1px);
+  background-size: 22px 22px;
+  position: relative;
+}
+
+.bgCategorie {
+  background-color: #DEDEDE;
+  /*background-image: radial-gradient(circle, #888 2px, transparent 1px);*/
+  background-size: 22px 22px;
+  position: relative;
+}
+
+.dark .bgCategorie {
+  background-color: #0F0F0F;
+  /*background-image: radial-gradient(circle, #555 2px, transparent 1px);*/
+}
+
+.dark .bgHero {
+  background-color: #111;
+  background-image: radial-gradient(circle, #555 2px, transparent 1px);
+}
+
+/* Fondu radial depuis le centre */
+.bgHero::after, .bgCategorie::after {
+  @media (width >= 48rem /* 768px */) {
+    background: radial-gradient(ellipse at top, transparent 20%, #EEE 80%);
+   }
+   @media (width <= 48rem /* 768px */) {
+     background: radial-gradient(ellipse at top, transparent 20%, #EEE 110%);
+    }
+  content: '';
+  transition: all 0.3s ease-in-out;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.dark .bgHero::after, .dark .bgCategorie::after {
+  @media (width >= 48rem /* 768px */) {
+    background: radial-gradient(ellipse at top, transparent 20%, #111 80%);
+   }
+   @media (width <= 48rem /* 768px */) {
+     background: radial-gradient(ellipse at top, transparent 20%, #111 110%);;
+    }
+  content: '';
+  transition: all 0.3s ease-in-out;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
