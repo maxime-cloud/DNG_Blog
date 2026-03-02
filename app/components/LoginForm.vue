@@ -141,7 +141,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       onRequest: (ctx) => {
         loading.value = true;
       },
-    onSuccess: (ctx) => {
+      onSuccess: (ctx) => {
         loading.value = false;
         toast.add({
           title: "Success",
@@ -151,8 +151,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       },
       onError: (ctx) => {
         loading.value = false;
-        if (ctx.error.code === "INVALID_EMAIL_OR_PASSWORDd") {
-          error.value = "Adresse e-mail ou mot de passe invalide"
+        if (ctx.error.code === "INVALID_EMAIL_OR_PASSWORD") {
+          error.value = "Email ou mot de passe incorrect."
         } else if (ctx.error.code === "USER_NOT_FOUND") {
           error.value = "Utilisateur introuvable"
         } else if (ctx.error.code === "INVALID_PASSWORD") {
@@ -160,9 +160,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         } else if (ctx.error.code === "CREDENTIAL_ACCOUNT_NOT_FOUND") {
           error.value = "Compte d'identification introuvable"
         } else if (ctx.error.code === "EMAIL_NOT_VERIFIED") {
-          error.value = "Email non vérifiée"
+          error.value = "Ton email n'est pas encore vérifié. Consulte ta boîte mail."
         }
-
         else {
           error.value = ctx.error.message;
         }
@@ -173,10 +172,6 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         });
       },
   });
-  if (err) {
-    console.log(data)
-    console.log("qsdfqdfq:   ", err)
-  }
 }
 
 if (route.query.errorprovider === "github") {

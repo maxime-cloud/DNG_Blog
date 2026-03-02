@@ -39,17 +39,6 @@
           variant="outline"
         />
       
-      <UFormField label="Entrez votre nom d'utilisateur" name="username" class="mb-6 flex flex-col gap-1 text-xs sm:text-sm">
-        <CUInput
-          v-model="state.username"
-          id="username"
-          placeholder="Nom d'utilisateur"
-          type="text"
-          size="lg"
-          class="w-full"
-        />
-      </UFormField>
-      
       <UFormField label="Entrez votre Email" name="email" class="mb-6 flex flex-col gap-1 text-xs sm:text-sm">
         <!-- <label for="email" class="sr-only text-text">Entrez votre Email</label> -->
         <CUInput
@@ -57,6 +46,17 @@
           id="email"
           placeholder="Email"
           type="email"
+          size="lg"
+          class="w-full"
+        />
+      </UFormField>
+      
+      <UFormField label="Entrez votre nom d'utilisateur" name="username" class="mb-6 flex flex-col gap-1 text-xs sm:text-sm">
+        <CUInput
+          v-model="state.username"
+          id="username"
+          placeholder="Nom d'utilisateur"
+          type="text"
           size="lg"
           class="w-full"
         />
@@ -159,7 +159,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         loading.value = false;
         toast.add({
           title: "Success",
-          description: "The form has been submitted.",
+          description: "Votre compte a été créé avec succès. Vérifiez votre boîte mail pour valider votre compte.",
           color: "success",
         });
       },
