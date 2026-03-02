@@ -5,7 +5,7 @@ class="mx-auto sm:w-full"
     v-slot="{ item }"
     loop
     arrows
-    :autoplay="!isHovered ? { delay: 2000 } : false"
+    :autoplay="!isHovered ? { delay: 5000 } : false"
     wheel-gestures
     :items="items"
     :ui="{ 
@@ -34,7 +34,7 @@ tags: string[],
 categories: string[],
 likes: number,
 views: number,
-}[] = {
+}[] = [{
   id: "EUE23",
   title: "Article Title",
   excert: "Article Excerpt",
@@ -44,5 +44,45 @@ views: number,
   categories: ["nuxt", "fedora", "linux"],
   likes: 12,
   views: 120
-}
+},{
+  id: "EUE23",
+  title: "Article Title",
+  excert: "Article Excerpt",
+  coverImageUrl: "https://www.mensjournal.com/.image/w_750,q_auto:good,c_fill,ar_16:9/NDI6MDAwMDAwMDAxMDgxNDk5/sleep-banking-header.jpg?arena_f_auto",
+  updatedAt: "new Date()",
+  tags: ["tag1", "tag2"],
+  categories: ["nuxt", "fedora", "linux"],
+  likes: 12,
+  views: 120
+},{
+  id: "EUE23",
+  title: "Article Title",
+  excert: "Article Excerpt",
+  coverImageUrl: "https://www.mensjournal.com/.image/w_750,q_auto:good,c_fill,ar_16:9/NDI6MDAwMDAwMDAxMDgxNDk5/sleep-banking-header.jpg?arena_f_auto",
+  updatedAt: "new Date()",
+  tags: ["tag1", "tag2"],
+  categories: ["nuxt", "fedora", "linux"],
+  likes: 12,
+  views: 120
+}, {
+  id: "EUE23",
+  title: "Article Title",
+  excert: "Article Excerpt",
+  coverImageUrl: "https://www.mensjournal.com/.image/w_750,q_auto:good,c_fill,ar_16:9/NDI6MDAwMDAwMDAxMDgxNDk5/sleep-banking-header.jpg?arena_f_auto",
+  updatedAt: "new Date()",
+  tags: ["tag1", "tag2"],
+  categories: ["nuxt", "fedora", "linux"],
+  likes: 12,
+  views: 120
+}, {
+  id: "EUE23",
+  title: "Article Title",
+  excert: "Article Excerpt",
+  coverImageUrl: "https://www.mensjournal.com/.image/w_750,q_auto:good,c_fill,ar_16:9/NDI6MDAwMDAwMDAxMDgxNDk5/sleep-banking-header.jpg?arena_f_auto",
+  updatedAt: "new Date()",
+  tags: ["tag1", "tag2"],
+  categories: ["nuxt", "fedora", "linux"],
+  likes: 12,
+  views: 120
+}]
 </script>

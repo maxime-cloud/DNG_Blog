@@ -13,7 +13,7 @@
                     <CUButton class="hidden md:flex" label="Articles récent" size="xl" />
                     <CUButton class="md:hidden" label="Articles récent" size="md" />
                   </NuxtLink>
-                  <NuxtLink to="/articles">
+                  <NuxtLink to="/article">
                     <CUButton class="hidden md:flex" label="Parcourir les articles" size="xl" logoPosition="right" logoName="i-lucide-arrow-right" />
                     <CUButton class="md:hidden" label="Parcourir les articles" size="lg" logoPosition="right" logoName="i-lucide-arrow-right" />
                   </NuxtLink>
@@ -29,17 +29,7 @@
             <CUButton class="" label="Voir plus" size="md" logoPosition="right" logoName="i-lucide-arrow-right" />
           </SectionTitle>
         </div>
-        <div class="contentCarousel w-full mb-20 px-8">
-          <ArticleScroller />
-        </div>
-        
-        
-        <div class="content flex flex-col pt-20 mb-10 px-4 relative">
-          <SectionTitle label="Articles recent" to="recent">
-            <CUButton class="" label="Voir plus" size="md" logoPosition="right" logoName="i-lucide-arrow-right" />
-          </SectionTitle>
-        </div>
-        <div class="contentCarousel w-full mb-20 px-8">
+        <div class="contentCarousel w-full px-8">
           <ArticleScroller />
         </div>
         
@@ -53,6 +43,17 @@
           <CategorieScrollers direction="left" />
           <CategorieScrollers direction="right" />
         </div>
+        
+        
+        <div class="content flex flex-col pt-20 mb-10 px-4 relative">
+          <SectionTitle label="Articles recent" to="recent">
+            <CUButton class="" label="Voir plus" size="md" logoPosition="right" logoName="i-lucide-arrow-right" />
+          </SectionTitle>
+        </div>
+        <div class="contentCarousel w-full mb-20 px-8">
+          <ArticleScroller />
+        </div>
+        
         
         <div class="contentCarousel mb-20 p-8 flex gap-4 relative justify-center">
           <NewsLetter />

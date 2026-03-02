@@ -26,14 +26,21 @@ useSeoMeta({
 
 
 import { provide } from 'vue'
+import { useAuthStore } from '@/stores/auth'
+
+const store = useAuthStore()
+store.fetchSession()
 
 const active = ref(300)
 provide("activeNav", active)
 
+const toaster = { max: 3}
+
 </script>
 
 <template>
-  <UApp>
+  <UApp :toaster="toaster">
+    {{ store.user }}
     <NuxtPage />
   </UApp>
 </template>
