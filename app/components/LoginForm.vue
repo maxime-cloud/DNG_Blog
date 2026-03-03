@@ -1,5 +1,6 @@
 <template>
   <UForm
+    v-if="!forgot"
     :schema="schema"
     @submit="onSubmit"
     :state="state"
@@ -58,10 +59,10 @@
       <UFormField name="password" class="mb-6 flex flex-col gap-1 text-xs sm:text-sm relative">
         <div class="flex justify-between items-center mb-2">
           <label for="email" class="text-text font-semibold">Entrez votre mot de passe</label>
-          <NuxtLink
-            to="/auth/reset-password"
-            class="text-text hover:underline text-sm text-end"
-            >Mot de passe oublié?</NuxtLink
+          <span
+            @click="forgotPassword"
+            class="text-text cursor-pointer hover:underline text-sm text-end"
+            >Mot de passe oublié?</span
           >
         </div>
         <div class="flex">
@@ -103,6 +104,7 @@
       </p>
     </div>
   </UForm>
+  <ForgotForm @close="emits('closeLogin')" v-else />
 </template>
 
 <script setup lang="ts">
@@ -111,8 +113,10 @@ import type { FormSubmitEvent } from '@nuxt/ui'
 import { authClient } from "@/lib/auth-client";
 
 const showPassword = ref(false);
+const forgot = ref(false);
 const error: Ref<string | null> = ref(null);
 const route = useRoute();
+const router = useRouter();
 const loading = ref(false);
 const schema = z.object({
   email: z.email("Email invalide"),
@@ -143,6 +147,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       },
       onSuccess: (ctx) => {
         loading.value = false;
+        emits('closeLogin')
         toast.add({
           title: "Success",
           description: "The form has been submitted.",
@@ -202,4 +207,13 @@ async function signInWithGithub() {
       // disableRedirect: true,
   });
 }
+
+const forgotPassword = ()=>{
+  if (route.path !== "/auth/login"){
+    forgot.value = true;
+  } else {
+    router.push('/auth/forgot-password')
+  }
+}
+const emits = defineEmits(['closeLogin']);
 </script>

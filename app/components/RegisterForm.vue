@@ -39,6 +39,17 @@
           variant="outline"
         />
       
+      <UFormField label="Entrez votre nom d'utilisateur" name="username" class="mb-6 flex flex-col gap-1 text-xs sm:text-sm">
+        <CUInput
+          v-model="state.username"
+          id="username"
+          placeholder="Nom d'utilisateur"
+          type="text"
+          size="lg"
+          class="w-full"
+        />
+      </UFormField>
+
       <UFormField label="Entrez votre Email" name="email" class="mb-6 flex flex-col gap-1 text-xs sm:text-sm">
         <!-- <label for="email" class="sr-only text-text">Entrez votre Email</label> -->
         <CUInput
@@ -51,26 +62,7 @@
         />
       </UFormField>
       
-      <UFormField label="Entrez votre nom d'utilisateur" name="username" class="mb-6 flex flex-col gap-1 text-xs sm:text-sm">
-        <CUInput
-          v-model="state.username"
-          id="username"
-          placeholder="Nom d'utilisateur"
-          type="text"
-          size="lg"
-          class="w-full"
-        />
-      </UFormField>
-
-      <UFormField name="password" class="mb-6 flex flex-col gap-1 text-xs sm:text-sm relative">
-        <div class="flex justify-between items-center mb-2">
-          <label for="email" class="text-text font-semibold">Entrez votre mot de passe</label>
-          <NuxtLink
-            to="/auth/reset-password"
-            class="text-text hover:underline text-sm text-end"
-            >Mot de passe oublié?</NuxtLink
-          >
-        </div>
+      <UFormField label="Entrez votre mot de passe" name="password" class="mb-6 flex flex-col gap-1 text-xs sm:text-sm relative">
         <div class="flex">
           <CUInput
             v-model="state.password"

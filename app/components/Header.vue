@@ -18,7 +18,7 @@
       }">
         <CUButton 
         :avatar="{
-          src: '/user-avatar.png'
+          src: store.user.image ? store.user.image : '/user-avatar.png'
         }"
         :label="store.user.name"
         class="justify-self-end" size="md" logoPosition="right" />
@@ -48,7 +48,7 @@
         <CUButton class="md:flex hidden" label="Connexion" size="md" logoPosition="right" logoName="i-lucide-log-in" />
           
           <template #content>
-              <LoginForm />
+              <LoginForm @closeLogin="openConnexion = false" />
           </template>
         </UModal>
       
@@ -87,7 +87,7 @@ const { x, y } = useWindowScroll()
 
 const pages: {name: string, link:string}[] = [
   {name: "Accueil", link: "/"},
-  {name: "Articles", link: "/article"},
+  {name: "Articles", link: "/articles"},
   {name: "Categories", link: "/categories"},
   {name: "Parcours", link: "/training"},
   {name: "Séries", link: "/series"},

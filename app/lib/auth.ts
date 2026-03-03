@@ -15,6 +15,11 @@ export const auth = betterAuth({
     requireEmailVerification: true,
     autoSignIn: false,
     
+    // try to singin with your email
+    onExistingUserSignUp: async ({ user }, request) => {
+      
+    },
+    
     // Reset password via Plunk
     sendResetPassword: async ({ user, url }) => {
       await $fetch("https://api.useplunk.com/v1/send", {
