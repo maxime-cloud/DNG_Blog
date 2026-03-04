@@ -40,7 +40,7 @@ const toaster = { max: 3}
 
 <template>
   <UApp :toaster="toaster">
-    {{ store.user }}
+    <!-- {{ store.user }} -->
     <NuxtPage />
   </UApp>
 </template>

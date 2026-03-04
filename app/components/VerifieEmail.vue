@@ -13,8 +13,8 @@
         </h3>
         <p class="text-base-content/80">
           Un email de vérification a été envoyé à votre adresse email : {{ props.email }}. <br>
-          Veuillez vérifier votre boîte mail et cliquer sur le lien pour activé votre compte.
-          <p class="font-semibold">Si vous n'avez pas reçu l'email, vérifiez votre dossier de spam.</p>
+          Veuillez vérifier votre boîte mail et cliquer sur le lien pour activé votre compte. <br>
+          <span class="font-semibold">Si vous n'avez pas reçu l'email, vérifiez votre dossier de spam.</span>
         </p>
       </div>
       <CUButton @click="emits('close')" label="Fermer" class="w-full justify-center" size="lg" logoPosition="right" />

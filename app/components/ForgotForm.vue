@@ -64,8 +64,8 @@
         </h3>
         <p class="text-base-content/80">
           Un email de réinitialisation a été envoyé à votre adresse email : {{ state.email }}. <br>
-          Veuillez vérifier votre boîte mail et cliquer sur le lien pour réinitialisé votre mot de passe.
-          <p class="font-semibold">Si vous n'avez pas reçu l'email, vérifiez votre dossier de spam.</p>
+          Veuillez vérifier votre boîte mail et cliquer sur le lien pour réinitialisé votre mot de passe. <br>
+          <span class="font-semibold">Si vous n'avez pas reçu l'email, vérifiez votre dossier de spam.</span>
         </p>
       </div>
       <CUButton v-if="route.path !== '/auth/forgot-password'"  @click="emits('close')" label="Fermer" class="w-full justify-center" size="lg" logoPosition="right" />

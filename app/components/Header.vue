@@ -3,7 +3,7 @@
   <nav :class="{'border-solid shadowNav rounded-full translate-y-8 duration-300 border-x': y >= activeNav, 'border-x': route.path !== '/'}" class="transition-all dark:border-x bg-CustomLight dark:bg-CustomColor-900 px-8 sticky top-0 border-dashed max-w-7xl w-full h-12 lg:h-16 border-CustomColor-900/60 dark:border-dashcolor flex gap-4 items-center">
     <NuxtLink to="/" class="flex gap-4 items-center">
       <AppLogo />
-      <h1 class="text-xl lg:text-2xl font-semibold">DNG Blog</h1>
+      <h1 class="text-xl lg:text-2xl font-semibold">StackTrace</h1>
     </NuxtLink>
     <div class="hidden lg:flex flex-1 items-center gap-2 justify-center">
       <NuxtLink class="px-1" :class="{ 'border-b-2': route.path === page.link }" v-for="page in pages" :key="page.name" :to="page.link">{{ page.name }}</NuxtLink>

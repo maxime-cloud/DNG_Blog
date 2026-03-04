@@ -1,8 +1,15 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// =============================================================================
+// SCHÉMA PRISMA — BLOGUE TECHNIQUE PERSONNEL
+// Base de données : PostgreSQL 15+
+// ORM : Prisma 7.x
+// Authentification : Better Auth (tables auth générées automatiquement)
+// =============================================================================
+// Commandes utiles :
+//   pnpm dlx prisma migrate dev --name init       → Créer et appliquer la migration
+//   pnpm dlx prisma migrate deploy                → Appliquer en production
+//   pnpm dlx prisma studio                        → Interface visuelle de la DB
+//   pnpm dlx prisma generate                      → Régénérer le client Prisma
+// =============================================================================
 
 generator client {
   provider = "prisma-client"
@@ -13,21 +20,44 @@ datasource db {
   provider = "postgresql"
 }
 
+// =============================================================================
+// AUTHENTIFICATION — Better Auth
+// Ces tables sont gérées et utilisées par Better Auth.
+// Ne pas modifier les noms de colonnes requis par Better Auth.
+// =============================================================================
+
 model User {
-  id            String    @id
+  id            String    @id @default(cuid())
   name          String
   email         String
   emailVerified Boolean   @default(false)
   image         String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  role          String?
+  role          String    @default("reader")
   banned        Boolean?  @default(false)
   banReason     String?
   banExpires    DateTime?
   sessions      Session[]
   accounts      Account[]
-
+  
+  // Champs étendus (au-delà du minimum Better Auth)
+    bio           String?   @db.Text
+    githubUrl     String?
+    websiteUrl    String?
+    
+  // Relations métier
+    articles            Article[]
+    comments            Comment[]
+    commentLikes        CommentLike[]
+    articleLikes        ArticleLike[]
+    favorites           Favorite[]
+    readingHistory      ReadingHistory[]
+    userPathProgress    UserPathProgress[]
+    newsletterCampaigns NewsletterCampaign[]
+    changelogEntries    ChangelogEntry[]
+    
+    
   @@unique([email])
   @@map("user")
 }
@@ -81,3 +111,454 @@ model Verification {
   @@map("verification")
 }
 
+// =============================================================================
+// ENUMS
+// =============================================================================
+
+enum UserRole {
+  admin
+  author
+  reader
+}
+
+enum ArticleStatus {
+  DRAFT
+  REVIEW
+  PUBLISHED
+  ARCHIVED
+}
+
+enum CommentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SPAM
+}
+
+enum NewsletterStatus {
+  PENDING
+  CONFIRMED
+  UNSUBSCRIBED
+}
+
+enum CampaignStatus {
+  DRAFT
+  SCHEDULED
+  SENT
+  FAILED
+}
+
+enum ChangelogType {
+  FEATURE
+  FIX
+  CONTENT
+  DESIGN
+  PERF
+  SECURITY
+}
+
+enum Difficulty {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+  FILE
+}
+
+// =============================================================================
+// CATÉGORIES
+// =============================================================================
+
+model Category {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  slug        String    @unique
+  description String   @db.Text
+  color       String   // ex: "#2563EB"
+  imageUrl    String   // nom d'icône Nuxt UI (ex: "i-heroicons-code-bracket")
+  createdAt   DateTime  @default(now())
+
+  articles    ArticleCategory[]
+
+  @@map("categories")
+}
+
+// =============================================================================
+// TAGS
+// =============================================================================
+
+model Tag {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  slug      String    @unique
+  createdAt DateTime  @default(now())
+
+  articles  ArticleTag[]
+
+  @@map("tags")
+}
+
+// =============================================================================
+// SÉRIES D'ARTICLES
+// =============================================================================
+
+model Series {
+  id             Int       @id @default(autoincrement())
+  title          String
+  slug           String    @unique
+  description    String?   @db.Text
+  coverImageUrl  String?
+  isPublished    Boolean   @default(false)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  articles       Article[]
+
+  @@map("series")
+}
+
+// =============================================================================
+// ARTICLES
+// =============================================================================
+
+model Article {
+  id              Int           @id @default(autoincrement())
+  title           String        @db.VarChar(255)
+  slug            String        @unique @db.VarChar(255)
+
+  // Contenu
+  excerpt         String?       @db.Text     // Résumé court — utilisé pour SEO et cartes
+  content         String        @db.Text     // Corps de l'article en Markdown/MDC
+  coverImageUrl   String?
+
+  // Classification
+  authorId        String
+  author          User          @relation(fields: [authorId], references: [id], onDelete: Restrict)
+
+  seriesId        Int?
+  series          Series?       @relation(fields: [seriesId], references: [id], onDelete: SetNull)
+  seriesOrder     Int?          // Position dans la série
+
+  // Champs techniques différenciants
+  distrosTarget   String[]      // ex: ["ubuntu", "fedora", "arch"]
+  techVersion     String?       // ex: "Node.js 20 LTS / Ubuntu 24.04"
+  lastVerifiedAt  DateTime?     // Date de dernière vérification du contenu
+
+  // Statut éditorial
+  status          ArticleStatus @default(DRAFT)
+  publishedAt     DateTime?
+  scheduledAt     DateTime?     // Publication différée
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  // SEO
+  metaTitle       String?       @db.VarChar(70)
+  metaDescription String?       @db.VarChar(160)
+  canonicalUrl    String?       // original url of page
+
+  // Relations
+  categories      ArticleCategory[]
+  tags            ArticleTag[]
+  comments        Comment[]
+  likes           ArticleLike[]
+  favorites       Favorite[]
+  media           Media[]
+  views           ArticleView[]
+  viewsDaily      ArticleViewDaily[]
+  readingHistory  ReadingHistory[]
+  searchIndex     SearchIndex?
+  pathSteps       LearningPathStep[]
+
+  @@index([status])
+  @@index([publishedAt])
+  @@index([authorId])
+  @@index([seriesId, seriesOrder])
+  @@map("articles")
+}
+
+// Tables pivot
+model ArticleCategory {
+  articleId  Int
+  categoryId Int
+  article    Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([articleId, categoryId])
+  @@map("article_categories")
+}
+
+model ArticleTag {
+  articleId Int
+  tagId     Int
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([articleId, tagId])
+  @@map("article_tags")
+}
+
+// =============================================================================
+// MÉDIAS
+// =============================================================================
+
+model Media {
+  id          Int       @id @default(autoincrement())
+  articleId   Int?
+  article     Article?  @relation(fields: [articleId], references: [id], onDelete: SetNull)
+
+  url         String
+  filename    String
+  mimeType    String    // ex: "image/webp"
+  type        MediaType @default(IMAGE)
+  sizeBytes   Int?
+  widthPx     Int?
+  heightPx    Int?
+  altText     String?   // Texte alternatif — accessibilité WCAG
+  uploadedAt  DateTime  @default(now())
+
+  @@index([articleId])
+  @@map("media")
+}
+
+// =============================================================================
+// COMMENTAIRES (avec réponses imbriquées)
+// =============================================================================
+
+model Comment {
+  id          Int           @id @default(autoincrement())
+  articleId   Int
+  article     Article       @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  userId      String?
+  user        User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  parentId    Int?
+  parent      Comment?      @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies     Comment[]     @relation("CommentReplies")
+
+  content     String        @db.Text
+  status      CommentStatus @default(PENDING)
+  reportCount Int           @default(0)  // Nombre de signalements reçus
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  likes       CommentLike[]
+
+  @@index([articleId, status])
+  @@index([parentId])
+  @@index([userId])
+  @@map("comments")
+}
+
+// =============================================================================
+// LIKES
+// =============================================================================
+
+model ArticleLike {
+  userId     String
+  articleId  Int
+  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  article    Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@id([userId, articleId])
+  @@map("article_likes")
+}
+
+model CommentLike {
+  userId    String
+  commentId Int
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@id([userId, commentId])
+  @@map("comment_likes")
+}
+
+// =============================================================================
+// FAVORIS
+// =============================================================================
+
+model Favorite {
+  userId    String
+  articleId Int
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@id([userId, articleId])
+  @@map("favorites")
+}
+
+// =============================================================================
+// HISTORIQUE DE LECTURE
+// =============================================================================
+
+model ReadingHistory {
+  userId    String
+  articleId Int
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  viewedAt  DateTime @default(now()) @updatedAt
+
+  @@id([userId, articleId])
+  @@map("reading_history")
+}
+
+// =============================================================================
+// NEWSLETTER
+// =============================================================================
+
+model NewsletterSubscription {
+  id              Int              @id @default(autoincrement())
+  email           String           @unique
+  name            String?
+  status          NewsletterStatus @default(PENDING)
+  confirmToken    String?          @unique
+  subscribedAt    DateTime         @default(now())
+  confirmedAt     DateTime?
+  unsubscribedAt  DateTime?
+
+  @@index([status])
+  @@map("newsletter_subscriptions")
+}
+
+model NewsletterCampaign {
+  id           Int            @id @default(autoincrement())
+  subject      String
+  bodyHtml     String         @db.Text
+  bodyText     String?        @db.Text   // Version texte brut (fallback)
+  status       CampaignStatus @default(DRAFT)
+  scheduledAt  DateTime?
+  sentAt       DateTime?
+  recipientCount Int?                    // Nombre de destinataires lors de l'envoi
+  authorId     String
+  author       User           @relation(fields: [authorId], references: [id], onDelete: Restrict)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@map("newsletter_campaigns")
+}
+
+// =============================================================================
+// PARCOURS D'APPRENTISSAGE
+// =============================================================================
+
+model LearningPath {
+  id             Int                @id @default(autoincrement())
+  title          String
+  slug           String             @unique
+  description    String?            @db.Text
+  difficulty     Difficulty         @default(BEGINNER)
+  coverImageUrl  String?
+  isPublished    Boolean            @default(false)
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+
+  steps          LearningPathStep[]
+  userProgress   UserPathProgress[]
+
+  @@map("learning_paths")
+}
+
+model LearningPathStep {
+  id          Int          @id @default(autoincrement())
+  pathId      Int
+  path        LearningPath @relation(fields: [pathId], references: [id], onDelete: Cascade)
+  articleId   Int
+  article     Article      @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  stepOrder   Int
+  stepTitle   String?      // Surcharge optionnelle du titre de l'article
+
+  userProgress UserPathProgress[]
+
+  @@unique([pathId, stepOrder])
+  @@index([pathId])
+  @@map("learning_path_steps")
+}
+
+model UserPathProgress {
+  userId    String
+  pathId    Int
+  stepId    Int
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  path      LearningPath     @relation(fields: [pathId], references: [id], onDelete: Cascade)
+  step      LearningPathStep @relation(fields: [stepId], references: [id], onDelete: Cascade)
+  completedAt DateTime       @default(now())
+
+  @@id([userId, pathId, stepId])
+  @@map("user_path_progress")
+}
+
+// =============================================================================
+// ANALYTICS (RGPD-friendly — pas d'IP brute)
+// =============================================================================
+
+model ArticleView {
+  id            BigInt    @id @default(autoincrement())
+  articleId     Int
+  article       Article   @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  ipHash        String?   // Hash SHA-256 de l'IP — jamais l'IP brute
+  userAgentHash String?
+  referrer      String?
+  viewedAt      DateTime  @default(now())
+
+  @@index([articleId])
+  @@index([viewedAt])
+  @@map("article_views")
+}
+
+// Agrégat quotidien pour les graphiques de trafic (évite les requêtes lourdes)
+model ArticleViewDaily {
+  articleId Int
+  viewDate  DateTime @db.Date
+  viewCount Int      @default(0)
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@id([articleId, viewDate])
+  @@map("article_views_daily")
+}
+
+// =============================================================================
+// INDEX DE RECHERCHE FULL-TEXT
+// (alimenté par un trigger Prisma middleware ou une tâche planifiée)
+// =============================================================================
+
+model SearchIndex {
+  articleId    Int     @id
+  article      Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  title        String
+  excerpt      String? @db.Text
+  contentPlain String  @db.Text  // Markdown nettoyé (sans balises)
+  tags         String? // Tags concaténés : "nuxt vue javascript"
+  categories   String? // Catégories concaténées : "développement-web"
+  updatedAt    DateTime @updatedAt
+
+  // Index full-text PostgreSQL natif (via migration SQL manuelle ou extension)
+  // ALTER TABLE search_index ADD COLUMN search_vector tsvector
+  // CREATE INDEX idx_search_vector ON search_index USING GIN(search_vector);
+
+  @@map("search_index")
+}
+
+// =============================================================================
+// CHANGELOG DU BLOG
+// =============================================================================
+
+model ChangelogEntry {
+  id          Int           @id @default(autoincrement())
+  version     String?       // ex: "2.1.0" (optionnel)
+  type        ChangelogType
+  title       String
+  description String?       @db.Text
+  authorId    String
+  author      User          @relation(fields: [authorId], references: [id], onDelete: Restrict)
+  publishedAt DateTime      @default(now())
+
+  @@map("changelog_entries")
+}

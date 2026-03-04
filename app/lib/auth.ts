@@ -16,9 +16,9 @@ export const auth = betterAuth({
     autoSignIn: false,
     
     // try to singin with your email
-    onExistingUserSignUp: async ({ user }, request) => {
+    /*onExistingUserSignUp: async ({ user }, request) => {
       
-    },
+    },*/
     
     // Reset password via Plunk
     sendResetPassword: async ({ user, url }) => {
@@ -85,7 +85,10 @@ export const auth = betterAuth({
     },
   },
   plugins: [
-    admin(),
+    admin({
+      defaultRole: 'reader', // tout nouvel utilisateur sera "reader" par défaut
+      adminRoles: ['admin'],  // les rôles considérés comme "admin" par le plugin
+    }),
   ],
   socialProviders: {
     github: {
