@@ -5,14 +5,14 @@ export const useAuthStore = defineStore('auth', () => {
   const isAuthenticated = computed(() => !!user.value)
 
   async function fetchSession() {
-    const session = await authClient.getSession()
-    user.value = session?.data?.user ?? null
-  }
-
-  async function logout() {
-    await authClient.signOut()
-    user.value = null
-  }
+    const data = await $fetch('/api/auth/session') // ← appel SSR
+      user.value = data?.user ?? null
+    }
+    
+    async function logout() {
+      await authClient.signOut()
+      user.value = null
+    }
 
   return { user, isAuthenticated, fetchSession, logout }
 })

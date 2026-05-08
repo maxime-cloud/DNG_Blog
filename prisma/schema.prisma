@@ -179,6 +179,7 @@ model Category {
   slug        String    @unique
   description String   @db.Text
   color       String   // ex: "#2563EB"
+  colorb      String
   imageUrl    String   // nom d'icône Nuxt UI (ex: "i-heroicons-code-bracket")
   createdAt   DateTime  @default(now())
 

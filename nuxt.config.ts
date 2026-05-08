@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxt/fonts'
   ],
+  ssr: true,
 
   devtools: {
     enabled: true

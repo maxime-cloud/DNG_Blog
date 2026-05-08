@@ -55,9 +55,7 @@
         </div>
         
         
-        <div class="contentCarousel mb-20 p-8 flex gap-4 relative justify-center">
-          <NewsLetter />
-        </div>
+        
       </BaseLayaoutContent>
     </NoAdminPage>
 </template>
