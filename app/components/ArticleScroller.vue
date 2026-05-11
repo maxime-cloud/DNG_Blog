@@ -1,88 +1,38 @@
 <template>
-<UCarousel
-ref="myHoverableElement"
-class="mx-auto sm:w-full"
+  <UCarousel
+    ref="myHoverableElement"
     v-slot="{ item }"
+    class="mx-auto sm:w-full"
     loop
     arrows
     :autoplay="!isHovered ? { delay: 5000 } : false"
     wheel-gestures
-    :items="items"
-    :ui="{ 
+    :items="articles"
+    :ui="{
       item: 'basis-1/1 xl:basis-1/3 sm:basis-[70%] md:basis-[60%] lg:basis-[45%]',
       prev: 'sm:start-8 hover:bg-white dark:hover:bg-primary -translate-y-20 cursor-pointer',
-      next: 'sm:end-8 hover:bg-white dark:hover:bg-primary -translate-y-20 cursor-pointer',
+      next: 'sm:end-8 hover:bg-white dark:hover:bg-primary -translate-y-20 cursor-pointer'
     }"
   >
     <ArticleCard :article="item" />
-</UCarousel>
+  </UCarousel>
 </template>
 
 <script setup lang="ts">
+const props = defineProps<{
+  sort?: 'latest' | 'popular' | 'oldest'
+  limit?: number
+}>()
+
 const myHoverableElement = useTemplateRef('myHoverableElement')
 const isHovered = useElementHover(myHoverableElement)
 
+const { data } = await useFetch('/api/articles', {
+  query: {
+    sort: props.sort ?? 'latest',
+    limit: props.limit ?? 6
+  }
+})
 
-const items:{
-id: string,
-title: string,
-excert: string,
-coverImageUrl: string,
-updatedAt: string,
-// updatedAt: Date,
-tags: string[],
-categories: string[],
-likes: number,
-views: number,
-}[] = [{
-  id: "EUE23",
-  title: "Article Title",
-  excert: "Article Excerpt",
-  coverImageUrl: "https://www.mensjournal.com/.image/w_750,q_auto:good,c_fill,ar_16:9/NDI6MDAwMDAwMDAxMDgxNDk5/sleep-banking-header.jpg?arena_f_auto",
-  updatedAt: "new Date()",
-  tags: ["tag1", "tag2"],
-  categories: ["nuxt", "fedora", "linux"],
-  likes: 12,
-  views: 120
-},{
-  id: "EUE23",
-  title: "Article Title",
-  excert: "Article Excerpt",
-  coverImageUrl: "https://www.mensjournal.com/.image/w_750,q_auto:good,c_fill,ar_16:9/NDI6MDAwMDAwMDAxMDgxNDk5/sleep-banking-header.jpg?arena_f_auto",
-  updatedAt: "new Date()",
-  tags: ["tag1", "tag2"],
-  categories: ["nuxt", "fedora", "linux"],
-  likes: 12,
-  views: 120
-},{
-  id: "EUE23",
-  title: "Article Title",
-  excert: "Article Excerpt",
-  coverImageUrl: "https://www.mensjournal.com/.image/w_750,q_auto:good,c_fill,ar_16:9/NDI6MDAwMDAwMDAxMDgxNDk5/sleep-banking-header.jpg?arena_f_auto",
-  updatedAt: "new Date()",
-  tags: ["tag1", "tag2"],
-  categories: ["nuxt", "fedora", "linux"],
-  likes: 12,
-  views: 120
-}, {
-  id: "EUE23",
-  title: "Article Title",
-  excert: "Article Excerpt",
-  coverImageUrl: "https://www.mensjournal.com/.image/w_750,q_auto:good,c_fill,ar_16:9/NDI6MDAwMDAwMDAxMDgxNDk5/sleep-banking-header.jpg?arena_f_auto",
-  updatedAt: "new Date()",
-  tags: ["tag1", "tag2"],
-  categories: ["nuxt", "fedora", "linux"],
-  likes: 12,
-  views: 120
-}, {
-  id: "EUE23",
-  title: "Article Title",
-  excert: "Article Excerpt",
-  coverImageUrl: "https://www.mensjournal.com/.image/w_750,q_auto:good,c_fill,ar_16:9/NDI6MDAwMDAwMDAxMDgxNDk5/sleep-banking-header.jpg?arena_f_auto",
-  updatedAt: "new Date()",
-  tags: ["tag1", "tag2"],
-  categories: ["nuxt", "fedora", "linux"],
-  likes: 12,
-  views: 120
-}]
+const articles = computed(() => data.value?.data ?? [])
 </script>

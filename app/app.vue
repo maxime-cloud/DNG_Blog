@@ -1,18 +1,18 @@
 <script setup>
+import { provide } from 'vue'
+import { useAuthStore } from '@/stores/auth'
+
 useHead({
-  meta: [
-    { name: 'viewport', content: 'width=device-width, initial-scale=1' }
-  ],
-  link: [
-    { rel: 'icon', href: '/favicon.ico' }
-  ],
+  meta: [{ name: 'viewport', content: 'width=device-width, initial-scale=1' }],
+  link: [{ rel: 'icon', href: '/favicon.ico' }],
   htmlAttrs: {
     lang: 'fr'
   }
 })
 
 const title = 'Nuxt Starter Template'
-const description = 'A production-ready starter template powered by Nuxt UI. Build beautiful, accessible, and performant applications in minutes, not hours.'
+const description =
+  'A production-ready starter template powered by Nuxt UI. Build beautiful, accessible, and performant applications in minutes, not hours.'
 
 useSeoMeta({
   title,
@@ -24,23 +24,20 @@ useSeoMeta({
   twitterCard: 'summary_large_image'
 })
 
-
-import { provide } from 'vue'
-import { useAuthStore } from '@/stores/auth'
-
 const store = useAuthStore()
 store.fetchSession()
 
 const active = ref(300)
-provide("activeNav", active)
+provide('activeNav', active)
 
-const toaster = { max: 3}
-
+const toaster = { max: 3 }
 </script>
 
 <template>
   <UApp :toaster="toaster">
     <!-- {{ store.user }} -->
-    <NuxtPage />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </UApp>
 </template>

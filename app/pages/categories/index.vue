@@ -1,7 +1,7 @@
 <template>
-    <NoAdminPage>
-      <BaseLayaoutContent >
-        fsdq
-      </BaseLayaoutContent>
-    </NoAdminPage>
+  <NoAdminPage>
+    <BaseLayaoutContent>
+      fsdq
+    </BaseLayaoutContent>
+  </NoAdminPage>
 </template>

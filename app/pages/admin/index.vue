@@ -1,0 +1,102 @@
+<script setup>
+definePageMeta({ layout: "admin", middleware: "admin" });
+
+const { data: overview } = await useFetch("/api/analytics/overview");
+const { data: topArticles } = await useFetch("/api/analytics/top-articles", {
+  query: { limit: 5 },
+});
+const { data: recentComments } = await useFetch("/api/admin/comments", {
+  query: { limit: 5 },
+});
+
+useSeoMeta({ title: "Dashboard Admin" });
+</script>
+
+<template>
+  <div class="p-6">
+    <h1 class="text-2xl font-bold mb-6 text-[#0F0F0F] dark:text-white">
+      Dashboard
+    </h1>
+
+    <!-- KPI Grid (4 columns) -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <AdminStatsCard
+        label="Articles"
+        :value="overview?.totalArticles ?? 0"
+        icon="i-lucide-file-text"
+      />
+      <AdminStatsCard
+        label="Vues totales"
+        :value="overview?.totalViews ?? 0"
+        icon="i-lucide-eye"
+      />
+      <AdminStatsCard
+        label="Utilisateurs"
+        :value="overview?.totalUsers ?? 0"
+        icon="i-lucide-users"
+      />
+      <AdminStatsCard
+        label="Abonnés newsletter"
+        :value="overview?.totalSubscribers ?? 0"
+        icon="i-lucide-mail"
+      />
+    </div>
+
+    <!-- Two columns: Top articles + Recent comments -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Top articles list -->
+      <div
+        class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 p-4 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none"
+      >
+        <h2 class="text-lg font-semibold mb-4 text-[#0F0F0F] dark:text-white">
+          Articles populaires
+        </h2>
+        <div
+          v-for="article in topArticles?.data ?? []"
+          :key="article.id"
+          class="flex justify-between items-center py-2 border-b border-[0.1px] border-dashed border-dashcolor/30 last:border-0"
+        >
+          <span class="text-sm truncate text-[#0F0F0F] dark:text-white">{{
+            article.title
+          }}</span>
+          <span class="text-xs text-zinc-500 ml-2 shrink-0"
+            >{{ article._count?.views ?? article.viewsCount ?? 0 }} vues</span
+          >
+        </div>
+        <p
+          v-if="!topArticles?.data?.length"
+          class="text-sm text-zinc-500 py-4 text-center"
+        >
+          Aucun article
+        </p>
+      </div>
+
+      <!-- Recent comments for moderation -->
+      <div
+        class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 p-4 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none"
+      >
+        <h2 class="text-lg font-semibold mb-4 text-[#0F0F0F] dark:text-white">
+          Commentaires récents
+        </h2>
+        <div
+          v-for="comment in recentComments?.data ?? []"
+          :key="comment.id"
+          class="py-2 border-b border-[0.1px] border-dashed border-dashcolor/30 last:border-0"
+        >
+          <p class="text-sm truncate text-[#0F0F0F] dark:text-white">
+            {{ comment.content }}
+          </p>
+          <div class="flex gap-2 mt-1">
+            <UBadge :label="comment.status" size="xs" />
+          </div>
+        </div>
+        <p
+          v-if="!recentComments?.data?.length"
+          class="text-sm text-zinc-500 py-4 text-center"
+        >
+          Aucun commentaire
+        </p>
+      </div>
+    </div>
+  </div>
+</template>

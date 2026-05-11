@@ -1,11 +1,11 @@
-import "dotenv/config";
-import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "~/generated/prisma/client";
+import 'dotenv/config'
+import { PrismaPg } from '@prisma/adapter-pg'
+import { PrismaClient } from '~/generated/prisma/client'
 // import slugExtension from 'prisma-extension-slug'
 
-const connectionString = `${process.env.DATABASE_URL}`;
+const connectionString = `${process.env.DATABASE_URL}`
 
-const adapter = new PrismaPg({ connectionString });
+const adapter = new PrismaPg({ connectionString })
 const prisma = new PrismaClient({ adapter })
 //   .$extends(
 //   slugExtension([
@@ -27,4 +27,4 @@ const prisma = new PrismaClient({ adapter })
 //   ])
 // );
 
-export { prisma };
+export { prisma }

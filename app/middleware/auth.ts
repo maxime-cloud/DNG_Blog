@@ -1,18 +1,6 @@
-import { authClient } from '~/lib/auth-client'
-
-export default defineNuxtRouteMiddleware(async (to) => {  
-  if (import.meta.server) {
-    const event = useRequestEvent()
-    const session = await $fetch('/api/auth/session', {
-      headers: event?.headers // ← transmet les cookies de la requête HTTP
-    })
-    if (!session?.user) {
-      return navigateTo('/login')
-    }
+export default defineNuxtRouteMiddleware(() => {
+  const store = useAuthStore()
+  if (!store.isAuthenticated) {
+    return navigateTo('/auth/login')
   }
 })
-
-
-// definePageMeta({
-//   middleware: 'auth'
-// })

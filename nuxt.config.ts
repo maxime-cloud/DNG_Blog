@@ -5,7 +5,8 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@vueuse/nuxt',
     '@pinia/nuxt',
-    '@nuxt/fonts'
+    '@nuxt/fonts',
+    '@nuxt/content'
   ],
   ssr: true,
 
@@ -14,6 +15,47 @@ export default defineNuxtConfig({
   },
 
   css: ['~/assets/css/main.css'],
+
+  content: {
+    database: {
+      type: 'pglite',
+      dataDir: '.nuxt/content-db'
+    },
+    build: {
+      markdown: {
+        highlight: {
+          theme: {
+            default: 'github-light',
+            dark: 'github-dark'
+          },
+          langs: [
+            'typescript',
+            'javascript',
+            'vue',
+            'bash',
+            'shell',
+            'python',
+            'json',
+            'yaml',
+            'nginx',
+            'dockerfile',
+            'sql',
+            'css',
+            'html',
+            'xml'
+          ]
+        },
+        remarkPlugins: {
+          'remark-gfm': {},
+          'remark-reading-time': {}
+        },
+        rehypePlugins: {
+          'rehype-slug': {},
+          'rehype-autolink-headings': { options: { behavior: 'wrap' } }
+        }
+      }
+    }
+  },
 
   routeRules: {
     '/': { prerender: true }

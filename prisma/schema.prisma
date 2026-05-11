@@ -312,6 +312,7 @@ model Media {
   article     Article?  @relation(fields: [articleId], references: [id], onDelete: SetNull)
 
   url         String
+  publicId    String?   // Cloudinary public_id for deletion
   filename    String
   mimeType    String    // ex: "image/webp"
   type        MediaType @default(IMAGE)
