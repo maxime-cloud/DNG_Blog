@@ -36,6 +36,7 @@ export default defineEventHandler(async event => {
         url: secure_url,
         filename,
         type: 'IMAGE',
+        mimeType,
         sizeBytes: filePart.data.length,
         ...(articleId && !isNaN(articleId) && { articleId })
       }

@@ -4,12 +4,12 @@ export const articleSchema = z.object({
   title: z.string().min(3).max(200),
   description: z.string().max(500).optional(),
   content: z.string().min(10),
-  categoryId: z.string().optional(),
+  categoryId: z.coerce.string().optional(),
   tags: z.array(z.string()).optional(),
   coverImage: z.url().optional(),
   status: z.enum(['DRAFT', 'REVIEW', 'PUBLISHED', 'ARCHIVED']).optional(),
   scheduledAt: z.date().optional(),
-  seriesId: z.string().optional(),
+  seriesId: z.coerce.string().optional(),
   seriesOrder: z.number().optional()
 })
 

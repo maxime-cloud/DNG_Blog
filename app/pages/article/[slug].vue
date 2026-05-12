@@ -117,9 +117,43 @@ const { data: content } = await useAsyncData(`article-content-${slug}`, () =>
 
 // Comments
 const { comments, loading: commentsLoading, fetchComments } = useComments(slug)
+
+const articleContent = useTemplateRef<HTMLElement>('articleContent')
+
 onMounted(() => {
   fetchComments()
+  addCopyButtons()
 })
+
+function addCopyButtons() {
+  nextTick(() => {
+    const container = articleContent.value
+    if (!container) return
+
+    container.querySelectorAll('pre').forEach(pre => {
+      if (pre.querySelector('.copy-btn')) return
+
+      const btn = document.createElement('button')
+      btn.className = 'copy-btn'
+      btn.setAttribute('aria-label', 'Copier')
+      btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>`
+
+      btn.addEventListener('click', async () => {
+        const code = pre.querySelector('code')?.innerText ?? pre.innerText
+        await navigator.clipboard.writeText(code)
+        btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`
+        btn.classList.add('copied')
+        setTimeout(() => {
+          btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>`
+          btn.classList.remove('copied')
+        }, 2000)
+      })
+
+      pre.style.position = 'relative'
+      pre.appendChild(btn)
+    })
+  })
+}
 
 function extractHeadings(nodes: ContentNode[]): Heading[] {
   const result: Heading[] = []
@@ -327,6 +361,7 @@ useSeoMeta({
           <!-- Article content -->
           <div
             v-if="content"
+            ref="articleContent"
             class="prose-article bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-6 sm:p-8 mb-6"
           >
             <ContentRenderer :value="content" />
@@ -577,6 +612,38 @@ useSeoMeta({
     6px -7px 24px 0px rgb(0, 0, 0, 0.51),
     -6px 7px 24px 0px rgb(0, 0, 0, 0.51),
     0px -4px 4px 0px rgb(0, 0, 0, 0.51);
+  position: relative;
+}
+
+.prose-article :deep(.copy-btn) {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 0.1px solid rgba(229, 231, 235, 0.2);
+  color: rgba(229, 231, 235, 0.5);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  opacity: 0;
+}
+
+.prose-article :deep(pre:hover .copy-btn) {
+  opacity: 1;
+}
+
+.prose-article :deep(.copy-btn:hover) {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.prose-article :deep(.copy-btn.copied) {
+  color: oklch(62.7% 0.194 149.214);
+  border-color: oklch(62.7% 0.194 149.214 / 0.4);
 }
 
 .prose-article :deep(img) {

@@ -54,9 +54,9 @@ async function save(publish = false) {
         content: form.content,
         description: form.description,
         coverImage: form.coverImage || undefined,
-        categoryId: form.categoryId,
+        categoryId: form.categoryId ?? undefined,
         tags: form.tags,
-        seriesId: form.seriesId,
+        seriesId: form.seriesId ?? undefined,
         seriesOrder: form.seriesOrder,
         metaTitle: form.metaTitle || undefined,
         metaDescription: form.metaDescription || undefined,
@@ -81,24 +81,12 @@ async function save(publish = false) {
     <div class="flex items-center justify-between mb-6">
       <div class="flex items-center gap-3">
         <NuxtLink to="/admin/articles">
-          <CUButton
-            size="sm"
-            logo-name="i-lucide-arrow-left"
-            logo-position="left"
-            label="Retour"
-          />
+          <CUButton size="sm" logo-name="i-lucide-arrow-left" logo-position="left" label="Retour" />
         </NuxtLink>
-        <h1 class="text-2xl font-bold text-[#0F0F0F] dark:text-white">
-          Nouvel article
-        </h1>
+        <h1 class="text-2xl font-bold text-[#0F0F0F] dark:text-white">Nouvel article</h1>
       </div>
       <div class="flex gap-2">
-        <CUButton
-          label="Sauvegarder"
-          size="md"
-          :loading="loading"
-          @click="save(false)"
-        />
+        <CUButton label="Sauvegarder" size="md" :loading="loading" @click="save(false)" />
         <CUButton
           label="Publier"
           size="md"
@@ -116,11 +104,7 @@ async function save(publish = false) {
         <!-- Title -->
         <div>
           <label class="block text-sm font-medium mb-1">Titre *</label>
-          <CUInput
-            v-model="form.title"
-            placeholder="Titre de l'article"
-            class="w-full text-lg"
-          />
+          <CUInput v-model="form.title" placeholder="Titre de l'article" class="w-full text-lg" />
         </div>
 
         <!-- Excerpt -->
@@ -173,22 +157,7 @@ async function save(publish = false) {
         <div
           class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4"
         >
-          <label class="block text-sm font-medium mb-2">Image de couverture</label>
-          <CUInput
-            v-model="form.coverImage"
-            placeholder="URL de l'image (Cloudinary)"
-            class="w-full mb-2"
-          />
-          <div
-            v-if="form.coverImage"
-            class="mt-2 border-[0.1px] border-dashed border-dashcolor/30 overflow-hidden"
-          >
-            <img
-              :src="form.coverImage"
-              alt="Couverture"
-              class="w-full h-32 object-cover"
-            >
-          </div>
+          <AdminCoverUpload v-model="form.coverImage" />
         </div>
 
         <!-- Category -->
@@ -200,14 +169,8 @@ async function save(publish = false) {
             v-model="form.categoryId"
             class="w-full bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none"
           >
-            <option :value="null">
-              Aucune catégorie
-            </option>
-            <option
-              v-for="cat in categories"
-              :key="cat.id"
-              :value="cat.id"
-            >
+            <option :value="null">Aucune catégorie</option>
+            <option v-for="cat in categories" :key="cat.id" :value="cat.id">
               {{ cat.name }}
             </option>
           </select>
@@ -225,11 +188,7 @@ async function save(publish = false) {
               class="flex-1"
               @keyup.enter="addTag"
             />
-            <CUButton
-              size="sm"
-              label="+"
-              @click="addTag"
-            />
+            <CUButton size="sm" label="+" @click="addTag" />
           </div>
           <div class="flex flex-wrap gap-1">
             <span
@@ -252,25 +211,14 @@ async function save(publish = false) {
             v-model="form.seriesId"
             class="w-full bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none mb-2"
           >
-            <option :value="null">
-              Aucune série
-            </option>
-            <option
-              v-for="s in seriesList"
-              :key="s.id"
-              :value="s.id"
-            >
+            <option :value="null">Aucune série</option>
+            <option v-for="s in seriesList" :key="s.id" :value="s.id">
               {{ s.title }}
             </option>
           </select>
           <div v-if="form.seriesId">
             <label class="block text-xs text-zinc-500 mb-1">Ordre dans la série</label>
-            <CUInput
-              v-model.number="form.seriesOrder"
-              type="number"
-              min="1"
-              class="w-full"
-            />
+            <CUInput v-model.number="form.seriesOrder" type="number" min="1" class="w-full" />
           </div>
         </div>
 
@@ -283,7 +231,7 @@ async function save(publish = false) {
             v-model="form.scheduledAt"
             type="datetime-local"
             class="w-full bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none"
-          >
+          />
         </div>
       </div>
     </div>

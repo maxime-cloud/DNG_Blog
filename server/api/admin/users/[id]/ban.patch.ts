@@ -5,7 +5,7 @@ const bodySchema = z.object({
   reason: z.string().optional()
 })
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async event => {
   try {
     const session = await requireRole(event, 'admin')
 
@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    const body = bodySchema.parse(await readBody(event))
+    const body = bodySchema.parse((await readBody(event)) ?? {})
 
     const target = await prisma.user.findUnique({
       where: { id },

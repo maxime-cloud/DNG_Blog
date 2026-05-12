@@ -25,7 +25,12 @@ useSeoMeta({
 })
 
 const store = useAuthStore()
-store.fetchSession()
+
+// SSR session is set by auth.global.ts (with cookies). Running fetchSession() on SSR
+// makes a cookieless call → null → Pinia mismatch → middleware re-fires → redirect.
+if (import.meta.client) {
+  store.fetchSession()
+}
 
 const active = ref(300)
 provide('activeNav', active)

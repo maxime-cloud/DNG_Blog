@@ -63,9 +63,9 @@ async function save() {
         content: form.content,
         description: form.description,
         coverImage: form.coverImage || undefined,
-        categoryId: form.categoryId,
+        categoryId: form.categoryId ?? undefined,
         tags: form.tags,
-        seriesId: form.seriesId,
+        seriesId: form.seriesId ?? undefined,
         seriesOrder: form.seriesOrder,
         metaTitle: form.metaTitle || undefined,
         metaDescription: form.metaDescription || undefined
@@ -115,31 +115,15 @@ async function restoreRevision(revisionId: number) {
     <div class="flex items-center justify-between mb-6">
       <div class="flex items-center gap-3">
         <NuxtLink to="/admin/articles">
-          <CUButton
-            size="sm"
-            logo-name="i-lucide-arrow-left"
-            logo-position="left"
-            label="Retour"
-          />
+          <CUButton size="sm" logo-name="i-lucide-arrow-left" logo-position="left" label="Retour" />
         </NuxtLink>
         <div>
-          <h1 class="text-2xl font-bold text-[#0F0F0F] dark:text-white">
-            Éditer l'article
-          </h1>
-          <UBadge
-            :label="form.status"
-            size="xs"
-            class="mt-1"
-          />
+          <h1 class="text-2xl font-bold text-[#0F0F0F] dark:text-white">Éditer l'article</h1>
+          <UBadge :label="form.status" size="xs" class="mt-1" />
         </div>
       </div>
       <div class="flex gap-2">
-        <CUButton
-          label="Sauvegarder"
-          size="md"
-          :loading="loading"
-          @click="save"
-        />
+        <CUButton label="Sauvegarder" size="md" :loading="loading" @click="save" />
         <CUButton
           v-if="form.status !== 'PUBLISHED'"
           label="Publier"
@@ -165,10 +149,7 @@ async function restoreRevision(revisionId: number) {
       v-if="revisions.length"
       class="mb-4 flex items-center gap-3 p-3 bg-[#EEE] dark:bg-[#111] border-[0.1px] border-dashed border-dashcolor/50"
     >
-      <UIcon
-        name="i-lucide-history"
-        class="w-4 h-4 text-zinc-500"
-      />
+      <UIcon name="i-lucide-history" class="w-4 h-4 text-zinc-500" />
       <span class="text-sm text-zinc-500">Révisions :</span>
       <div class="flex gap-2 flex-wrap">
         <button
@@ -195,11 +176,7 @@ async function restoreRevision(revisionId: number) {
         <!-- Title -->
         <div>
           <label class="block text-sm font-medium mb-1">Titre *</label>
-          <CUInput
-            v-model="form.title"
-            placeholder="Titre de l'article"
-            class="w-full"
-          />
+          <CUInput v-model="form.title" placeholder="Titre de l'article" class="w-full" />
         </div>
 
         <!-- Excerpt -->
@@ -252,22 +229,7 @@ async function restoreRevision(revisionId: number) {
         <div
           class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4"
         >
-          <label class="block text-sm font-medium mb-2">Image de couverture</label>
-          <CUInput
-            v-model="form.coverImage"
-            placeholder="URL Cloudinary"
-            class="w-full mb-2"
-          />
-          <div
-            v-if="form.coverImage"
-            class="mt-2 border-[0.1px] border-dashed border-dashcolor/30 overflow-hidden"
-          >
-            <img
-              :src="form.coverImage"
-              alt="Couverture"
-              class="w-full h-32 object-cover"
-            >
-          </div>
+          <AdminCoverUpload v-model="form.coverImage" />
         </div>
 
         <!-- Category -->
@@ -279,14 +241,8 @@ async function restoreRevision(revisionId: number) {
             v-model="form.categoryId"
             class="w-full bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none"
           >
-            <option :value="null">
-              Aucune catégorie
-            </option>
-            <option
-              v-for="cat in categories"
-              :key="cat.id"
-              :value="cat.id"
-            >
+            <option :value="null">Aucune catégorie</option>
+            <option v-for="cat in categories" :key="cat.id" :value="cat.id">
               {{ cat.name }}
             </option>
           </select>
@@ -304,11 +260,7 @@ async function restoreRevision(revisionId: number) {
               class="flex-1"
               @keyup.enter="addTag"
             />
-            <CUButton
-              size="sm"
-              label="+"
-              @click="addTag"
-            />
+            <CUButton size="sm" label="+" @click="addTag" />
           </div>
           <div class="flex flex-wrap gap-1">
             <span
@@ -331,25 +283,14 @@ async function restoreRevision(revisionId: number) {
             v-model="form.seriesId"
             class="w-full bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none mb-2"
           >
-            <option :value="null">
-              Aucune série
-            </option>
-            <option
-              v-for="s in seriesList"
-              :key="s.id"
-              :value="s.id"
-            >
+            <option :value="null">Aucune série</option>
+            <option v-for="s in seriesList" :key="s.id" :value="s.id">
               {{ s.title }}
             </option>
           </select>
           <div v-if="form.seriesId">
             <label class="block text-xs text-zinc-500 mb-1">Ordre dans la série</label>
-            <CUInput
-              v-model.number="form.seriesOrder"
-              type="number"
-              min="1"
-              class="w-full"
-            />
+            <CUInput v-model.number="form.seriesOrder" type="number" min="1" class="w-full" />
           </div>
         </div>
       </div>

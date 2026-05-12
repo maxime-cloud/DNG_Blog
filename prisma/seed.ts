@@ -29,7 +29,7 @@ async function main() {
         description: "Tutoriels sur Vue.js, Nuxt, TypeScript et l'écosystème web moderne",
         color: 'oklch(62.7% 0.194 149.214)',
         colorb: 'oklch(62.7% 0.194 149.214)',
-        imageUrl: 'i-simple-icons-vuedotjs'
+        imageUrl: null
       }
     }),
     prisma.category.upsert({
@@ -41,7 +41,7 @@ async function main() {
         description: 'Administration système, commandes essentielles et configurations',
         color: 'oklch(70% 0.15 60)',
         colorb: 'oklch(70% 0.15 60)',
-        imageUrl: 'i-simple-icons-linux'
+        imageUrl: null
       }
     }),
     prisma.category.upsert({
@@ -53,7 +53,7 @@ async function main() {
         description: 'Protocoles réseau, DNS, HTTP, configuration de serveurs',
         color: 'oklch(54.6% 0.245 262.881)',
         colorb: 'oklch(54.6% 0.245 262.881)',
-        imageUrl: 'i-lucide-network'
+        imageUrl: null
       }
     }),
     prisma.category.upsert({
@@ -65,7 +65,7 @@ async function main() {
         description: 'Docker, Git, CI/CD et outils de productivité pour développeurs',
         color: 'oklch(65% 0.18 300)',
         colorb: 'oklch(65% 0.18 300)',
-        imageUrl: 'i-lucide-wrench'
+        imageUrl: null
       }
     })
   ])
