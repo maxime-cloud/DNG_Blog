@@ -37,13 +37,21 @@ const filePath = computed(() => path.value.replace('/docs', 'docs'))
     <article class="flex-1 min-w-0 py-10 px-4">
       <DocsBreadcrumb :path="path" />
 
-      <h1 class="text-3xl font-bold mb-2">{{ page?.title }}</h1>
-      <p v-if="page?.description" class="text-zinc-500 mb-8">
+      <h1 class="text-3xl font-bold mb-2">
+        {{ page?.title }}
+      </h1>
+      <p
+        v-if="page?.description"
+        class="text-zinc-500 mb-8"
+      >
         {{ page?.description }}
       </p>
 
       <div class="prose dark:prose-invert max-w-none">
-        <ContentRenderer v-if="page" :value="page" />
+        <ContentRenderer
+          v-if="page"
+          :value="page"
+        />
       </div>
 
       <DocsEditLink :path="filePath" />

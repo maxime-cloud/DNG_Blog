@@ -4,8 +4,8 @@ defineProps({
   value: [String, Number],
   icon: String,
   trend: Number,
-  color: { type: String, default: "primary" },
-});
+  color: { type: String, default: 'primary' }
+})
 </script>
 
 <template>
@@ -14,7 +14,9 @@ defineProps({
   >
     <div class="flex items-start justify-between">
       <div>
-        <p class="text-sm text-zinc-500">{{ label }}</p>
+        <p class="text-sm text-zinc-500">
+          {{ label }}
+        </p>
         <p class="text-3xl font-bold mt-1 text-[#0F0F0F] dark:text-white">
           {{ value }}
         </p>
@@ -26,7 +28,10 @@ defineProps({
           {{ trend >= 0 ? "↑" : "↓" }} {{ Math.abs(trend) }}%
         </p>
       </div>
-      <UIcon :name="icon" class="w-8 h-8 text-primary opacity-60" />
+      <UIcon
+        :name="icon"
+        class="w-8 h-8 text-primary opacity-60"
+      />
     </div>
   </div>
 </template>

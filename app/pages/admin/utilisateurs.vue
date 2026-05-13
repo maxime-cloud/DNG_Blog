@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { toast } from 'vue-sonner'
+
 definePageMeta({ layout: 'admin', middleware: 'admin' })
 useSeoMeta({ title: 'Gestion des utilisateurs' })
 
@@ -11,7 +13,7 @@ interface UserRow {
   banned?: boolean
   emailVerified: boolean
   createdAt: string
-  _count?: { articles: number; comments: number }
+  _count?: { articles: number, comments: number }
 }
 
 interface UserDetail extends UserRow {
@@ -20,8 +22,6 @@ interface UserDetail extends UserRow {
   websiteUrl?: string | null
   banReason?: string | null
 }
-
-const toast = useToast()
 
 type FetchErr = { data?: { statusMessage?: string } }
 const errMsg = (e: unknown, fallback: string) => (e as FetchErr)?.data?.statusMessage ?? fallback
@@ -65,12 +65,12 @@ async function createUser() {
         role: newUser.role
       }
     })
-    toast.add({ title: 'Utilisateur créé', color: 'success' })
+    toast.success('Utilisateur créé')
     Object.assign(newUser, { name: '', email: '', password: '', role: 'reader' })
     showCreate.value = false
     refresh()
   } catch (e) {
-    toast.add({ title: errMsg(e, 'Erreur création'), color: 'error' })
+    toast.error(errMsg(e, 'Erreur création'))
   } finally {
     creating.value = false
   }
@@ -88,7 +88,7 @@ async function refreshSelected() {
   selectedDetail.value = res.data
 }
 
-watch(selectedId, async id => {
+watch(selectedId, async (id) => {
   if (id) await refreshSelected()
   else selectedDetail.value = null
 })
@@ -126,11 +126,11 @@ async function saveProfile() {
       method: 'PATCH',
       body: profileForm
     })
-    toast.add({ title: 'Profil mis à jour', color: 'success' })
+    toast.success('Profil mis à jour')
     refreshSelected()
     refresh()
   } catch (e) {
-    toast.add({ title: errMsg(e, 'Erreur sauvegarde'), color: 'error' })
+    toast.error(errMsg(e, 'Erreur sauvegarde'))
   } finally {
     savingProfile.value = false
   }
@@ -147,11 +147,11 @@ async function onAvatarChange(event: Event) {
     const form = new FormData()
     form.append('file', file)
     await $fetch(`/api/admin/users/${selectedId.value}/avatar`, { method: 'POST', body: form })
-    toast.add({ title: 'Photo mise à jour', color: 'success' })
+    toast.success('Photo mise à jour')
     refreshSelected()
     refresh()
   } catch {
-    toast.add({ title: 'Erreur upload avatar', color: 'error' })
+    toast.error('Erreur upload avatar')
   } finally {
     uploadingAvatar.value = false
   }
@@ -169,10 +169,10 @@ async function savePassword() {
       method: 'PATCH',
       body: { newPassword: newPassword.value }
     })
-    toast.add({ title: 'Mot de passe mis à jour — sessions révoquées', color: 'success' })
+    toast.success('Mot de passe mis à jour — sessions révoquées')
     newPassword.value = ''
   } catch (e) {
-    toast.add({ title: errMsg(e, 'Erreur mot de passe'), color: 'error' })
+    toast.error(errMsg(e, 'Erreur mot de passe'))
   } finally {
     savingPassword.value = false
   }
@@ -182,11 +182,11 @@ async function savePassword() {
 async function changeRole(id: string, role: string) {
   try {
     await $fetch(`/api/admin/users/${id}/role`, { method: 'PATCH', body: { role } })
-    toast.add({ title: 'Rôle modifié', color: 'success' })
+    toast.success('Rôle modifié')
     refreshSelected()
     refresh()
   } catch (e) {
-    toast.add({ title: errMsg(e, 'Erreur rôle'), color: 'error' })
+    toast.error(errMsg(e, 'Erreur rôle'))
   }
 }
 
@@ -194,22 +194,22 @@ async function changeRole(id: string, role: string) {
 async function ban(id: string) {
   try {
     await $fetch(`/api/admin/users/${id}/ban`, { method: 'PATCH' })
-    toast.add({ title: 'Utilisateur banni', color: 'success' })
+    toast.success('Utilisateur banni')
     refreshSelected()
     refresh()
   } catch (e) {
-    toast.add({ title: errMsg(e, 'Erreur ban'), color: 'error' })
+    toast.error(errMsg(e, 'Erreur ban'))
   }
 }
 
 async function unban(id: string) {
   try {
     await $fetch(`/api/admin/users/${id}/unban`, { method: 'PATCH' })
-    toast.add({ title: 'Utilisateur débanni', color: 'success' })
+    toast.success('Utilisateur débanni')
     refreshSelected()
     refresh()
   } catch (e) {
-    toast.add({ title: errMsg(e, 'Erreur unban'), color: 'error' })
+    toast.error(errMsg(e, 'Erreur unban'))
   }
 }
 
@@ -217,11 +217,11 @@ async function unban(id: string) {
 async function verifyEmail(id: string) {
   try {
     await $fetch(`/api/admin/users/${id}/verify-email`, { method: 'PATCH' })
-    toast.add({ title: 'Email marqué comme vérifié', color: 'success' })
+    toast.success('Email marqué comme vérifié')
     refreshSelected()
     refresh()
   } catch (e) {
-    toast.add({ title: errMsg(e, 'Erreur vérification'), color: 'error' })
+    toast.error(errMsg(e, 'Erreur vérification'))
   }
 }
 
@@ -231,9 +231,9 @@ async function revokeSessions(id: string) {
     const res = await $fetch<{ count: number }>(`/api/admin/users/${id}/sessions`, {
       method: 'DELETE'
     })
-    toast.add({ title: `${res.count} session(s) révoquée(s)`, color: 'success' })
+    toast.success(`${res.count} session(s) révoquée(s)`)
   } catch (e) {
-    toast.add({ title: errMsg(e, 'Erreur révocation'), color: 'error' })
+    toast.error(errMsg(e, 'Erreur révocation'))
   }
 }
 
@@ -246,12 +246,12 @@ async function deleteUser() {
   deleting.value = true
   try {
     await $fetch(`/api/admin/users/${selectedId.value}`, { method: 'DELETE' })
-    toast.add({ title: 'Utilisateur supprimé', color: 'success' })
+    toast.success('Utilisateur supprimé')
     selectedId.value = null
     confirmDelete.value = false
     refresh()
   } catch (e) {
-    toast.add({ title: errMsg(e, 'Erreur suppression'), color: 'error' })
+    toast.error(errMsg(e, 'Erreur suppression'))
   } finally {
     deleting.value = false
   }
@@ -262,7 +262,9 @@ async function deleteUser() {
   <div class="p-6">
     <!-- Header -->
     <div class="flex items-center justify-between mb-6">
-      <h1 class="text-2xl font-bold">Utilisateurs</h1>
+      <h1 class="text-2xl font-bold">
+        Utilisateurs
+      </h1>
       <CUButton
         label="Ajouter"
         logo-name="i-lucide-plus"
@@ -276,10 +278,19 @@ async function deleteUser() {
       v-if="showCreate"
       class="mb-6 p-4 border-[0.1px] border-dashed border-primary/40 dark:border-dashcolor/50 space-y-3"
     >
-      <p class="text-sm font-semibold text-[#0F0F0F] dark:text-white">Nouvel utilisateur</p>
+      <p class="text-sm font-semibold text-[#0F0F0F] dark:text-white">
+        Nouvel utilisateur
+      </p>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <CUInput v-model="newUser.name" placeholder="Nom complet" />
-        <CUInput v-model="newUser.email" placeholder="Email" type="email" />
+        <CUInput
+          v-model="newUser.name"
+          placeholder="Nom complet"
+        />
+        <CUInput
+          v-model="newUser.email"
+          placeholder="Email"
+          type="email"
+        />
         <CUInput
           v-model="newUser.password"
           placeholder="Mot de passe (min 8 car.)"
@@ -289,9 +300,15 @@ async function deleteUser() {
           v-model="newUser.role"
           class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 px-3 py-2 text-sm rounded-none text-[#0F0F0F] dark:text-white"
         >
-          <option value="reader">Reader</option>
-          <option value="author">Author</option>
-          <option value="admin">Admin</option>
+          <option value="reader">
+            Reader
+          </option>
+          <option value="author">
+            Author
+          </option>
+          <option value="admin">
+            Admin
+          </option>
         </select>
       </div>
       <div class="flex gap-2">
@@ -300,7 +317,10 @@ async function deleteUser() {
           :disabled="creating"
           @click="createUser"
         />
-        <CUButton label="Annuler" @click="showCreate = false" />
+        <CUButton
+          label="Annuler"
+          @click="showCreate = false"
+        />
       </div>
     </div>
 
@@ -315,10 +335,18 @@ async function deleteUser() {
         v-model="roleFilter"
         class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 px-3 py-2 text-sm rounded-none text-[#0F0F0F] dark:text-white"
       >
-        <option value="">Tous les rôles</option>
-        <option value="reader">Reader</option>
-        <option value="author">Author</option>
-        <option value="admin">Admin</option>
+        <option value="">
+          Tous les rôles
+        </option>
+        <option value="reader">
+          Reader
+        </option>
+        <option value="author">
+          Author
+        </option>
+        <option value="admin">
+          Admin
+        </option>
       </select>
     </div>
 
@@ -332,16 +360,27 @@ async function deleteUser() {
     >
       <template #name="{ row }">
         <div class="flex items-center gap-2">
-          <UAvatar :src="row.image ?? undefined" :alt="row.name" size="xs" />
+          <UAvatar
+            :src="row.image ?? undefined"
+            :alt="row.name"
+            size="xs"
+          />
           <div>
-            <p class="text-sm font-medium">{{ row.name }}</p>
-            <p class="text-xs text-zinc-500">{{ row.email }}</p>
+            <p class="text-sm font-medium">
+              {{ row.name }}
+            </p>
+            <p class="text-xs text-zinc-500">
+              {{ row.email }}
+            </p>
           </div>
         </div>
       </template>
 
       <template #role="{ row }">
-        <UBadge :label="row.role" size="xs" />
+        <UBadge
+          :label="row.role"
+          size="xs"
+        />
       </template>
 
       <template #status="{ row }">
@@ -351,7 +390,12 @@ async function deleteUser() {
             :color="row.banned ? 'error' : 'success'"
             size="xs"
           />
-          <UBadge v-if="!row.emailVerified" label="Non vérifié" color="warning" size="xs" />
+          <UBadge
+            v-if="!row.emailVerified"
+            label="Non vérifié"
+            color="warning"
+            size="xs"
+          />
         </div>
       </template>
 
@@ -381,9 +425,18 @@ async function deleteUser() {
       <div class="flex items-center gap-4 p-4 border-b border-dashed border-dashcolor/30">
         <!-- Avatar with upload -->
         <div class="relative shrink-0">
-          <UAvatar :src="selected.image ?? undefined" :alt="selected.name" size="xl" />
+          <UAvatar
+            :src="selected.image ?? undefined"
+            :alt="selected.name"
+            size="xl"
+          />
           <label class="absolute bottom-0 right-0 cursor-pointer">
-            <input type="file" accept="image/*" class="hidden" @change="onAvatarChange" />
+            <input
+              type="file"
+              accept="image/*"
+              class="hidden"
+              @change="onAvatarChange"
+            >
             <span
               class="flex items-center justify-center w-6 h-6 bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 hover:border-primary/50 transition-colors"
             >
@@ -397,10 +450,17 @@ async function deleteUser() {
         </div>
 
         <div class="flex-1 min-w-0">
-          <p class="font-semibold truncate">{{ selected.name }}</p>
-          <p class="text-sm text-zinc-500 truncate">{{ selected.email }}</p>
+          <p class="font-semibold truncate">
+            {{ selected.name }}
+          </p>
+          <p class="text-sm text-zinc-500 truncate">
+            {{ selected.email }}
+          </p>
           <div class="flex items-center gap-2 mt-1">
-            <UBadge :label="selected.role" size="xs" />
+            <UBadge
+              :label="selected.role"
+              size="xs"
+            />
             <UBadge
               :label="selected.banned ? 'Banni' : 'Actif'"
               :color="selected.banned ? 'error' : 'success'"
@@ -443,27 +503,46 @@ async function deleteUser() {
       </div>
 
       <!-- Tab: Profile -->
-      <div v-if="activeTab === 'profile'" class="p-4 space-y-3">
+      <div
+        v-if="activeTab === 'profile'"
+        class="p-4 space-y-3"
+      >
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label class="text-xs text-zinc-500 block mb-1">Nom</label>
-            <CUInput v-model="profileForm.name" placeholder="Nom complet" />
+            <CUInput
+              v-model="profileForm.name"
+              placeholder="Nom complet"
+            />
           </div>
           <div>
             <label class="text-xs text-zinc-500 block mb-1">Email</label>
-            <CUInput v-model="profileForm.email" placeholder="Email" type="email" />
+            <CUInput
+              v-model="profileForm.email"
+              placeholder="Email"
+              type="email"
+            />
           </div>
           <div class="sm:col-span-2">
             <label class="text-xs text-zinc-500 block mb-1">Bio</label>
-            <CUInput v-model="profileForm.bio" placeholder="Biographie courte" />
+            <CUInput
+              v-model="profileForm.bio"
+              placeholder="Biographie courte"
+            />
           </div>
           <div>
             <label class="text-xs text-zinc-500 block mb-1">GitHub URL</label>
-            <CUInput v-model="profileForm.githubUrl" placeholder="https://github.com/..." />
+            <CUInput
+              v-model="profileForm.githubUrl"
+              placeholder="https://github.com/..."
+            />
           </div>
           <div>
             <label class="text-xs text-zinc-500 block mb-1">Site web</label>
-            <CUInput v-model="profileForm.websiteUrl" placeholder="https://..." />
+            <CUInput
+              v-model="profileForm.websiteUrl"
+              placeholder="https://..."
+            />
           </div>
         </div>
         <CUButton
@@ -474,14 +553,21 @@ async function deleteUser() {
       </div>
 
       <!-- Tab: Password -->
-      <div v-if="activeTab === 'password'" class="p-4 space-y-3">
+      <div
+        v-if="activeTab === 'password'"
+        class="p-4 space-y-3"
+      >
         <p class="text-xs text-zinc-500">
           Définir un nouveau mot de passe. Toutes les sessions actives de l'utilisateur seront
           révoquées.
         </p>
         <div class="max-w-sm">
           <label class="text-xs text-zinc-500 block mb-1">Nouveau mot de passe (min 8 car.)</label>
-          <CUInput v-model="newPassword" placeholder="Nouveau mot de passe" type="password" />
+          <CUInput
+            v-model="newPassword"
+            placeholder="Nouveau mot de passe"
+            type="password"
+          />
         </div>
         <CUButton
           :label="savingPassword ? 'Mise à jour...' : 'Définir le mot de passe'"
@@ -491,26 +577,39 @@ async function deleteUser() {
       </div>
 
       <!-- Tab: Actions -->
-      <div v-if="activeTab === 'actions'" class="p-4 space-y-6">
+      <div
+        v-if="activeTab === 'actions'"
+        class="p-4 space-y-6"
+      >
         <!-- Role -->
         <div>
-          <p class="text-sm font-medium mb-2">Changer le rôle</p>
+          <p class="text-sm font-medium mb-2">
+            Changer le rôle
+          </p>
           <div class="flex items-center gap-2">
             <select
               class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 px-3 py-2 text-sm rounded-none text-[#0F0F0F] dark:text-white"
               :value="selected.role"
               @change="changeRole(selected.id, ($event.target as HTMLSelectElement).value)"
             >
-              <option value="reader">Reader</option>
-              <option value="author">Author</option>
-              <option value="admin">Admin</option>
+              <option value="reader">
+                Reader
+              </option>
+              <option value="author">
+                Author
+              </option>
+              <option value="admin">
+                Admin
+              </option>
             </select>
           </div>
         </div>
 
         <!-- Email verification -->
         <div>
-          <p class="text-sm font-medium mb-2">Vérification email</p>
+          <p class="text-sm font-medium mb-2">
+            Vérification email
+          </p>
           <div class="flex items-center gap-3">
             <UBadge
               :label="selected.emailVerified ? 'Email vérifié' : 'Email non vérifié'"
@@ -530,9 +629,16 @@ async function deleteUser() {
 
         <!-- Ban / Unban -->
         <div>
-          <p class="text-sm font-medium mb-2">Suspension</p>
-          <div v-if="selected.banned" class="space-y-1">
-            <p class="text-xs text-zinc-500">Raison : {{ selected.banReason ?? 'Non précisée' }}</p>
+          <p class="text-sm font-medium mb-2">
+            Suspension
+          </p>
+          <div
+            v-if="selected.banned"
+            class="space-y-1"
+          >
+            <p class="text-xs text-zinc-500">
+              Raison : {{ selected.banReason ?? 'Non précisée' }}
+            </p>
             <CUButton
               size="xs"
               label="Débannir"
@@ -553,7 +659,9 @@ async function deleteUser() {
 
         <!-- Revoke sessions -->
         <div>
-          <p class="text-sm font-medium mb-2">Sessions actives</p>
+          <p class="text-sm font-medium mb-2">
+            Sessions actives
+          </p>
           <CUButton
             size="xs"
             label="Révoquer toutes les sessions"
@@ -565,7 +673,9 @@ async function deleteUser() {
 
         <!-- Delete -->
         <div class="border-t border-dashed border-red-400/30 pt-4">
-          <p class="text-sm font-medium text-red-500 mb-2">Zone de danger</p>
+          <p class="text-sm font-medium text-red-500 mb-2">
+            Zone de danger
+          </p>
           <div v-if="!confirmDelete">
             <CUButton
               size="xs"
@@ -575,7 +685,10 @@ async function deleteUser() {
               @click="confirmDelete = true"
             />
           </div>
-          <div v-else class="space-y-2">
+          <div
+            v-else
+            class="space-y-2"
+          >
             <p class="text-xs text-red-400">
               Cette action est irréversible. Tous les articles et données associés seront supprimés.
             </p>
@@ -586,7 +699,11 @@ async function deleteUser() {
                 :disabled="deleting"
                 @click="deleteUser"
               />
-              <CUButton size="xs" label="Annuler" @click="confirmDelete = false" />
+              <CUButton
+                size="xs"
+                label="Annuler"
+                @click="confirmDelete = false"
+              />
             </div>
           </div>
         </div>

@@ -12,10 +12,8 @@
           class="rounded-none"
         />
         <div class="flex-1 min-w-0">
-          <p
-            class="text-sm font-semibold text-[#0F0F0F] dark:text-[#F3F4F6] truncate"
-          >
-            {{ comment.user?.name ?? "Anonyme" }}
+          <p class="text-sm font-semibold text-[#0F0F0F] dark:text-[#F3F4F6] truncate">
+            {{ comment.user?.name ?? 'Anonyme' }}
           </p>
           <p class="text-xs text-zinc-500">
             {{ formattedDate }}
@@ -32,9 +30,7 @@
       </div>
 
       <!-- Content -->
-      <p
-        class="text-sm text-[#0F0F0F]/80 dark:text-[#F3F4F6]/80 mb-3 whitespace-pre-wrap"
-      >
+      <p class="text-sm text-[#0F0F0F]/80 dark:text-[#F3F4F6]/80 mb-3 whitespace-pre-wrap">
         {{ comment.content }}
       </p>
 
@@ -46,10 +42,7 @@
           :class="liked ? 'text-red-400' : 'text-zinc-500 hover:text-red-400'"
           @click="toggleLike"
         >
-          <UIcon
-            :name="liked ? 'i-lucide-heart' : 'i-lucide-heart'"
-            class="w-4 h-4"
-          />
+          <UIcon :name="liked ? 'i-lucide-heart' : 'i-lucide-heart'" class="w-4 h-4" />
           <span>{{ likeCountLocal }}</span>
         </button>
 
@@ -58,10 +51,7 @@
           class="flex items-center gap-1 text-xs text-zinc-500 hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors"
           @click="showReplyForm = !showReplyForm"
         >
-          <UIcon
-            name="i-lucide-message-square"
-            class="w-4 h-4"
-          />
+          <UIcon name="i-lucide-message-square" class="w-4 h-4" />
           <span>Répondre</span>
         </button>
 
@@ -70,10 +60,7 @@
           class="flex items-center gap-1 text-xs text-zinc-500 hover:text-yellow-500 transition-colors"
           @click="report"
         >
-          <UIcon
-            name="i-lucide-flag"
-            class="w-4 h-4"
-          />
+          <UIcon name="i-lucide-flag" class="w-4 h-4" />
           <span>Signaler</span>
         </button>
 
@@ -83,10 +70,7 @@
           class="flex items-center gap-1 text-xs text-zinc-500 hover:text-red-500 transition-colors ml-auto"
           @click="deleteComment"
         >
-          <UIcon
-            name="i-lucide-trash-2"
-            class="w-4 h-4"
-          />
+          <UIcon name="i-lucide-trash-2" class="w-4 h-4" />
           <span>Supprimer</span>
         </button>
       </div>
@@ -96,19 +80,12 @@
         v-if="showReplyForm"
         class="mt-3 border-t border-dashed border-primary/20 dark:border-dashcolor/30 pt-3"
       >
-        <CommentForm
-          :slug="slug"
-          :parent-id="comment.id"
-          @submitted="onReplySubmitted"
-        />
+        <CommentForm :slug="slug" :parent-id="comment.id" @submitted="onReplySubmitted" />
       </div>
     </div>
 
     <!-- Nested replies (max depth 2 visually via pl-6) -->
-    <div
-      v-if="comment.replies && comment.replies.length"
-      class="pl-6 flex flex-col gap-3"
-    >
+    <div v-if="comment.replies && comment.replies.length" class="pl-6 flex flex-col gap-3">
       <CommentItem
         v-for="reply in comment.replies"
         :key="reply.id"
@@ -123,13 +100,13 @@
 <script setup lang="ts">
 interface CommentUser {
   name: string
-  image?: string
+  image?: string | null
 }
 
 interface Comment {
   id: number
   content: string
-  user?: CommentUser
+  user?: CommentUser | null
   userId?: string
   createdAt: string
   likes: unknown[]
@@ -154,9 +131,7 @@ const likeCountLocal = ref(props.comment.likes?.length ?? 0)
 const showReplyForm = ref(false)
 
 const canDelete = computed(
-  () =>
-    isLoggedIn.value
-    && (isAdmin.value || user.value?.id === props.comment.userId)
+  () => isLoggedIn.value && (isAdmin.value || user.value?.id === props.comment.userId)
 )
 
 const formattedDate = computed(() => {
@@ -167,7 +142,7 @@ const formattedDate = computed(() => {
   const diffHours = Math.floor(diffMins / 60)
   const diffDays = Math.floor(diffHours / 24)
 
-  if (diffMins < 1) return 'à l\'instant'
+  if (diffMins < 1) return "à l'instant"
   if (diffMins < 60) return `il y a ${diffMins} min`
   if (diffHours < 24) return `il y a ${diffHours}h`
   if (diffDays < 7) return `il y a ${diffDays}j`

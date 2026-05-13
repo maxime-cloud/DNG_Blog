@@ -5,12 +5,12 @@ useSeoMeta({ title: 'Analytiques' })
 const period = ref('30')
 const { data: overview } = await useFetch('/api/analytics/overview')
 const { data: traffic, refresh: refreshTraffic } = await useFetch<{
-  data: Array<{ viewDate: string; viewCount: number }>
+  data: Array<{ viewDate: string, viewCount: number }>
 }>('/api/analytics/traffic', {
   query: computed(() => ({ days: period.value }))
 })
 const { data: topArticles, refresh: refreshTop } = await useFetch<{
-  data: Array<{ id: number; title: string; slug: string; _count?: { views: number } }>
+  data: Array<{ id: number, title: string, slug: string, _count?: { views: number } }>
 }>('/api/analytics/top-articles', {
   query: computed(() => ({ period: `${period.value}d`, limit: 10 }))
 })
@@ -24,14 +24,22 @@ watch(period, () => {
 <template>
   <div class="p-6">
     <div class="flex items-center justify-between mb-6">
-      <h1 class="text-2xl font-bold">Analytiques</h1>
+      <h1 class="text-2xl font-bold">
+        Analytiques
+      </h1>
       <select
         v-model="period"
         class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none"
       >
-        <option value="7">7 jours</option>
-        <option value="30">30 jours</option>
-        <option value="90">90 jours</option>
+        <option value="7">
+          7 jours
+        </option>
+        <option value="30">
+          30 jours
+        </option>
+        <option value="90">
+          90 jours
+        </option>
       </select>
     </div>
 
@@ -42,7 +50,11 @@ watch(period, () => {
         :value="overview?.totalArticles ?? 0"
         icon="i-lucide-file-text"
       />
-      <AdminStatsCard label="Vues totales" :value="overview?.totalViews ?? 0" icon="i-lucide-eye" />
+      <AdminStatsCard
+        label="Vues totales"
+        :value="overview?.totalViews ?? 0"
+        icon="i-lucide-eye"
+      />
       <AdminStatsCard
         label="Utilisateurs"
         :value="overview?.totalUsers ?? 0"
@@ -59,13 +71,19 @@ watch(period, () => {
     <div
       class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4 mb-6"
     >
-      <h2 class="font-semibold mb-4">Trafic journalier</h2>
+      <h2 class="font-semibold mb-4">
+        Trafic journalier
+      </h2>
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
           <thead>
             <tr>
-              <th class="text-left py-2 text-zinc-500">Date</th>
-              <th class="text-right py-2 text-zinc-500">Vues</th>
+              <th class="text-left py-2 text-zinc-500">
+                Date
+              </th>
+              <th class="text-right py-2 text-zinc-500">
+                Vues
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -74,8 +92,12 @@ watch(period, () => {
               :key="day.viewDate"
               class="border-t border-[0.1px] border-dashed border-dashcolor/30"
             >
-              <td class="py-1.5">{{ new Date(day.viewDate).toLocaleDateString('fr-FR') }}</td>
-              <td class="py-1.5 text-right">{{ day.viewCount }}</td>
+              <td class="py-1.5">
+                {{ new Date(day.viewDate).toLocaleDateString('fr-FR') }}
+              </td>
+              <td class="py-1.5 text-right">
+                {{ day.viewCount }}
+              </td>
             </tr>
           </tbody>
         </table>
@@ -86,7 +108,9 @@ watch(period, () => {
     <div
       class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4"
     >
-      <h2 class="font-semibold mb-4">Top articles</h2>
+      <h2 class="font-semibold mb-4">
+        Top articles
+      </h2>
       <div class="space-y-2">
         <div
           v-for="(article, i) in topArticles?.data ?? []"

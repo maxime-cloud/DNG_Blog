@@ -1,6 +1,6 @@
 import { defineEventHandler, createError, getRouterParam } from 'h3'
 
-export default defineEventHandler(async event => {
+export default defineEventHandler(async (event) => {
   try {
     const session = await requireAuth(event)
     const userId = session.user.id

@@ -9,7 +9,7 @@ const bodySchema = z.object({
   websiteUrl: z.string().url().or(z.literal('')).optional()
 })
 
-export default defineEventHandler(async event => {
+export default defineEventHandler(async (event) => {
   try {
     await requireRole(event, 'admin')
 

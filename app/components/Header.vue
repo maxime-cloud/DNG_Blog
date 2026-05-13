@@ -15,7 +15,10 @@
       }"
       class="transition-all dark:border-x bg-CustomLight dark:bg-CustomColor-900 px-8 sticky top-0 border-dashed max-w-7xl w-full h-12 lg:h-16 border-CustomColor-900/60 dark:border-dashcolor flex gap-4 items-center"
     >
-      <NuxtLink to="/" class="flex gap-4 items-center">
+      <NuxtLink
+        to="/"
+        class="flex gap-4 items-center"
+      >
         <AppLogo />
         <h1 class="text-xl lg:text-2xl font-semibold">StackTrace</h1>
       </NuxtLink>
@@ -26,8 +29,7 @@
           class="px-1"
           :class="{ 'border-b-2': route.path === page.link }"
           :to="page.link"
-          >{{ page.name }}</NuxtLink
-        >
+        >{{ page.name }}</NuxtLink>
       </div>
 
       <div class="flex gap-4 justify-end flex-1 lg:flex-0">
@@ -87,7 +89,9 @@
             content: 'ring-0 flex justify-center bg-transparent items-center'
           }"
         >
-          <button class="md:block hidden cursor-pointer">S'inscrire</button>
+          <button class="md:block hidden cursor-pointer">
+            S'inscrire
+          </button>
           <template #content>
             <RegisterForm @close-signup="openRegister = false" />
           </template>
@@ -119,8 +123,16 @@
           :logo-name="isDark ? 'i-lucide-moon' : 'i-lucide-sun'"
           @click="isDark = !isDark"
         />
-        <UDrawer class="lg:hidden" direction="right">
-          <CUButton class="lg:hidden" size="md" logo-position="right" logo-name="i-lucide-menu" />
+        <UDrawer
+          class="lg:hidden"
+          direction="right"
+        >
+          <CUButton
+            class="lg:hidden"
+            size="md"
+            logo-position="right"
+            logo-name="i-lucide-menu"
+          />
 
           <template #content />
         </UDrawer>
@@ -148,7 +160,7 @@ watch(openRegister, () => {
 const activeNav = inject<number>('activeNav') ?? 300
 const { x, y } = useWindowScroll()
 
-const pages: { name: string; link: string }[] = [
+const pages: { name: string, link: string }[] = [
   { name: 'Accueil', link: '/' },
   { name: 'Articles', link: '/articles' },
   { name: 'Catégories', link: '/categories' },

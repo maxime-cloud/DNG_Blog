@@ -9,7 +9,7 @@ const bodySchema = z.object({
   role: z.enum(['reader', 'author', 'admin']).default('reader')
 })
 
-export default defineEventHandler(async event => {
+export default defineEventHandler(async (event) => {
   try {
     await requireRole(event, 'admin')
 

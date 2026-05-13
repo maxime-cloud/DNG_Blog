@@ -8,7 +8,7 @@
       class="object-cover h-10 absolute top-4 right-4"
       :src="category.imageUrl"
       :alt="category.name"
-    />
+    >
     <div class="flex flex-col justify-between md:p-4 leading-normal">
       <h5
         class="mb-2 text-2xl font-bold tracking-tight"

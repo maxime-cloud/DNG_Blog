@@ -1,12 +1,18 @@
 <template>
-  <h2 :id="id" class="text-2xl font-bold mt-10 mb-4 flex items-center gap-2 group">
+  <h2
+    :id="id"
+    class="text-2xl font-bold mt-10 mb-4 flex items-center gap-2 group"
+  >
     <slot />
     <button
       class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-zinc-400 hover:text-primary"
       :aria-label="`Copy link to section`"
       @click="copyAnchor"
     >
-      <UIcon name="i-lucide-link" class="w-4 h-4" />
+      <UIcon
+        name="i-lucide-link"
+        class="w-4 h-4"
+      />
     </button>
   </h2>
 </template>

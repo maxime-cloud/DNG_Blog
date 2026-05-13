@@ -55,9 +55,15 @@ function fileIcon(name: string): string {
     </div>
 
     <!-- File -->
-    <div v-else class="flex items-center gap-1.5 py-0.5 text-zinc-500">
+    <div
+      v-else
+      class="flex items-center gap-1.5 py-0.5 text-zinc-500"
+    >
       <span class="w-3.5 shrink-0" />
-      <UIcon :name="fileIcon(node.name)" class="w-3.5 h-3.5 text-primary/70 shrink-0" />
+      <UIcon
+        :name="fileIcon(node.name)"
+        class="w-3.5 h-3.5 text-primary/70 shrink-0"
+      />
       <span>{{ node.name }}</span>
     </div>
 

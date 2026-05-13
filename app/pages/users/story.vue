@@ -1,16 +1,16 @@
 <script setup>
-definePageMeta({ middleware: "auth" });
+definePageMeta({ middleware: 'auth' })
 
-const { data: history, refresh } = await useFetch("/api/users/me/history", {
-  query: { limit: 50 },
-});
+const { data: history, refresh } = await useFetch('/api/users/me/history', {
+  query: { limit: 50 }
+})
 
 async function clearHistory() {
-  await $fetch("/api/users/me/history", { method: "DELETE" });
-  refresh();
+  await $fetch('/api/users/me/history', { method: 'DELETE' })
+  refresh()
 }
 
-useSeoMeta({ title: "Mon historique" });
+useSeoMeta({ title: 'Mon historique' })
 </script>
 
 <template>
@@ -18,12 +18,14 @@ useSeoMeta({ title: "Mon historique" });
     <BaseLayaoutContent>
       <div class="py-10 px-4">
         <div class="flex items-center justify-between mb-8">
-          <h1 class="text-3xl font-bold">Historique de lecture</h1>
+          <h1 class="text-3xl font-bold">
+            Historique de lecture
+          </h1>
           <CUButton
             v-if="history?.data?.length"
-            @click="clearHistory"
             label="Effacer l'historique"
-            logoName="i-lucide-trash"
+            logo-name="i-lucide-trash"
+            @click="clearHistory"
           />
         </div>
 
@@ -33,7 +35,10 @@ useSeoMeta({ title: "Mon historique" });
         >
           Votre historique est vide.
         </div>
-        <div v-else class="space-y-4">
+        <div
+          v-else
+          class="space-y-4"
+        >
           <div
             v-for="item in history.data"
             :key="item.articleId"

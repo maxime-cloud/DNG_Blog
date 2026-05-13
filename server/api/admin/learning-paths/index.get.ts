@@ -1,6 +1,6 @@
 import { defineEventHandler, createError } from 'h3'
 
-export default defineEventHandler(async event => {
+export default defineEventHandler(async (event) => {
   try {
     await requireRole(event, 'admin')
 

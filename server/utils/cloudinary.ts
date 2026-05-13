@@ -17,7 +17,7 @@ function getCloudinary() {
 export function uploadFromBuffer(
   buffer: Buffer,
   options: Record<string, unknown> = {}
-): Promise<{ secure_url: string; public_id: string }> {
+): Promise<{ secure_url: string, public_id: string }> {
   const cld = getCloudinary()
   return new Promise((resolve, reject) => {
     const stream = cld.uploader.upload_stream(options, (error, result) => {
@@ -38,7 +38,7 @@ export async function deleteImage(publicId: string): Promise<void> {
 
 export function getOptimizedUrl(
   publicId: string,
-  opts: { width?: number; height?: number; crop?: string } = {}
+  opts: { width?: number, height?: number, crop?: string } = {}
 ): string {
   const cld = getCloudinary()
   return cld.url(publicId, {
@@ -53,7 +53,7 @@ export function getOptimizedUrl(
 export function uploadAvatar(
   buffer: Buffer,
   userId: string
-): Promise<{ secure_url: string; public_id: string }> {
+): Promise<{ secure_url: string, public_id: string }> {
   return uploadFromBuffer(buffer, {
     folder: 'dngblog/avatars',
     public_id: userId,
@@ -67,7 +67,7 @@ export function uploadAvatar(
 export function uploadArticleCover(
   buffer: Buffer,
   articleSlug: string
-): Promise<{ secure_url: string; public_id: string }> {
+): Promise<{ secure_url: string, public_id: string }> {
   return uploadFromBuffer(buffer, {
     folder: 'dngblog/covers',
     public_id: articleSlug,
@@ -82,7 +82,7 @@ export function uploadArticleCover(
 export function uploadMedia(
   buffer: Buffer,
   filename: string
-): Promise<{ secure_url: string; public_id: string }> {
+): Promise<{ secure_url: string, public_id: string }> {
   return uploadFromBuffer(buffer, {
     folder: 'dngblog/media',
     public_id: filename,
@@ -93,7 +93,7 @@ export function uploadMedia(
 export function uploadCategoryIcon(
   buffer: Buffer,
   categorySlug: string
-): Promise<{ secure_url: string; public_id: string }> {
+): Promise<{ secure_url: string, public_id: string }> {
   return uploadFromBuffer(buffer, {
     folder: 'dngblog/categories',
     public_id: categorySlug,

@@ -5,7 +5,7 @@ const bodySchema = z.object({
   reason: z.string().optional()
 })
 
-export default defineEventHandler(async event => {
+export default defineEventHandler(async (event) => {
   try {
     const session = await requireRole(event, 'admin')
 

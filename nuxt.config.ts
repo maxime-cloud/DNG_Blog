@@ -1,3 +1,5 @@
+import Icons from 'unplugin-icons/vite'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
@@ -6,7 +8,9 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@pinia/nuxt',
     '@nuxt/fonts',
-    '@nuxt/content'
+    '@nuxt/content',
+    '@vueuse/motion/nuxt',
+    'vue-sonner/nuxt'
   ],
   ssr: true,
 
@@ -62,6 +66,10 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2025-01-15',
+
+  vite: {
+    plugins: [Icons({ compiler: 'vue3', autoInstall: true }) as any]
+  },
 
   eslint: {
     config: {

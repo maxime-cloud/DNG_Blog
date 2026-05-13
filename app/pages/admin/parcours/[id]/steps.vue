@@ -8,7 +8,7 @@ interface Step {
   id: number
   stepOrder: number
   stepTitle: string | null
-  article: { id: number; title: string; slug: string }
+  article: { id: number, title: string, slug: string }
 }
 
 interface LearningPath {
@@ -29,7 +29,7 @@ useSeoMeta({ title: computed(() => `Étapes — ${path.value?.title ?? ''}`) })
 const showAdd = ref(false)
 const newStep = reactive({ articleId: '', stepOrder: '', stepTitle: '' })
 const articleSearch = ref('')
-const articleResults = ref<{ id: number; title: string; slug: string }[]>([])
+const articleResults = ref<{ id: number, title: string, slug: string }[]>([])
 const searching = ref(false)
 const saving = ref(false)
 const error = ref('')
@@ -41,7 +41,7 @@ async function searchArticles() {
   }
   searching.value = true
   try {
-    const res = await $fetch<{ data: { id: number; title: string; slug: string }[] }>(
+    const res = await $fetch<{ data: { id: number, title: string, slug: string }[] }>(
       '/api/admin/articles',
       {
         query: { search: articleSearch.value, limit: 10 }
@@ -53,7 +53,7 @@ async function searchArticles() {
   }
 }
 
-function selectArticle(article: { id: number; title: string; slug: string }) {
+function selectArticle(article: { id: number, title: string, slug: string }) {
   newStep.articleId = String(article.id)
   articleSearch.value = article.title
   articleResults.value = []
@@ -81,7 +81,7 @@ async function addStep() {
     refresh()
   } catch (e) {
     const err = e as { data?: { statusMessage?: string } }
-    error.value = err.data?.statusMessage ?? "Erreur lors de l'ajout"
+    error.value = err.data?.statusMessage ?? 'Erreur lors de l\'ajout'
   } finally {
     saving.value = false
   }
@@ -115,21 +115,43 @@ async function moveStep(step: Step, direction: 'up' | 'down') {
 <template>
   <div class="p-6">
     <div class="flex items-center gap-4 mb-6">
-      <NuxtLink to="/admin/parcours" class="text-zinc-500 hover:text-primary transition-colors">
-        <UIcon name="i-lucide-arrow-left" class="w-4 h-4" />
+      <NuxtLink
+        to="/admin/parcours"
+        class="text-zinc-500 hover:text-primary transition-colors"
+      >
+        <UIcon
+          name="i-lucide-arrow-left"
+          class="w-4 h-4"
+        />
       </NuxtLink>
       <div>
-        <h1 class="text-2xl font-bold">Étapes du parcours</h1>
-        <p v-if="path" class="text-sm text-zinc-500 mt-0.5">{{ path.title }}</p>
+        <h1 class="text-2xl font-bold">
+          Étapes du parcours
+        </h1>
+        <p
+          v-if="path"
+          class="text-sm text-zinc-500 mt-0.5"
+        >
+          {{ path.title }}
+        </p>
       </div>
       <div class="ml-auto">
-        <CUButton label="Ajouter une étape" logoName="i-lucide-plus" @click="showAdd = !showAdd" />
+        <CUButton
+          label="Ajouter une étape"
+          logo-name="i-lucide-plus"
+          @click="showAdd = !showAdd"
+        />
       </div>
     </div>
 
     <!-- Add step form -->
-    <div v-if="showAdd" class="border-[0.1px] border-dashed border-dashcolor/50 p-4 mb-6 space-y-3">
-      <p class="text-sm font-semibold">Ajouter une étape</p>
+    <div
+      v-if="showAdd"
+      class="border-[0.1px] border-dashed border-dashcolor/50 p-4 mb-6 space-y-3"
+    >
+      <p class="text-sm font-semibold">
+        Ajouter une étape
+      </p>
 
       <div class="relative">
         <CUInput
@@ -167,16 +189,31 @@ async function moveStep(step: Step, direction: 'up' | 'down') {
         />
       </div>
 
-      <p v-if="error" class="text-red-400 text-sm">{{ error }}</p>
+      <p
+        v-if="error"
+        class="text-red-400 text-sm"
+      >
+        {{ error }}
+      </p>
 
       <div class="flex gap-2">
-        <CUButton label="Ajouter" :loading="saving" @click="addStep" />
-        <CUButton label="Annuler" @click="showAdd = false" />
+        <CUButton
+          label="Ajouter"
+          :loading="saving"
+          @click="addStep"
+        />
+        <CUButton
+          label="Annuler"
+          @click="showAdd = false"
+        />
       </div>
     </div>
 
     <!-- Steps list -->
-    <div v-if="path?.steps.length" class="space-y-2">
+    <div
+      v-if="path?.steps.length"
+      class="space-y-2"
+    >
       <div
         v-for="(step, idx) in path.steps"
         :key="step.id"
@@ -194,27 +231,36 @@ async function moveStep(step: Step, direction: 'up' | 'down') {
           <p class="font-medium text-sm truncate">
             {{ step.stepTitle ?? step.article.title }}
           </p>
-          <p v-if="step.stepTitle" class="text-xs text-zinc-500 truncate">
+          <p
+            v-if="step.stepTitle"
+            class="text-xs text-zinc-500 truncate"
+          >
             {{ step.article.title }}
           </p>
-          <p class="text-xs text-zinc-400">slug: {{ step.article.slug }}</p>
+          <p class="text-xs text-zinc-400">
+            slug: {{ step.article.slug }}
+          </p>
         </div>
 
         <!-- Actions -->
         <div class="flex gap-1 shrink-0">
           <CUButton
             size="xs"
-            logoName="i-lucide-arrow-up"
+            logo-name="i-lucide-arrow-up"
             :disabled="idx === 0"
             @click="moveStep(step, 'up')"
           />
           <CUButton
             size="xs"
-            logoName="i-lucide-arrow-down"
+            logo-name="i-lucide-arrow-down"
             :disabled="idx === path!.steps.length - 1"
             @click="moveStep(step, 'down')"
           />
-          <CUButton size="xs" logoName="i-lucide-trash" @click="deleteStep(step.id)" />
+          <CUButton
+            size="xs"
+            logo-name="i-lucide-trash"
+            @click="deleteStep(step.id)"
+          />
         </div>
       </div>
     </div>

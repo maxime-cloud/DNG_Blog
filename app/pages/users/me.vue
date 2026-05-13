@@ -1,62 +1,67 @@
 <script setup>
-definePageMeta({ middleware: "auth" });
+import { toast } from 'vue-sonner'
 
-const { user } = useAuth();
-const toast = useToast();
-const loading = ref(false);
+definePageMeta({ middleware: 'auth' })
+
+const { user } = useAuth()
+const loading = ref(false)
 
 const form = reactive({
-  name: user.value?.name ?? "",
-  bio: "",
-  githubUrl: "",
-  websiteUrl: "",
-});
+  name: user.value?.name ?? '',
+  bio: '',
+  githubUrl: '',
+  websiteUrl: ''
+})
 
 // Fetch full profile
-const { data: profile } = await useFetch("/api/users/me");
+const { data: profile } = await useFetch('/api/users/me')
 watch(
   profile,
   (val) => {
     if (val)
       Object.assign(form, {
         name: val.name,
-        bio: val.bio ?? "",
-        githubUrl: val.githubUrl ?? "",
-        websiteUrl: val.websiteUrl ?? "",
-      });
+        bio: val.bio ?? '',
+        githubUrl: val.githubUrl ?? '',
+        websiteUrl: val.websiteUrl ?? ''
+      })
   },
-  { immediate: true },
-);
+  { immediate: true }
+)
 
 async function save() {
-  loading.value = true;
+  loading.value = true
   try {
-    await $fetch("/api/users/me", { method: "PATCH", body: form });
-    toast.add({ title: "Profil mis à jour", color: "success" });
+    await $fetch('/api/users/me', { method: 'PATCH', body: form })
+    toast.success('Profil mis à jour')
   } catch (e) {
-    toast.add({
-      title: "Erreur",
-      description: "Impossible de mettre à jour",
-      color: "error",
-    });
+    toast.error('Impossible de mettre à jour le profil')
   } finally {
-    loading.value = false;
+    loading.value = false
   }
 }
 
-useSeoMeta({ title: "Mon profil" });
+useSeoMeta({ title: 'Mon profil' })
 </script>
 
 <template>
   <NoAdminPage>
     <BaseLayaoutContent>
       <div class="max-w-2xl mx-auto py-10 px-4">
-        <h1 class="text-3xl font-bold mb-8">Mon profil</h1>
+        <h1 class="text-3xl font-bold mb-8">
+          Mon profil
+        </h1>
 
-        <form @submit.prevent="save" class="space-y-6">
+        <form
+          class="space-y-6"
+          @submit.prevent="save"
+        >
           <!-- Avatar section -->
           <div class="flex items-center gap-4">
-            <UAvatar :src="user?.image ?? '/user-avatar.png'" size="xl" />
+            <UAvatar
+              :src="user?.image ?? '/user-avatar.png'"
+              size="xl"
+            />
           </div>
 
           <div>
@@ -73,14 +78,24 @@ useSeoMeta({ title: "Mon profil" });
           </div>
           <div>
             <label class="text-sm font-medium mb-1 block">GitHub URL</label>
-            <CUInput v-model="form.githubUrl" type="url" />
+            <CUInput
+              v-model="form.githubUrl"
+              type="url"
+            />
           </div>
           <div>
             <label class="text-sm font-medium mb-1 block">Site web</label>
-            <CUInput v-model="form.websiteUrl" type="url" />
+            <CUInput
+              v-model="form.websiteUrl"
+              type="url"
+            />
           </div>
 
-          <CUButton type="submit" label="Sauvegarder" :loading="loading" />
+          <CUButton
+            type="submit"
+            label="Sauvegarder"
+            :loading="loading"
+          />
         </form>
       </div>
     </BaseLayaoutContent>

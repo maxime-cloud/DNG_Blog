@@ -1,8 +1,8 @@
 <script setup>
 defineProps({
   prev: Object,
-  next: Object,
-});
+  next: Object
+})
 </script>
 
 <template>
@@ -17,7 +17,10 @@ defineProps({
       <span class="text-xs text-zinc-500 mb-1">← Précédent</span>
       <span class="text-sm font-medium">{{ prev.title }}</span>
     </NuxtLink>
-    <div v-else class="flex-1" />
+    <div
+      v-else
+      class="flex-1"
+    />
     <NuxtLink
       v-if="next"
       :to="next.path"

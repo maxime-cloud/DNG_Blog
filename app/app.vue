@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { provide } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 
@@ -11,8 +11,8 @@ useHead({
 })
 
 const title = 'Nuxt Starter Template'
-const description =
-  'A production-ready starter template powered by Nuxt UI. Build beautiful, accessible, and performant applications in minutes, not hours.'
+const description
+  = 'A production-ready starter template powered by Nuxt UI. Build beautiful, accessible, and performant applications in minutes, not hours.'
 
 useSeoMeta({
   title,
@@ -35,14 +35,40 @@ if (import.meta.client) {
 const active = ref(300)
 provide('activeNav', active)
 
-const toaster = { max: 3 }
+async function pageEnter(el: Element, done: () => void) {
+  if (!import.meta.client) {
+    done()
+    return
+  }
+  const { gsap } = await import('gsap')
+  gsap.fromTo(
+    el,
+    { opacity: 0, y: 20 },
+    { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', onComplete: done }
+  )
+}
+
+async function pageLeave(el: Element, done: () => void) {
+  if (!import.meta.client) {
+    done()
+    return
+  }
+  const { gsap } = await import('gsap')
+  gsap.to(el, { opacity: 0, y: -10, duration: 0.25, ease: 'power2.in', onComplete: done })
+}
 </script>
 
 <template>
-  <UApp :toaster="toaster">
+  <UApp>
+    <Toaster
+      position="bottom-right"
+      rich-colors
+      close-button
+    />
+    <ConfirmDialog />
     <!-- {{ store.user }} -->
     <NuxtLayout>
-      <NuxtPage />
+      <NuxtPage :transition="{ css: false, onEnter: pageEnter, onLeave: pageLeave }" />
     </NuxtLayout>
   </UApp>
 </template>

@@ -9,8 +9,8 @@ interface CategoryArticle {
   excerpt: string | null
   coverImageUrl: string | null
   publishedAt: string | null
-  author: { name: string; image: string | null }
-  _count: { comments: number; likes: number }
+  author: { name: string, image: string | null }
+  _count: { comments: number, likes: number }
 }
 
 interface Category {
@@ -22,7 +22,7 @@ interface Category {
   imageUrl: string | null
   articles: {
     data: CategoryArticle[]
-    meta: { page: number; limit: number; total: number; totalPages: number }
+    meta: { page: number, limit: number, total: number, totalPages: number }
   }
 }
 
@@ -77,17 +77,26 @@ function normalizeArticle(a: CategoryArticle) {
       <div class="pt-10 mb-10 px-4">
         <!-- Breadcrumb -->
         <nav class="flex items-center gap-2 text-xs text-zinc-500 mb-6">
-          <NuxtLink to="/" class="hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors">
+          <NuxtLink
+            to="/"
+            class="hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors"
+          >
             Accueil
           </NuxtLink>
-          <UIcon name="i-lucide-chevron-right" class="w-3 h-3" />
+          <UIcon
+            name="i-lucide-chevron-right"
+            class="w-3 h-3"
+          />
           <NuxtLink
             to="/categories"
             class="hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors"
           >
             Catégories
           </NuxtLink>
-          <UIcon name="i-lucide-chevron-right" class="w-3 h-3" />
+          <UIcon
+            name="i-lucide-chevron-right"
+            class="w-3 h-3"
+          />
           <span class="text-[#0F0F0F] dark:text-[#F3F4F6] truncate max-w-[200px]">
             {{ category?.name }}
           </span>
@@ -102,7 +111,7 @@ function normalizeArticle(a: CategoryArticle) {
             :src="category.imageUrl"
             :alt="category.name"
             class="w-12 h-12 object-contain"
-          />
+          >
           <div class="flex-1">
             <h1
               class="text-[24px] sm:text-[32px] font-bold text-[#0F0F0F] dark:text-[#FFFFFF] leading-tight"
@@ -125,7 +134,10 @@ function normalizeArticle(a: CategoryArticle) {
         </div>
 
         <!-- Articles grid -->
-        <div v-if="articles.length" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div
+          v-if="articles.length"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           <ArticleCard
             v-for="article in articles"
             :key="article.id"
@@ -134,14 +146,27 @@ function normalizeArticle(a: CategoryArticle) {
         </div>
 
         <!-- Empty -->
-        <div v-else class="flex flex-col items-center justify-center py-24 text-zinc-500 gap-4">
-          <UIcon name="i-lucide-file-x" class="w-12 h-12" />
+        <div
+          v-else
+          class="flex flex-col items-center justify-center py-24 text-zinc-500 gap-4"
+        >
+          <UIcon
+            name="i-lucide-file-x"
+            class="w-12 h-12"
+          />
           <p>Aucun article dans cette catégorie.</p>
         </div>
 
         <!-- Pagination -->
-        <div v-if="totalPages > 1" class="mt-10">
-          <Pagination :current-page="page" :total-pages="totalPages" :on-page-change="changePage" />
+        <div
+          v-if="totalPages > 1"
+          class="mt-10"
+        >
+          <Pagination
+            :current-page="page"
+            :total-pages="totalPages"
+            :on-page-change="changePage"
+          />
         </div>
       </div>
     </BaseLayaoutContent>

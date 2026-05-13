@@ -2,7 +2,7 @@ import { defineEventHandler, readBody, createError, getRouterParam } from 'h3'
 
 const CHANGELOG_TYPES = ['FEATURE', 'FIX', 'CONTENT', 'DESIGN', 'PERF', 'SECURITY'] as const
 
-export default defineEventHandler(async event => {
+export default defineEventHandler(async (event) => {
   try {
     await requireRole(event, 'admin')
 

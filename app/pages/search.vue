@@ -39,15 +39,25 @@ useSeoMeta({ title: 'Recherche' })
             class="flex-1"
             @keyup.enter="doSearch"
           />
-          <CUButton label="Rechercher" @click="doSearch" />
+          <CUButton
+            label="Rechercher"
+            @click="doSearch"
+          />
         </div>
 
         <!-- Loading -->
-        <div v-if="loading" class="text-center text-zinc-500 py-10">Recherche en cours...</div>
+        <div
+          v-if="loading"
+          class="text-center text-zinc-500 py-10"
+        >
+          Recherche en cours...
+        </div>
 
         <!-- Results -->
         <div v-else-if="results.length">
-          <p class="text-sm text-zinc-500 mb-4">{{ total }} résultat(s) pour "{{ query }}"</p>
+          <p class="text-sm text-zinc-500 mb-4">
+            {{ total }} résultat(s) pour "{{ query }}"
+          </p>
           <div class="space-y-4">
             <NuxtLink
               v-for="r in results"
@@ -77,7 +87,10 @@ useSeoMeta({ title: 'Recherche' })
         </div>
 
         <!-- Empty state -->
-        <div v-else-if="query && !loading" class="text-center py-20 text-zinc-500">
+        <div
+          v-else-if="query && !loading"
+          class="text-center py-20 text-zinc-500"
+        >
           <p>Aucun résultat pour "{{ query }}"</p>
         </div>
       </div>

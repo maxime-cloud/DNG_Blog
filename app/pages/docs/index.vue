@@ -1,18 +1,20 @@
 <script setup>
-definePageMeta({ layout: "docs" });
+definePageMeta({ layout: 'docs' })
 
-const { fetchDocsNav } = useDocs();
-const navigation = await fetchDocsNav();
+const { fetchDocsNav } = useDocs()
+const navigation = await fetchDocsNav()
 
 useSeoMeta({
-  title: "Documentation",
-  description: "Documentation technique du blog",
-});
+  title: 'Documentation',
+  description: 'Documentation technique du blog'
+})
 </script>
 
 <template>
   <div class="max-w-3xl mx-auto py-10 px-4">
-    <h1 class="text-4xl font-bold mb-4">Documentation</h1>
+    <h1 class="text-4xl font-bold mb-4">
+      Documentation
+    </h1>
     <p class="text-zinc-500 mb-10">
       Guides techniques, références et tutoriels.
     </p>

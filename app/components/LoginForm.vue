@@ -125,6 +125,7 @@
 <script setup lang="ts">
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
+import { toast } from 'vue-sonner'
 import { authClient } from '@/lib/auth-client'
 
 const showPassword = ref(false)
@@ -147,10 +148,9 @@ const state = reactive<Partial<Schema>>({
   password: undefined
 })
 
-const toast = useToast()
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   error.value = null
-  const { data, error: err } = await authClient.signIn.email(
+  await authClient.signIn.email(
     {
       email: event.data.email,
       password: event.data.password,
@@ -165,11 +165,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       onSuccess: (ctx) => {
         loading.value = false
         emits('closeLogin')
-        toast.add({
-          title: 'Success',
-          description: 'The form has been submitted.',
-          color: 'success'
-        })
+        toast.success('Connecté avec succès !')
       },
       onError: (ctx) => {
         loading.value = false
@@ -182,24 +178,18 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         } else if (ctx.error.code === 'CREDENTIAL_ACCOUNT_NOT_FOUND') {
           error.value = 'Compte d\'identification introuvable'
         } else if (ctx.error.code === 'EMAIL_NOT_VERIFIED') {
-          error.value
-            = 'Ton email n\'est pas encore vérifié. Consulte ta boîte mail.'
+          error.value = 'Ton email n\'est pas encore vérifié. Consulte ta boîte mail.'
         } else {
           error.value = ctx.error.message
         }
-        toast.add({
-          title: 'Error',
-          description: error.value,
-          color: 'error'
-        })
+        toast.error(error.value ?? 'Une erreur est survenue')
       }
     }
   )
 }
 
 if (route.query.errorprovider === 'github') {
-  error.value
-    = 'Une erreur s\'est produite lors de la connexion avec GitHub. Veuillez réessayer.'
+  error.value = 'Une erreur s\'est produite lors de la connexion avec GitHub. Veuillez réessayer.'
 }
 
 async function signInWithGithub() {

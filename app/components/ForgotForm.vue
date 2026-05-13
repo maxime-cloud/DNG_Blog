@@ -75,10 +75,9 @@
         <p class="text-base-content/80">
           Un email de réinitialisation a été envoyé à votre adresse email :
           {{ state.email }}. <br>
-          Veuillez vérifier votre boîte mail et cliquer sur le lien pour
-          réinitialiser votre mot de passe. <br>
-          <span class="font-semibold">Si vous n'avez pas reçu l'email, vérifiez votre dossier de
-            spam.</span>
+          Veuillez vérifier votre boîte mail et cliquer sur le lien pour réinitialiser votre mot de
+          passe. <br>
+          <span class="font-semibold">Si vous n'avez pas reçu l'email, vérifiez votre dossier de spam.</span>
         </p>
       </div>
       <CUButton
@@ -106,6 +105,8 @@ import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 import { authClient } from '@/lib/auth-client'
 
+import { toast } from 'vue-sonner'
+
 const emailSent = ref(false)
 const error: Ref<string | null | undefined> = ref(null)
 const route = useRoute()
@@ -122,23 +123,17 @@ const state = reactive<Partial<Schema>>({
   email: undefined
 })
 
-const toast = useToast()
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   error.value = null
-  const { data, error: err } = await authClient.requestPasswordReset({
-    email: event.data.email, // required
+  const { error: err } = await authClient.requestPasswordReset({
+    email: event.data.email,
     redirectTo: '/auth/reset-password'
   })
   if (err) {
     error.value = err.message
   } else {
     emailSent.value = true
-    toast.add({
-      title: 'Success',
-      description:
-        'Un email de réinitialisation du mot de passe a été envoyé à votre adresse email.',
-      color: 'success'
-    })
+    toast.success('Email de réinitialisation envoyé — vérifiez votre boîte mail.')
     error.value = null
   }
 }

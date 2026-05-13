@@ -441,7 +441,7 @@ useSeoMeta({
               <CommentItem
                 v-for="comment in comments"
                 :key="comment.id"
-                :comment="comment as any"
+                :comment="comment"
                 :slug="slug"
                 @deleted="fetchComments"
               />

@@ -98,6 +98,8 @@ import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 import { authClient } from '@/lib/auth-client'
 
+import { toast } from 'vue-sonner'
+
 const showPassword = ref(false)
 const tokentError = ref(false)
 const error: Ref<string | null | undefined> = ref(null)
@@ -115,42 +117,29 @@ const state = reactive<Partial<Schema>>({
   password: undefined
 })
 
-const toast = useToast()
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   error.value = null
   const token = new URLSearchParams(window.location.search).get('token')
   if (!token) {
-    error.value
-      = 'Le lien de réinitialisation du mot de passe est invalide ou a expiré.'
+    error.value = 'Le lien de réinitialisation du mot de passe est invalide ou a expiré.'
     return
   }
-  const { data, error: err } = await authClient.resetPassword({
-    newPassword: event.data.password, // required
-    token // required
+  const { error: err } = await authClient.resetPassword({
+    newPassword: event.data.password,
+    token
   })
   if (err) {
-    error.value
-      = 'Le lien de réinitialisation du mot de passe est invalide ou a expiré.'
+    error.value = 'Le lien de réinitialisation du mot de passe est invalide ou a expiré.'
   } else {
     router.push('/auth/login')
-    toast.add({
-      title: 'Success',
-      description: 'Votre mot de passe a été réinitialisé avec succès.',
-      color: 'success'
-    })
+    toast.success('Mot de passe réinitialisé avec succès !')
     error.value = null
   }
 }
 
 if (route.query.error === 'INVALID_TOKEN') {
-  toast.add({
-    title: 'error',
-    description:
-      'Le lien de réinitialisation du mot de passe est invalide ou a expiré.',
-    color: 'error'
-  })
+  toast.error('Le lien de réinitialisation du mot de passe est invalide ou a expiré.')
   tokentError.value = true
-  error.value
-    = 'Le lien de réinitialisation du mot de passe est invalide ou a expiré.'
+  error.value = 'Le lien de réinitialisation du mot de passe est invalide ou a expiré.'
 }
 </script>

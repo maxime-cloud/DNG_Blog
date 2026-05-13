@@ -4,21 +4,21 @@ const props = defineProps({
   rows: Array,
   loading: Boolean,
   total: Number,
-  page: { type: Number, default: 1 },
-});
-const emit = defineEmits(["sort", "page-change"]);
-const sortKey = ref("");
-const sortDir = ref("asc");
+  page: { type: Number, default: 1 }
+})
+const emit = defineEmits(['sort', 'page-change'])
+const sortKey = ref('')
+const sortDir = ref('asc')
 
 function sortBy(key) {
-  if (!key) return;
+  if (!key) return
   if (sortKey.value === key) {
-    sortDir.value = sortDir.value === "asc" ? "desc" : "asc";
+    sortDir.value = sortDir.value === 'asc' ? 'desc' : 'asc'
   } else {
-    sortKey.value = key;
-    sortDir.value = "asc";
+    sortKey.value = key
+    sortDir.value = 'asc'
   }
-  emit("sort", sortKey.value, sortDir.value);
+  emit('sort', sortKey.value, sortDir.value)
 }
 </script>
 
@@ -26,10 +26,16 @@ function sortBy(key) {
   <div
     class="border-[0.1px] border-dashed border-dashcolor/50 overflow-hidden rounded-none"
   >
-    <div v-if="loading" class="p-8 text-center text-zinc-500">
+    <div
+      v-if="loading"
+      class="p-8 text-center text-zinc-500"
+    >
       Chargement...
     </div>
-    <table v-else class="w-full text-sm">
+    <table
+      v-else
+      class="w-full text-sm"
+    >
       <thead
         class="border-b border-[0.1px] border-dashed border-dashcolor/50 bg-[#EEE] dark:bg-[#111]"
       >
@@ -65,7 +71,12 @@ function sortBy(key) {
             :key="col.key"
             class="px-4 py-3 text-[#0F0F0F] dark:text-white"
           >
-            <slot :name="col.key" :row="row">{{ row[col.key] }}</slot>
+            <slot
+              :name="col.key"
+              :row="row"
+            >
+              {{ row[col.key] }}
+            </slot>
           </td>
         </tr>
         <tr v-if="!rows || rows.length === 0">
@@ -83,9 +94,7 @@ function sortBy(key) {
       v-if="total && total > 0"
       class="flex items-center justify-between px-4 py-3 border-t border-[0.1px] border-dashed border-dashcolor/30"
     >
-      <span class="text-sm text-zinc-500"
-        >{{ total }} résultat{{ total > 1 ? "s" : "" }}</span
-      >
+      <span class="text-sm text-zinc-500">{{ total }} résultat{{ total > 1 ? "s" : "" }}</span>
       <div class="flex gap-2">
         <CUButton
           size="xs"

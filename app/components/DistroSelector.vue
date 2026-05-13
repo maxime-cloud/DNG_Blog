@@ -18,18 +18,18 @@
 
 <script setup lang="ts">
 const distros = [
-  { id: "ubuntu", label: "Ubuntu", icon: "i-simple-icons-ubuntu" },
-  { id: "fedora", label: "Fedora", icon: "i-simple-icons-fedora" },
-  { id: "arch", label: "Arch", icon: "i-simple-icons-archlinux" },
-] as const;
+  { id: 'ubuntu', label: 'Ubuntu', icon: 'i-simple-icons-ubuntu' },
+  { id: 'fedora', label: 'Fedora', icon: 'i-simple-icons-fedora' },
+  { id: 'arch', label: 'Arch', icon: 'i-simple-icons-archlinux' }
+] as const
 
-type DistroId = (typeof distros)[number]["id"];
+type DistroId = (typeof distros)[number]['id']
 
-const selected = useLocalStorage<DistroId>("selected-distro", "ubuntu");
+const selected = useLocalStorage<DistroId>('selected-distro', 'ubuntu')
 
-provide("selected-distro", selected);
+provide('selected-distro', selected)
 
 function select(id: DistroId) {
-  selected.value = id;
+  selected.value = id
 }
 </script>

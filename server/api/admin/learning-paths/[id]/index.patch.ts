@@ -1,6 +1,6 @@
 import { defineEventHandler, readBody, createError, getRouterParam } from 'h3'
 
-export default defineEventHandler(async event => {
+export default defineEventHandler(async (event) => {
   try {
     await requireRole(event, 'admin')
 
@@ -12,8 +12,8 @@ export default defineEventHandler(async event => {
     const { title, description, difficulty, isPublished } = body
 
     if (
-      difficulty !== undefined &&
-      !['BEGINNER', 'INTERMEDIATE', 'ADVANCED'].includes(difficulty)
+      difficulty !== undefined
+      && !['BEGINNER', 'INTERMEDIATE', 'ADVANCED'].includes(difficulty)
     ) {
       throw createError({
         statusCode: 400,

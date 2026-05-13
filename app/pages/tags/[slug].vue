@@ -9,8 +9,8 @@ interface TagArticle {
   excerpt: string | null
   coverImageUrl: string | null
   publishedAt: string | null
-  author: { name: string; image: string | null }
-  _count: { comments: number; likes: number }
+  author: { name: string, image: string | null }
+  _count: { comments: number, likes: number }
 }
 
 interface Tag {
@@ -19,7 +19,7 @@ interface Tag {
   name: string
   articles: {
     data: TagArticle[]
-    meta: { page: number; limit: number; total: number; totalPages: number }
+    meta: { page: number, limit: number, total: number, totalPages: number }
   }
 }
 
@@ -67,10 +67,16 @@ function normalizeArticle(a: TagArticle) {
       <div class="pt-10 mb-10 px-4">
         <!-- Breadcrumb -->
         <nav class="flex items-center gap-2 text-xs text-zinc-500 mb-6">
-          <NuxtLink to="/" class="hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors">
+          <NuxtLink
+            to="/"
+            class="hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors"
+          >
             Accueil
           </NuxtLink>
-          <UIcon name="i-lucide-chevron-right" class="w-3 h-3" />
+          <UIcon
+            name="i-lucide-chevron-right"
+            class="w-3 h-3"
+          />
           <span class="text-[#0F0F0F] dark:text-[#F3F4F6]">#{{ tag?.name }}</span>
         </nav>
 
@@ -92,7 +98,10 @@ function normalizeArticle(a: TagArticle) {
         </div>
 
         <!-- Articles grid -->
-        <div v-if="articles.length" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div
+          v-if="articles.length"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           <ArticleCard
             v-for="article in articles"
             :key="article.id"
@@ -101,14 +110,27 @@ function normalizeArticle(a: TagArticle) {
         </div>
 
         <!-- Empty -->
-        <div v-else class="flex flex-col items-center justify-center py-24 text-zinc-500 gap-4">
-          <UIcon name="i-lucide-tag" class="w-12 h-12" />
+        <div
+          v-else
+          class="flex flex-col items-center justify-center py-24 text-zinc-500 gap-4"
+        >
+          <UIcon
+            name="i-lucide-tag"
+            class="w-12 h-12"
+          />
           <p>Aucun article pour ce tag.</p>
         </div>
 
         <!-- Pagination -->
-        <div v-if="totalPages > 1" class="mt-10">
-          <Pagination :current-page="page" :total-pages="totalPages" :on-page-change="changePage" />
+        <div
+          v-if="totalPages > 1"
+          class="mt-10"
+        >
+          <Pagination
+            :current-page="page"
+            :total-pages="totalPages"
+            :on-page-change="changePage"
+          />
         </div>
       </div>
     </BaseLayaoutContent>

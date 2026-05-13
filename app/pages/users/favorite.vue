@@ -1,19 +1,23 @@
 <script setup>
-definePageMeta({ middleware: "auth" });
+definePageMeta({ middleware: 'auth' })
 
-const { data: favorites, pending } = await useFetch("/api/users/me/favorites", {
-  query: { limit: 20, page: 1 },
-});
+const { data: favorites, pending } = await useFetch('/api/users/me/favorites', {
+  query: { limit: 20, page: 1 }
+})
 
-useSeoMeta({ title: "Mes favoris" });
+useSeoMeta({ title: 'Mes favoris' })
 </script>
 
 <template>
   <NoAdminPage>
     <BaseLayaoutContent>
       <div class="py-10 px-4">
-        <h1 class="text-3xl font-bold mb-8">Mes favoris</h1>
-        <div v-if="pending">Chargement...</div>
+        <h1 class="text-3xl font-bold mb-8">
+          Mes favoris
+        </h1>
+        <div v-if="pending">
+          Chargement...
+        </div>
         <div
           v-else-if="!favorites?.data?.length"
           class="text-center py-20 text-zinc-500"

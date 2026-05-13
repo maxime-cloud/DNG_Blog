@@ -1,6 +1,6 @@
 import { defineEventHandler, readBody, createError, getRouterParam } from 'h3'
 
-export default defineEventHandler(async event => {
+export default defineEventHandler(async (event) => {
   try {
     await requireRole(event, 'admin')
 
@@ -37,7 +37,7 @@ export default defineEventHandler(async event => {
       })
 
     await Promise.all(
-      steps.map((step: { id: number; stepOrder: number }) =>
+      steps.map((step: { id: number, stepOrder: number }) =>
         prisma.learningPathStep.update({
           where: { id: step.id },
           data: { stepOrder: step.stepOrder }

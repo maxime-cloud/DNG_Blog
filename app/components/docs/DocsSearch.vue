@@ -1,22 +1,22 @@
 <script setup>
-const { searchDocs } = useDocs();
-const query = ref("");
-const results = ref([]);
-const open = ref(false);
+const { searchDocs } = useDocs()
+const query = ref('')
+const results = ref([])
+const open = ref(false)
 
 watchDebounced(
   query,
   async (val) => {
     if (val.length < 2) {
-      results.value = [];
-      open.value = false;
-      return;
+      results.value = []
+      open.value = false
+      return
     }
-    results.value = await searchDocs(val);
-    open.value = results.value.length > 0;
+    results.value = await searchDocs(val)
+    open.value = results.value.length > 0
   },
-  { debounce: 300 },
-);
+  { debounce: 300 }
+)
 </script>
 
 <template>
@@ -41,8 +41,7 @@ watchDebounced(
         <span
           v-if="r.description"
           class="block text-xs text-zinc-500 dark:text-zinc-500 mt-0.5 truncate"
-          >{{ r.description }}</span
-        >
+        >{{ r.description }}</span>
       </NuxtLink>
     </div>
   </div>

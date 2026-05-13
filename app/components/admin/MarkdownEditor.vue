@@ -17,12 +17,12 @@ function insertFormatting(before: string, after = '') {
   const start = el.selectionStart
   const end = el.selectionEnd
   const selected = (props.modelValue ?? '').slice(start, end)
-  const newVal =
-    (props.modelValue ?? '').slice(0, start) +
-    before +
-    selected +
-    after +
-    (props.modelValue ?? '').slice(end)
+  const newVal
+    = (props.modelValue ?? '').slice(0, start)
+      + before
+      + selected
+      + after
+      + (props.modelValue ?? '').slice(end)
   emit('update:modelValue', newVal)
   nextTick(() => {
     el.focus()
@@ -67,7 +67,12 @@ async function onDrop(event: DragEvent) {
     <div
       class="flex items-center gap-1 p-2 border-b border-[0.1px] border-dashed border-dashcolor/30 bg-[#EEE] dark:bg-[#111]"
     >
-      <CUButton size="xs" icon="i-lucide-bold" title="Gras" @click="insertFormatting('**', '**')" />
+      <CUButton
+        size="xs"
+        icon="i-lucide-bold"
+        title="Gras"
+        @click="insertFormatting('**', '**')"
+      />
       <CUButton
         size="xs"
         icon="i-lucide-italic"
@@ -98,10 +103,21 @@ async function onDrop(event: DragEvent) {
         title="Titre H2"
         @click="insertFormatting('## ')"
       />
-      <CUButton size="xs" icon="i-lucide-list" title="Liste" @click="insertFormatting('- ')" />
+      <CUButton
+        size="xs"
+        icon="i-lucide-list"
+        title="Liste"
+        @click="insertFormatting('- ')"
+      />
       <div class="ml-auto flex items-center gap-2">
-        <span v-if="uploadingImage" class="text-xs text-zinc-500 flex items-center gap-1">
-          <UIcon name="i-lucide-loader" class="w-3 h-3 animate-spin" />
+        <span
+          v-if="uploadingImage"
+          class="text-xs text-zinc-500 flex items-center gap-1"
+        >
+          <UIcon
+            name="i-lucide-loader"
+            class="w-3 h-3 animate-spin"
+          />
           Upload...
         </span>
         <CUButton

@@ -124,7 +124,7 @@
     :email="state.email"
     @close="
       () => {
-        emits('closeSignup');
+        emits('closeSignup')
       }
     "
   />
@@ -134,6 +134,8 @@
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 import { authClient } from '@/lib/auth-client'
+
+import { toast } from 'vue-sonner'
 
 const AcountCreated = ref(false)
 const showPassword = ref(false)
@@ -159,48 +161,35 @@ const state = reactive<Partial<Schema>>({
   password: undefined
 })
 if (route.query.errorprovider === 'github') {
-  error.value
-    = 'Une erreur s\'est produite lors de la connexion avec GitHub. Veuillez réessayer.'
+  error.value = 'Une erreur s\'est produite lors de la connexion avec GitHub. Veuillez réessayer.'
 }
 
-const toast = useToast()
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   error.value = null
-  const { data, error: err } = await authClient.signUp.email(
+  await authClient.signUp.email(
     {
       email: event.data.email,
       password: event.data.password,
       name: event.data.username,
-      // image, // User image URL (optional)
       callbackURL: route.path === '/auth/register' ? '/' : route.path
     },
     {
-      onRequest: (ctx) => {
+      onRequest: () => {
         loading.value = true
       },
-      onSuccess: (ctx) => {
+      onSuccess: () => {
         AcountCreated.value = true
         loading.value = false
-        toast.add({
-          title: 'Success',
-          description:
-            'Votre compte a été créé avec succès. Vérifiez votre boîte mail pour valider votre compte.',
-          color: 'success'
-        })
+        toast.success('Compte créé ! Vérifiez votre boîte mail pour valider votre compte.')
       },
       onError: (ctx) => {
         loading.value = false
         if (ctx.error.code === 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL') {
-          error.value
-            = 'Cet utilisateur existe déjà. Veuillez utiliser une autre adresse e-mail.'
+          error.value = 'Cet utilisateur existe déjà. Veuillez utiliser une autre adresse e-mail.'
         } else {
           error.value = ctx.error.message
         }
-        toast.add({
-          title: 'Error',
-          description: error.value,
-          color: 'error'
-        })
+        toast.error(error.value ?? 'Une erreur est survenue')
       }
     }
   )

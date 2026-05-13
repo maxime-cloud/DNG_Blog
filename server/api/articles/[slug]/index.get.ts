@@ -25,7 +25,16 @@ export default defineEventHandler(async event => {
           }
         },
         series: {
-          select: { id: true, title: true, slug: true }
+          select: {
+            id: true,
+            title: true,
+            slug: true,
+            articles: {
+              where: { status: 'PUBLISHED' },
+              select: { id: true, slug: true, title: true, seriesOrder: true },
+              orderBy: { seriesOrder: 'asc' }
+            }
+          }
         },
         comments: {
           where: { parentId: null, status: 'APPROVED' },

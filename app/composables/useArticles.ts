@@ -1,3 +1,6 @@
+import { useQuery } from '@tanstack/vue-query'
+import { queryKeys } from '~/composables/queryKeys'
+
 export interface ArticleParams {
   page?: number
   limit?: number
@@ -26,55 +29,52 @@ export interface ArticlesResponse {
   limit: number
 }
 
+export function useArticlesList(filters: MaybeRef<ArticleParams> = {}) {
+  return useQuery({
+    queryKey: computed(() => queryKeys.articles.list(toValue(filters) as Record<string, unknown>)),
+    queryFn: () => $fetch<ArticlesResponse>('/api/articles', { query: toValue(filters) })
+  })
+}
+
+export function useArticle(slug: MaybeRef<string>) {
+  return useQuery({
+    queryKey: computed(() => queryKeys.articles.detail(toValue(slug))),
+    queryFn: () => $fetch<Article>(`/api/articles/${toValue(slug)}`),
+    enabled: computed(() => !!toValue(slug))
+  })
+}
+
+export function useRelatedArticles(slug: MaybeRef<string>) {
+  return useQuery({
+    queryKey: computed(() => queryKeys.articles.related(toValue(slug))),
+    queryFn: () => $fetch<Article[]>(`/api/articles/${toValue(slug)}/related`),
+    enabled: computed(() => !!toValue(slug))
+  })
+}
+
+export function useFeaturedArticle() {
+  return useQuery({
+    queryKey: [...queryKeys.articles.all, 'featured'],
+    queryFn: () => $fetch<Article>('/api/articles/featured')
+  })
+}
+
 export function useArticles() {
-  async function fetchArticles(
-    params: ArticleParams = {}
-  ): Promise<ArticlesResponse> {
-    try {
-      return await $fetch<ArticlesResponse>('/api/articles', { query: params })
-    } catch (error) {
-      console.error('[useArticles] fetchArticles error:', error)
-      throw error
-    }
+  async function fetchArticles(params: ArticleParams = {}): Promise<ArticlesResponse> {
+    return await $fetch<ArticlesResponse>('/api/articles', { query: params })
   }
 
   async function fetchArticle(slug: string): Promise<Article> {
-    try {
-      return await $fetch<Article>(`/api/articles/${slug}`)
-    } catch (error) {
-      console.error(
-        `[useArticles] fetchArticle error for slug "${slug}":`,
-        error
-      )
-      throw error
-    }
+    return await $fetch<Article>(`/api/articles/${slug}`)
   }
 
   async function fetchRelated(slug: string): Promise<Article[]> {
-    try {
-      return await $fetch<Article[]>(`/api/articles/${slug}/related`)
-    } catch (error) {
-      console.error(
-        `[useArticles] fetchRelated error for slug "${slug}":`,
-        error
-      )
-      throw error
-    }
+    return await $fetch<Article[]>(`/api/articles/${slug}/related`)
   }
 
   async function fetchFeatured(): Promise<Article> {
-    try {
-      return await $fetch<Article>('/api/articles/featured')
-    } catch (error) {
-      console.error('[useArticles] fetchFeatured error:', error)
-      throw error
-    }
+    return await $fetch<Article>('/api/articles/featured')
   }
 
-  return {
-    fetchArticles,
-    fetchArticle,
-    fetchRelated,
-    fetchFeatured
-  }
+  return { fetchArticles, fetchArticle, fetchRelated, fetchFeatured }
 }

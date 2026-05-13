@@ -26,7 +26,7 @@ async function main() {
       create: {
         name: 'Développement Web',
         slug: 'developpement-web',
-        description: "Tutoriels sur Vue.js, Nuxt, TypeScript et l'écosystème web moderne",
+        description: 'Tutoriels sur Vue.js, Nuxt, TypeScript et l\'écosystème web moderne',
         color: 'oklch(62.7% 0.194 149.214)',
         colorb: 'oklch(62.7% 0.194 149.214)',
         imageUrl: null
@@ -128,7 +128,7 @@ async function main() {
     create: {
       title: 'Linux pour développeurs',
       slug: 'linux-pour-developpeurs',
-      description: "Tout ce qu'un développeur doit savoir sur Linux.",
+      description: 'Tout ce qu\'un développeur doit savoir sur Linux.',
       isPublished: true
     }
   })
@@ -340,7 +340,7 @@ Grid place automatiquement les éléments grâce à \`grid-auto-flow\`.`,
         categories: { create: [{ categoryId }] },
         tags: {
           create: tagNames
-            .map(name => {
+            .map((name) => {
               const tag = tags.find(t => t.name === name)
               return tag ? { tagId: tag.id } : undefined
             })
@@ -362,7 +362,7 @@ Grid place automatiquement les éléments grâce à \`grid-auto-flow\`.`,
         data: {
           articleId: createdArticles[0].id,
           userId: admin.id,
-          content: "Super article ! La section sur l'installation est particulièrement claire.",
+          content: 'Super article ! La section sur l\'installation est particulièrement claire.',
           status: 'APPROVED'
         }
       })
@@ -448,7 +448,7 @@ Grid place automatiquement les éléments grâce à \`grid-auto-flow\`.`,
       data: {
         title: 'Lancement du blog StackTrace',
         description:
-          "Première version publique du blog avec articles, catégories, commentaires et parcours d'apprentissage.",
+          'Première version publique du blog avec articles, catégories, commentaires et parcours d\'apprentissage.',
         type: 'FEATURE',
         version: '1.0.0',
         publishedAt: new Date(),
@@ -458,7 +458,7 @@ Grid place automatiquement les éléments grâce à \`grid-auto-flow\`.`,
     await prisma.changelogEntry.create({
       data: {
         title: 'Système de newsletter avec double opt-in',
-        description: "Ajout de l'inscription newsletter avec confirmation par email.",
+        description: 'Ajout de l\'inscription newsletter avec confirmation par email.',
         type: 'FEATURE',
         version: '1.1.0',
         publishedAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
@@ -476,7 +476,7 @@ Grid place automatiquement les éléments grâce à \`grid-auto-flow\`.`,
 }
 
 main()
-  .catch(e => {
+  .catch((e) => {
     console.error('❌ Seed failed:', e)
     process.exit(1)
   })

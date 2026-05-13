@@ -21,9 +21,9 @@ interface StepArticle {
   excerpt: string | null
   coverImageUrl: string | null
   publishedAt: string | null
-  author: { id: string; name: string; image: string | null } | null
-  tags: { id: number; name: string; slug: string }[]
-  categories: { id: number; name: string; slug: string }[]
+  author: { id: string, name: string, image: string | null } | null
+  tags: { id: number, name: string, slug: string }[]
+  categories: { id: number, name: string, slug: string }[]
 }
 
 interface StepData {
@@ -42,8 +42,8 @@ interface StepData {
     article: StepArticle
   }
   navigation: {
-    prev: { stepOrder: number | null; stepTitle: string | null; articleSlug: string | null }
-    next: { stepOrder: number | null; stepTitle: string | null; articleSlug: string | null }
+    prev: { stepOrder: number | null, stepTitle: string | null, articleSlug: string | null }
+    next: { stepOrder: number | null, stepTitle: string | null, articleSlug: string | null }
   }
 }
 
@@ -158,7 +158,10 @@ function formatDate(dateStr?: string | null) {
             :to="`/training/${pathSlug}`"
             class="flex items-center gap-1.5 text-sm text-zinc-500 hover:text-primary transition-colors shrink-0"
           >
-            <UIcon name="i-lucide-arrow-left" class="w-3.5 h-3.5" />
+            <UIcon
+              name="i-lucide-arrow-left"
+              class="w-3.5 h-3.5"
+            />
             <span class="truncate max-w-[160px] sm:max-w-xs">{{ path?.title }}</span>
           </NuxtLink>
 
@@ -182,24 +185,36 @@ function formatDate(dateStr?: string | null) {
       <div class="px-4 pt-8 pb-4">
         <!-- Breadcrumb -->
         <nav class="flex items-center gap-2 text-xs text-zinc-500 mb-6 flex-wrap">
-          <NuxtLink to="/" class="hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors">
+          <NuxtLink
+            to="/"
+            class="hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors"
+          >
             Accueil
           </NuxtLink>
-          <UIcon name="i-lucide-chevron-right" class="w-3 h-3" />
+          <UIcon
+            name="i-lucide-chevron-right"
+            class="w-3 h-3"
+          />
           <NuxtLink
             to="/training"
             class="hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors"
           >
             Parcours
           </NuxtLink>
-          <UIcon name="i-lucide-chevron-right" class="w-3 h-3" />
+          <UIcon
+            name="i-lucide-chevron-right"
+            class="w-3 h-3"
+          />
           <NuxtLink
             :to="`/training/${pathSlug}`"
             class="hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors truncate max-w-[120px]"
           >
             {{ path?.title }}
           </NuxtLink>
-          <UIcon name="i-lucide-chevron-right" class="w-3 h-3" />
+          <UIcon
+            name="i-lucide-chevron-right"
+            class="w-3 h-3"
+          />
           <span class="text-[#0F0F0F] dark:text-[#F3F4F6] truncate max-w-[160px]">
             {{ step?.stepTitle ?? step?.article.title }}
           </span>
@@ -232,7 +247,10 @@ function formatDate(dateStr?: string | null) {
           </p>
 
           <div class="flex flex-wrap items-center gap-4 text-sm text-zinc-500">
-            <div v-if="step?.article.author" class="flex items-center gap-2">
+            <div
+              v-if="step?.article.author"
+              class="flex items-center gap-2"
+            >
               <UAvatar
                 :src="step.article.author.image ?? undefined"
                 :alt="step.article.author.name"
@@ -243,12 +261,24 @@ function formatDate(dateStr?: string | null) {
                 {{ step.article.author.name }}
               </span>
             </div>
-            <div v-if="step?.article.publishedAt" class="flex items-center gap-1">
-              <UIcon name="i-lucide-calendar" class="w-3.5 h-3.5" />
+            <div
+              v-if="step?.article.publishedAt"
+              class="flex items-center gap-1"
+            >
+              <UIcon
+                name="i-lucide-calendar"
+                class="w-3.5 h-3.5"
+              />
               <span>{{ formatDate(step.article.publishedAt) }}</span>
             </div>
-            <div v-if="readingTime" class="flex items-center gap-1">
-              <UIcon name="i-lucide-clock" class="w-3.5 h-3.5" />
+            <div
+              v-if="readingTime"
+              class="flex items-center gap-1"
+            >
+              <UIcon
+                name="i-lucide-clock"
+                class="w-3.5 h-3.5"
+              />
               <span>{{ readingTime }}</span>
             </div>
           </div>
@@ -269,11 +299,14 @@ function formatDate(dateStr?: string | null) {
               :alt="step.article.title"
               class="w-full h-64 sm:h-80 lg:h-96 object-cover"
               loading="eager"
-            />
+            >
           </div>
 
           <!-- Mobile: Table of Contents -->
-          <div v-if="headings.length" class="mb-6 lg:hidden">
+          <div
+            v-if="headings.length"
+            class="mb-6 lg:hidden"
+          >
             <TableOfContents :headings="headings" />
           </div>
 
@@ -297,18 +330,28 @@ function formatDate(dateStr?: string | null) {
             class="mb-6 bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-4 flex items-center justify-between gap-4"
           >
             <div class="flex items-center gap-2 text-sm text-zinc-500">
-              <UIcon name="i-lucide-trophy" class="w-4 h-4" />
+              <UIcon
+                name="i-lucide-trophy"
+                class="w-4 h-4"
+              />
               <span>Progression du parcours</span>
             </div>
 
-            <UTooltip v-if="!isLoggedIn" text="Connectez-vous pour suivre votre progression">
-              <CUButton label="Marquer comme terminé" logoName="i-lucide-check" disabled />
+            <UTooltip
+              v-if="!isLoggedIn"
+              text="Connectez-vous pour suivre votre progression"
+            >
+              <CUButton
+                label="Marquer comme terminé"
+                logo-name="i-lucide-check"
+                disabled
+              />
             </UTooltip>
 
             <CUButton
               v-else-if="!isCompleted"
               label="Marquer comme terminé"
-              logoName="i-lucide-check"
+              logo-name="i-lucide-check"
               :loading="toggling"
               @click="toggleComplete"
             />
@@ -316,7 +359,7 @@ function formatDate(dateStr?: string | null) {
             <CUButton
               v-else
               label="Étape terminée"
-              logoName="i-lucide-check-circle"
+              logo-name="i-lucide-check-circle"
               :loading="toggling"
               class="border-green-500/40 text-green-500"
               @click="toggleComplete"
@@ -347,7 +390,10 @@ function formatDate(dateStr?: string | null) {
               v-else
               class="flex-1 bg-[#0F0F0F]/5 dark:bg-[#F3F4F6]/5 border-[0.1px] border-dashed border-primary/10 dark:border-dashcolor/20 rounded-none p-4 flex items-center gap-3 opacity-40"
             >
-              <UIcon name="i-lucide-arrow-left" class="w-4 h-4 text-zinc-500 shrink-0" />
+              <UIcon
+                name="i-lucide-arrow-left"
+                class="w-4 h-4 text-zinc-500 shrink-0"
+              />
               <span class="text-sm text-zinc-500">Première étape</span>
             </div>
 
@@ -374,7 +420,10 @@ function formatDate(dateStr?: string | null) {
               class="flex-1 bg-[#0F0F0F]/5 dark:bg-[#F3F4F6]/5 border-[0.1px] border-dashed border-primary/10 dark:border-dashcolor/20 rounded-none p-4 flex items-center justify-end gap-3 opacity-40"
             >
               <span class="text-sm text-zinc-500">Dernière étape</span>
-              <UIcon name="i-lucide-arrow-right" class="w-4 h-4 text-zinc-500 shrink-0" />
+              <UIcon
+                name="i-lucide-arrow-right"
+                class="w-4 h-4 text-zinc-500 shrink-0"
+              />
             </div>
           </div>
         </div>
@@ -383,7 +432,10 @@ function formatDate(dateStr?: string | null) {
         <aside class="hidden lg:block w-64 shrink-0">
           <div class="sticky top-32 flex flex-col gap-6">
             <!-- Table of contents -->
-            <TableOfContents v-if="headings.length" :headings="headings" />
+            <TableOfContents
+              v-if="headings.length"
+              :headings="headings"
+            />
 
             <!-- Steps list -->
             <div
@@ -414,7 +466,11 @@ function formatDate(dateStr?: string | null) {
                           : 'bg-[#0F0F0F]/5 dark:bg-[#F3F4F6]/5 border-[#0F0F0F]/20 dark:border-dashcolor/30 text-zinc-500'
                     "
                   >
-                    <UIcon v-if="s.isCompleted" name="i-lucide-check" class="w-3 h-3" />
+                    <UIcon
+                      v-if="s.isCompleted"
+                      name="i-lucide-check"
+                      class="w-3 h-3"
+                    />
                     <span v-else>{{ s.stepOrder }}</span>
                   </div>
                   <span

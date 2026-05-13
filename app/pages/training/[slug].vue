@@ -6,7 +6,7 @@ interface LearningPathStep {
   id: number
   stepOrder: number
   stepTitle: string | null
-  article: { slug: string; title: string } | null
+  article: { slug: string, title: string } | null
   completed: boolean | null
 }
 
@@ -67,17 +67,26 @@ const showProgress = computed(() => isLoggedIn.value && (path.value?.steps?.leng
       <div class="px-4 pt-10 pb-4">
         <!-- Breadcrumb -->
         <nav class="flex items-center gap-2 text-xs text-zinc-500 mb-6">
-          <NuxtLink to="/" class="hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors">
+          <NuxtLink
+            to="/"
+            class="hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors"
+          >
             Accueil
           </NuxtLink>
-          <UIcon name="i-lucide-chevron-right" class="w-3 h-3" />
+          <UIcon
+            name="i-lucide-chevron-right"
+            class="w-3 h-3"
+          />
           <NuxtLink
             to="/training"
             class="hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors"
           >
             Parcours
           </NuxtLink>
-          <UIcon name="i-lucide-chevron-right" class="w-3 h-3" />
+          <UIcon
+            name="i-lucide-chevron-right"
+            class="w-3 h-3"
+          />
           <span class="text-[#0F0F0F] dark:text-[#F3F4F6] truncate max-w-[200px]">
             {{ path?.title }}
           </span>
@@ -88,19 +97,25 @@ const showProgress = computed(() => isLoggedIn.value && (path.value?.steps?.leng
           class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none mb-8"
         >
           <!-- Cover image -->
-          <div v-if="path?.coverImageUrl" class="overflow-hidden rounded-none">
+          <div
+            v-if="path?.coverImageUrl"
+            class="overflow-hidden rounded-none"
+          >
             <img
               :src="path.coverImageUrl"
               :alt="path.title"
               class="w-full h-52 sm:h-64 object-cover"
               loading="eager"
-            />
+            >
           </div>
 
           <div class="p-6 sm:p-8">
             <!-- Difficulty badge + label -->
             <div class="flex items-center gap-3 mb-3">
-              <UIcon name="i-lucide-graduation-cap" class="w-4 h-4 text-primary" />
+              <UIcon
+                name="i-lucide-graduation-cap"
+                class="w-4 h-4 text-primary"
+              />
               <span class="text-xs font-semibold uppercase tracking-widest text-zinc-500">
                 Parcours d'apprentissage
               </span>
@@ -128,15 +143,24 @@ const showProgress = computed(() => isLoggedIn.value && (path.value?.steps?.leng
 
             <div class="flex items-center gap-4 text-sm text-zinc-500 mb-5">
               <div class="flex items-center gap-1.5">
-                <UIcon name="i-lucide-list-ordered" class="w-4 h-4" />
+                <UIcon
+                  name="i-lucide-list-ordered"
+                  class="w-4 h-4"
+                />
                 <span>
                   {{ path?.steps?.length ?? 0 }} étape{{
                     (path?.steps?.length ?? 0) > 1 ? 's' : ''
                   }}
                 </span>
               </div>
-              <div v-if="showProgress && path?.userProgress" class="flex items-center gap-1.5">
-                <UIcon name="i-lucide-check-circle" class="w-4 h-4 text-green-500" />
+              <div
+                v-if="showProgress && path?.userProgress"
+                class="flex items-center gap-1.5"
+              >
+                <UIcon
+                  name="i-lucide-check-circle"
+                  class="w-4 h-4 text-green-500"
+                />
                 <span>
                   {{ path.userProgress.completedSteps }}/{{ path.userProgress.totalSteps }}
                   complétées
@@ -168,7 +192,10 @@ const showProgress = computed(() => isLoggedIn.value && (path.value?.steps?.leng
             Étapes du parcours
           </h2>
 
-          <div v-if="path?.steps?.length" class="flex flex-col gap-3">
+          <div
+            v-if="path?.steps?.length"
+            class="flex flex-col gap-3"
+          >
             <NuxtLink
               v-for="step in path.steps"
               :key="step.id"
@@ -184,7 +211,11 @@ const showProgress = computed(() => isLoggedIn.value && (path.value?.steps?.leng
                     : 'bg-primary/10 border-primary/40 text-primary'
                 "
               >
-                <UIcon v-if="step.completed" name="i-lucide-check" class="w-5 h-5" />
+                <UIcon
+                  v-if="step.completed"
+                  name="i-lucide-check"
+                  class="w-5 h-5"
+                />
                 <span v-else>{{ step.stepOrder }}</span>
               </div>
 
@@ -206,7 +237,10 @@ const showProgress = computed(() => isLoggedIn.value && (path.value?.steps?.leng
 
               <!-- Completed badge or arrow -->
               <div class="shrink-0">
-                <span v-if="step.completed" class="text-xs text-green-500 font-semibold">
+                <span
+                  v-if="step.completed"
+                  class="text-xs text-green-500 font-semibold"
+                >
                   Terminé
                 </span>
                 <UIcon
