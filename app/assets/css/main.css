@@ -14,6 +14,22 @@
   --ui-text: white;
 }
 
+/* Override bg-primary to be dark as requested */
+.bg-primary,
+.bg-primary-500,
+.bg-primary-600 {
+  background-color: #0f0f0f !important;
+}
+
+/* Ensure text and border stay blue */
+.text-primary {
+  color: #3B82F6 !important;
+}
+
+.border-primary {
+  border-color: #3B82F6 !important;
+}
+
 html,
 body {
   background-color: rgb(10, 10, 10);
