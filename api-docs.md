@@ -216,3 +216,85 @@ Admin only. Send a test email of the campaign to the authenticated admin's email
 - **Params:** `id` (integer)
 - **Response:** `{ success: true }`
 - **Errors:** `400` invalid id, `404` campaign not found, `401`, `403`
+
+---
+
+## Analytics
+
+Tous les endpoints sont **admin only** (`requireRole(event, 'admin')`) sauf `articles/:id` (author ou admin). Erreurs communes : `401`, `403`, `500`.
+
+### `GET /api/analytics/overview`
+
+Compteurs globaux + tendances de la période vs la période précédente.
+
+- **Query:** `days` (1–365, défaut 30) — fenêtre utilisée pour calculer les tendances
+- **Response:** `{ totalArticles, totalViews, totalUsers, totalSubscribers, totalComments, totalLikes, totalFavorites, trends: { views, comments, subscribers, users }, days }` — `trends.*` = variation en % (N vs N-1)
+
+### `GET /api/analytics/traffic`
+
+Vues agrégées par jour depuis `ArticleViewDaily`.
+
+- **Query:** `days` (1–365, défaut 30)
+- **Response:** `{ data: [{ date, views }], days }`
+
+### `GET /api/analytics/top-articles`
+
+Top articles publiés, triables par vues ou likes.
+
+- **Query:** `period` (`7d` | `30d` | `90d` | `all`, défaut `30d`), `sort` (`views` | `likes`, défaut `views`), `limit` (1–50, défaut 10)
+- **Response:** `{ data: [{ id, title, slug, viewsCount, likesCount }], period, sort, limit }`
+
+### `GET /api/analytics/categories`
+
+Répartition des articles publiés par catégorie (catégories non vides uniquement).
+
+- **Response:** `{ data: [{ name, slug, color, count }] }` — trié par `count` desc
+
+### `GET /api/analytics/status`
+
+Distribution des articles par statut éditorial (les 4 statuts, zéro inclus).
+
+- **Response:** `{ data: [{ status, count }] }`
+
+### `GET /api/analytics/comments-trend`
+
+Nombre de commentaires créés par jour (série continue, jours sans commentaire à 0).
+
+- **Query:** `days` (1–365, défaut 30)
+- **Response:** `{ data: [{ date, count }], days }`
+
+### `GET /api/analytics/growth`
+
+Nouveaux abonnés newsletter et nouveaux utilisateurs par jour.
+
+- **Query:** `days` (1–365, défaut 30)
+- **Response:** `{ subscribers: [{ date, count }], users: [{ date, count }], days }`
+
+### `GET /api/analytics/top-authors`
+
+Auteurs ayant au moins un article publié, classés par vues cumulées.
+
+- **Query:** `limit` (1–50, défaut 5)
+- **Response:** `{ data: [{ id, name, image, articlesCount, viewsCount }] }`
+
+### `GET /api/analytics/publications`
+
+Dates de publication des articles, série journalière pour heatmap calendrier.
+
+- **Query:** `days` (30–366, défaut 365)
+- **Response:** `{ data: [{ date, count }], days }`
+
+### `GET /api/analytics/referrers`
+
+Top sources de trafic, agrégées par domaine depuis `ArticleView.referrer`.
+
+- **Response:** `{ data: [{ referrer, count }] }`
+
+### `GET /api/analytics/articles/:id`
+
+Author (ses propres articles) ou admin. Stats détaillées d'un article.
+
+- **Params:** `id` (integer)
+- **Query:** `days` (défaut 30)
+- **Response:** `{ title, slug, totalViews, likesCount, favoritesCount, commentCount, dailyViews: [{ date, views }] }`
+- **Errors:** `403` si author non-propriétaire, `404` article introuvable

@@ -21,6 +21,8 @@
     "@prisma/client": "^7.4.1",
     "@tailwindcss/typography": "^0.5.19",
     "@tanstack/vue-query": "^5.100.10",
+    "@unovis/ts": "^1.6.5",
+    "@unovis/vue": "^1.6.5",
     "@vueuse/motion": "^3.0.3",
     "@vueuse/nuxt": "14.2.1",
     "better-auth": "^1.4.19",

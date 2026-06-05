@@ -2,9 +2,9 @@
   <UInput
     v-bind="$attrs"
     :size="props.size"
-    class="relative text-[#0F0F0F]"
+    class="relative text-white"
     :ui="{
-      base: 'bg-white text-[#0F0F0F] placeholder-[#0F0F0F]/40 ring-0 rounded-none border-dashcolor/50 border-[0.1px] shadow-[-6px_7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0, 0.51)]',
+      base: 'bg-CustomColor-900 text-white ring-0 rounded-none border-dashcolor/50 border-[0.1px] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)]',
       rounded: 'rounded-none'
     }"
   />
@@ -19,4 +19,10 @@ const props = defineProps({
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+:deep(input::placeholder),
+:deep(textarea::placeholder) {
+  color: #e5e7eb;
+  opacity: 0.4;
+}
+</style>

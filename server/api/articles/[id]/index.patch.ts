@@ -1,19 +1,14 @@
 import { defineEventHandler, readBody, createError, getRouterParam } from 'h3'
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async event => {
   try {
     const session = await requireAuth(event)
 
     const id = Number(getRouterParam(event, 'id'))
-    if (isNaN(id))
-      throw createError({ statusCode: 400, statusMessage: 'ID invalide' })
+    if (isNaN(id)) throw createError({ statusCode: 400, statusMessage: 'ID invalide' })
 
     const article = await prisma.article.findUnique({ where: { id } })
-    if (!article)
-      throw createError({
-        statusCode: 404,
-        statusMessage: 'Article introuvable'
-      })
+    if (!article) throw createError({ statusCode: 404, statusMessage: 'Article introuvable' })
 
     const isOwner = article.authorId === session.user.id
     const isAdmin = session.user.role === 'admin'
@@ -24,7 +19,7 @@ export default defineEventHandler(async (event) => {
     if (!parsed.success) {
       throw createError({
         statusCode: 400,
-        statusMessage: parsed.error.message
+        statusMessage: parsed.error.issues.map(i => i.message).join(', ')
       })
     }
 
@@ -33,30 +28,64 @@ export default defineEventHandler(async (event) => {
       content,
       description,
       coverImage,
+      categoryId,
+      tags,
       seriesId,
       seriesOrder,
       status,
-      scheduledAt
+      scheduledAt,
+      metaTitle,
+      metaDescription
     } = parsed.data
 
-    const updated = await prisma.article.update({
+    await prisma.$transaction(async tx => {
+      // Update main article fields
+      await tx.article.update({
+        where: { id },
+        data: {
+          ...(title !== undefined && { title }),
+          ...(content !== undefined && { content }),
+          ...(description !== undefined && { excerpt: description }),
+          ...(coverImage !== undefined && { coverImageUrl: coverImage || null }),
+          ...(seriesId !== undefined && { seriesId: seriesId ?? null }),
+          ...(seriesOrder !== undefined && { seriesOrder: seriesOrder ?? null }),
+          ...(status !== undefined && { status }),
+          ...(scheduledAt !== undefined && {
+            scheduledAt: scheduledAt ? new Date(scheduledAt) : null
+          }),
+          ...(metaTitle !== undefined && { metaTitle: metaTitle || null }),
+          ...(metaDescription !== undefined && { metaDescription: metaDescription || null })
+        }
+      })
+
+      // Update category
+      if (categoryId !== undefined) {
+        await tx.articleCategory.deleteMany({ where: { articleId: id } })
+        if (categoryId) {
+          await tx.articleCategory.create({ data: { articleId: id, categoryId } })
+        }
+      }
+
+      // Update tags
+      if (tags !== undefined) {
+        await tx.articleTag.deleteMany({ where: { articleId: id } })
+        for (const name of tags) {
+          const tag = await tx.tag.upsert({
+            where: { name },
+            update: {},
+            create: { name, slug: generateSlug(name) }
+          })
+          await tx.articleTag.create({ data: { articleId: id, tagId: tag.id } })
+        }
+      }
+    })
+
+    const updated = await prisma.article.findUnique({
       where: { id },
-      data: {
-        ...(title !== undefined && { title }),
-        ...(content !== undefined && { content }),
-        ...(description !== undefined && { excerpt: description }),
-        ...(coverImage !== undefined && { coverImageUrl: coverImage }),
-        ...(seriesId !== undefined && { seriesId: Number(seriesId) }),
-        ...(seriesOrder !== undefined && { seriesOrder }),
-        ...(status !== undefined && { status }),
-        ...(scheduledAt !== undefined && { scheduledAt })
-      },
       include: {
         author: { select: { id: true, name: true, image: true } },
         categories: {
-          select: {
-            category: { select: { id: true, name: true, slug: true } }
-          }
+          select: { category: { select: { id: true, name: true, slug: true } } }
         },
         tags: {
           select: { tag: { select: { id: true, name: true, slug: true } } }

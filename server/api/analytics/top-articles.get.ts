@@ -3,6 +3,7 @@ import z from 'zod'
 
 const querySchema = z.object({
   period: z.enum(['7d', '30d', '90d', 'all']).default('30d'),
+  sort: z.enum(['views', 'likes']).default('views'),
   limit: z.coerce.number().int().min(1).max(50).default(10)
 })
 
@@ -16,7 +17,7 @@ export default defineEventHandler(async (event) => {
   await requireRole(event, 'admin')
 
   try {
-    const { period, limit } = querySchema.parse(getQuery(event))
+    const { period, sort, limit } = querySchema.parse(getQuery(event))
 
     const dateFilter
       = period !== 'all'
@@ -37,8 +38,9 @@ export default defineEventHandler(async (event) => {
         ...dateFilter
       },
       take: limit,
-      orderBy: { views: { _count: 'desc' } },
+      orderBy: sort === 'likes' ? { likes: { _count: 'desc' } } : { views: { _count: 'desc' } },
       select: {
+        id: true,
         title: true,
         slug: true,
         _count: { select: { views: true, likes: true } }
@@ -46,13 +48,14 @@ export default defineEventHandler(async (event) => {
     })
 
     const data = articles.map(a => ({
+      id: a.id,
       title: a.title,
       slug: a.slug,
       viewsCount: a._count.views,
       likesCount: a._count.likes
     }))
 
-    return { data, period, limit }
+    return { data, period, sort, limit }
   } catch (error: any) {
     if (error.statusCode) throw error
     console.error('[API] GET /api/analytics/top-articles', error)

@@ -22,7 +22,7 @@
         <UBadge
           v-if="comment.status && comment.status !== 'approved'"
           :label="comment.status"
-          size="xs"
+          size="sm"
           color="warning"
           variant="subtle"
           class="rounded-none capitalize"

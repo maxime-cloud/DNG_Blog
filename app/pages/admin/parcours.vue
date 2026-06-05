@@ -86,7 +86,7 @@ async function del(id: number) {
         <div class="flex gap-2 items-center">
           <UBadge
             :label="path.isPublished ? 'Publié' : 'Brouillon'"
-            size="xs"
+            size="sm"
           />
           <NuxtLink :to="`/admin/parcours/${path.id}/steps`">
             <CUButton

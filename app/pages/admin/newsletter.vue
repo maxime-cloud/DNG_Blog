@@ -132,7 +132,7 @@ async function deleteSub(id: number) {
             <p class="text-xs text-zinc-500">
               {{ sub.name }} — <UBadge
                 :label="sub.status"
-                size="xs"
+                size="sm"
               />
             </p>
           </div>
@@ -210,7 +210,7 @@ async function deleteSub(id: number) {
               {{ new Date(c.createdAt).toLocaleDateString('fr-FR') }} —
               <UBadge
                 :label="c.status"
-                size="xs"
+                size="sm"
               />
             </p>
           </div>

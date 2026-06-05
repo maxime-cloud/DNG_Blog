@@ -4,13 +4,15 @@ export const articleSchema = z.object({
   title: z.string().min(3).max(200),
   description: z.string().max(500).optional(),
   content: z.string().min(10),
-  categoryId: z.coerce.string().optional(),
+  categoryId: z.coerce.number().nullable().optional(),
   tags: z.array(z.string()).optional(),
-  coverImage: z.url().optional(),
+  coverImage: z.string().optional(),
   status: z.enum(['DRAFT', 'REVIEW', 'PUBLISHED', 'ARCHIVED']).optional(),
-  scheduledAt: z.date().optional(),
-  seriesId: z.coerce.string().optional(),
-  seriesOrder: z.number().optional()
+  scheduledAt: z.string().optional(),
+  seriesId: z.coerce.number().nullable().optional(),
+  seriesOrder: z.number().nullable().optional(),
+  metaTitle: z.string().max(70).optional(),
+  metaDescription: z.string().max(160).optional()
 })
 
 export const commentSchema = z.object({

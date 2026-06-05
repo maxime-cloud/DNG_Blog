@@ -19,6 +19,11 @@ body {
   background-color: rgb(10, 10, 10);
 }
 
+textarea::placeholder {
+  color: #e5e7eb;
+  opacity: 0.4;
+}
+
 /*div {
   transition: background-color 4s ease-in-out;
 }*/

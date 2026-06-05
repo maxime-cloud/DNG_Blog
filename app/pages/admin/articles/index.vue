@@ -80,7 +80,7 @@ async function deleteArticle(id) {
       <template #status="{ row }">
         <UBadge
           :label="row.status"
-          size="xs"
+          size="sm"
         />
       </template>
       <template #publishedAt="{ row }">

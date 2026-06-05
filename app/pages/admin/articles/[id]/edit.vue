@@ -34,6 +34,9 @@ const categories = computed(() => categoriesData.value?.data ?? [])
 const { data: seriesData } = await useFetch('/api/series')
 const seriesList = computed(() => seriesData.value?.data ?? [])
 
+const { data: tagsData } = await useFetch('/api/tags')
+const popularTags = computed(() => (tagsData.value?.data ?? []).slice(0, 6).map((t: any) => t.name))
+
 const { data: revisionsData, refresh: refreshRevisions } = await useFetch(
   `/api/admin/articles/${id}/revisions`
 )
@@ -47,6 +50,11 @@ function addTag() {
 
 function removeTag(tag: string) {
   form.tags = form.tags.filter(t => t !== tag)
+}
+
+function togglePopularTag(tag: string) {
+  if (form.tags.includes(tag)) removeTag(tag)
+  else form.tags.push(tag)
 }
 
 async function save() {
@@ -119,7 +127,7 @@ async function restoreRevision(revisionId: number) {
         </NuxtLink>
         <div>
           <h1 class="text-2xl font-bold text-white">Éditer l'article</h1>
-          <UBadge :label="form.status" size="xs" class="mt-1" />
+          <UBadge :label="form.status" size="sm" class="mt-1" />
         </div>
       </div>
       <div class="flex gap-2">
@@ -226,16 +234,12 @@ async function restoreRevision(revisionId: number) {
       <!-- Sidebar -->
       <div class="flex flex-col gap-4">
         <!-- Cover image -->
-        <div
-          class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4"
-        >
+        <div class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4">
           <AdminCoverUpload v-model="form.coverImage" />
         </div>
 
         <!-- Category -->
-        <div
-          class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4"
-        >
+        <div class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4">
           <label class="block text-sm font-medium mb-2">Catégorie</label>
           <select
             v-model="form.categoryId"
@@ -295,9 +299,7 @@ async function restoreRevision(revisionId: number) {
         </div>
 
         <!-- Series -->
-        <div
-          class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4"
-        >
+        <div class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4">
           <label class="block text-sm font-medium mb-2">Série</label>
           <select
             v-model="form.seriesId"

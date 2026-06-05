@@ -69,7 +69,16 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2025-01-15',
 
+  build: {
+    transpile: ['@unovis/vue']
+  },
+
   vite: {
+    // Unovis ships @unovis/ts as CJS (depends on striptags, also CJS). Pre-bundle
+    // them so Vite resolves the CJS↔ESM default-export interop.
+    optimizeDeps: {
+      include: ['@unovis/vue', '@unovis/ts', 'striptags']
+    },
     plugins: [Icons({ compiler: 'vue3', autoInstall: true }) as any]
   },
 

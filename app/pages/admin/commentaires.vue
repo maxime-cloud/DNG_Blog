@@ -119,7 +119,7 @@ const columns = [
         <UBadge
           :label="row.status"
           :color="statusBadgeColor[row.status] ?? 'neutral'"
-          size="xs"
+          size="sm"
         />
       </template>
       <template #createdAt="{ row }">

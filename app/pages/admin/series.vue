@@ -156,7 +156,7 @@ async function del(id: number) {
           <div class="flex gap-2 items-center">
             <UBadge
               :label="s.isPublished ? 'Publié' : 'Brouillon'"
-              size="xs"
+              size="sm"
             />
             <CUButton
               size="xs"

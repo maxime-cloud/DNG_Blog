@@ -379,7 +379,7 @@ async function deleteUser() {
       <template #role="{ row }">
         <UBadge
           :label="row.role"
-          size="xs"
+          size="sm"
         />
       </template>
 
@@ -388,13 +388,13 @@ async function deleteUser() {
           <UBadge
             :label="row.banned ? 'Banni' : 'Actif'"
             :color="row.banned ? 'error' : 'success'"
-            size="xs"
+            size="sm"
           />
           <UBadge
             v-if="!row.emailVerified"
             label="Non vérifié"
             color="warning"
-            size="xs"
+            size="sm"
           />
         </div>
       </template>
@@ -459,18 +459,18 @@ async function deleteUser() {
           <div class="flex items-center gap-2 mt-1">
             <UBadge
               :label="selected.role"
-              size="xs"
+              size="sm"
             />
             <UBadge
               :label="selected.banned ? 'Banni' : 'Actif'"
               :color="selected.banned ? 'error' : 'success'"
-              size="xs"
+              size="sm"
             />
             <UBadge
               v-if="!selected.emailVerified"
               label="Email non vérifié"
               color="warning"
-              size="xs"
+              size="sm"
             />
           </div>
         </div>
