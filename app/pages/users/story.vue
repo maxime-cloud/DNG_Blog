@@ -47,7 +47,7 @@ useSeoMeta({ title: 'Mon historique' })
             <div class="flex-1">
               <NuxtLink
                 :to="`/article/${item.article.slug}`"
-                class="font-medium hover:text-primary"
+                class="font-medium hover:text-white"
               >
                 {{ item.article.title }}
               </NuxtLink>

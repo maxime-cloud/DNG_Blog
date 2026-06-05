@@ -222,7 +222,7 @@ const showProgress = computed(() => isLoggedIn.value && (path.value?.steps?.leng
               <!-- Step info -->
               <div class="flex-1 min-w-0">
                 <p
-                  class="text-[#F3F4F6] font-semibold text-sm sm:text-base truncate group-hover:text-primary transition-colors"
+                  class="text-[#F3F4F6] font-semibold text-sm sm:text-base truncate transition-colors"
                   :class="{ 'line-through text-zinc-500': step.completed }"
                 >
                   {{ step.stepTitle ?? step.article?.title ?? `Étape ${step.stepOrder}` }}
@@ -246,8 +246,9 @@ const showProgress = computed(() => isLoggedIn.value && (path.value?.steps?.leng
                 <UIcon
                   v-else
                   name="i-lucide-arrow-right"
-                  class="w-4 h-4 text-zinc-500 group-hover:text-primary transition-colors"
+                  class="w-4 h-4 text-zinc-500 group-hover:text-white transition-colors"
                 />
+              </div>
               </div>
             </NuxtLink>
           </div>

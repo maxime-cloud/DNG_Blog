@@ -149,7 +149,7 @@ function formatDate(dateStr: string | null) {
               <!-- Episode info -->
               <div class="flex-1 min-w-0">
                 <p
-                  class="text-[#F3F4F6] font-semibold text-sm sm:text-base truncate group-hover:text-primary transition-colors"
+                  class="text-[#F3F4F6] font-semibold text-sm sm:text-base truncate transition-colors"
                 >
                   {{ article.title }}
                 </p>
@@ -164,7 +164,7 @@ function formatDate(dateStr: string | null) {
               <!-- Arrow -->
               <UIcon
                 name="i-lucide-arrow-right"
-                class="shrink-0 w-4 h-4 text-zinc-500 group-hover:text-primary transition-colors"
+                class="shrink-0 w-4 h-4 text-zinc-500 group-hover:text-white transition-colors"
               />
             </NuxtLink>
           </div>

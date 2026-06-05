@@ -156,7 +156,7 @@ function formatDate(dateStr?: string | null) {
         <div class="max-w-7xl mx-auto px-4 py-2 flex items-center gap-4">
           <NuxtLink
             :to="`/training/${pathSlug}`"
-            class="flex items-center gap-1.5 text-sm text-zinc-500 hover:text-primary transition-colors shrink-0"
+            class="flex items-center gap-1.5 text-sm text-zinc-500 hover:text-white transition-colors shrink-0"
           >
             <UIcon name="i-lucide-arrow-left" class="w-3.5 h-3.5" />
             <span class="truncate max-w-[160px] sm:max-w-xs">{{ path?.title }}</span>
@@ -324,12 +324,12 @@ function formatDate(dateStr?: string | null) {
             >
               <UIcon
                 name="i-lucide-arrow-left"
-                class="w-4 h-4 text-zinc-500 group-hover:text-primary transition-colors shrink-0"
+                class="w-4 h-4 text-zinc-500 group-hover:text-white transition-colors shrink-0"
               />
               <div class="min-w-0">
                 <p class="text-xs text-zinc-500 mb-0.5">Étape précédente</p>
                 <p
-                  class="text-sm font-medium text-[#F3F4F6] truncate group-hover:text-primary transition-colors"
+                  class="text-sm font-medium text-[#F3F4F6] truncate group-hover:text-white transition-colors"
                 >
                   {{ nav.prev.stepTitle }}
                 </p>
@@ -351,14 +351,14 @@ function formatDate(dateStr?: string | null) {
               <div class="min-w-0 text-right">
                 <p class="text-xs text-zinc-500 mb-0.5">Étape suivante</p>
                 <p
-                  class="text-sm font-medium text-[#F3F4F6] truncate group-hover:text-primary transition-colors"
+                  class="text-sm font-medium text-[#F3F4F6] truncate group-hover:text-white transition-colors"
                 >
                   {{ nav.next.stepTitle }}
                 </p>
               </div>
               <UIcon
                 name="i-lucide-arrow-right"
-                class="w-4 h-4 text-zinc-500 group-hover:text-primary transition-colors shrink-0"
+                class="w-4 h-4 text-zinc-500 group-hover:text-white transition-colors shrink-0"
               />
             </NuxtLink>
             <div
@@ -574,3 +574,4 @@ function formatDate(dateStr?: string | null) {
   background-color: rgba(255, 255, 255, 0.04);
 }
 </style>
+tyle>

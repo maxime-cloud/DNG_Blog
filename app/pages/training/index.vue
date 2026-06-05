@@ -141,7 +141,7 @@ function progressPercent(path: LearningPath) {
               </div>
 
               <h3
-                class="text-base font-semibold text-[#F3F4F6] line-clamp-2 group-hover:text-primary transition-colors leading-snug"
+                class="text-base font-semibold text-[#F3F4F6] line-clamp-2 transition-colors leading-snug"
               >
                 {{ path.title }}
               </h3>

@@ -42,6 +42,7 @@ interface ArticleDetail {
   id: string
   slug: string
   title: string
+  content?: string | null
   description?: string
   coverImage?: string | null
   publishedAt?: string | null
@@ -110,9 +111,11 @@ if (import.meta.server) {
   await trackView(slug)
 }
 
-// Nuxt Content v3 — fetch the Markdown content
-const { data: content } = await useAsyncData(`article-content-${slug}`, () =>
-  queryCollection('blog').path(`/blog/${slug}`).first()
+// Fetch the article body parsed to MDC AST. Parsing happens server-side
+// (see /api/articles/[slug]/content) so the Markdown processor never ships
+// to the client — only the rendered AST does.
+const { data: parsed } = await useAsyncData(`article-content-${slug}`, () =>
+  $fetch(`/api/articles/${slug}/content`)
 )
 
 // Comments
@@ -155,24 +158,6 @@ function addCopyButtons() {
   })
 }
 
-function extractHeadings(nodes: ContentNode[]): Heading[] {
-  const result: Heading[] = []
-  for (const node of nodes) {
-    if ((node.tag === 'h2' || node.tag === 'h3') && node.props?.id) {
-      const text = (node.children ?? [])
-        .filter(c => c.type === 'text' || c.value)
-        .map(c => c.value ?? c.children?.[0]?.value ?? '')
-        .join('')
-      result.push({
-        id: node.props.id as string,
-        text,
-        depth: node.tag === 'h2' ? 2 : 3
-      })
-    }
-  }
-  return result
-}
-
 function hasDistroNode(nodes: ContentNode[]): boolean {
   for (const node of nodes) {
     if (node.tag === 'distro-block' || node.component === 'DistroBlock') return true
@@ -181,21 +166,42 @@ function hasDistroNode(nodes: ContentNode[]): boolean {
   return false
 }
 
-// Extract headings from content body for TableOfContents
+interface TocLink {
+  id: string
+  text: string
+  depth: number
+  children?: TocLink[]
+}
+
+// Extract headings (h2/h3) from the parsed Markdown toc for TableOfContents
 const headings = computed<Heading[]>(() => {
-  const body = (content.value as ContentWithBody | null)?.body
-  if (!body?.children) return []
-  return extractHeadings(body.children)
+  const links = (parsed.value as { toc?: { links?: TocLink[] } } | null)?.toc?.links
+  if (!links) return []
+  const result: Heading[] = []
+  const walk = (items: TocLink[]) => {
+    for (const item of items) {
+      if (item.depth === 2 || item.depth === 3) {
+        result.push({ id: item.id, text: item.text, depth: item.depth as 2 | 3 })
+      }
+      if (item.children?.length) walk(item.children)
+    }
+  }
+  walk(links)
+  return result
 })
 
-// Reading time from remark-reading-time
+// Reading time estimated from the Markdown word count (~200 words/min)
 const readingTime = computed<string | null>(() => {
-  return (content.value as ContentWithBody | null)?.readingTime?.text ?? null
+  const text = article.value?.content
+  if (!text) return null
+  const words = text.trim().split(/\s+/).filter(Boolean).length
+  if (!words) return null
+  return `${Math.max(1, Math.ceil(words / 200))} min de lecture`
 })
 
 // Detect if article has distro-specific blocks
 const hasDistroBlocks = computed<boolean>(() => {
-  const body = (content.value as ContentWithBody | null)?.body
+  const body = (parsed.value as ContentWithBody | null)?.body
   if (!body?.children) return false
   return hasDistroNode(body.children)
 })
@@ -231,14 +237,9 @@ useSeoMeta({
       <div class="px-4 pt-10 pb-4">
         <!-- Breadcrumb -->
         <nav class="flex items-center gap-2 text-xs text-zinc-500 mb-6">
-          <NuxtLink to="/" class="hover:text-[#F3F4F6] transition-colors">
-            Accueil
-          </NuxtLink>
+          <NuxtLink to="/" class="hover:text-[#F3F4F6] transition-colors"> Accueil </NuxtLink>
           <UIcon name="i-lucide-chevron-right" class="w-3 h-3" />
-          <NuxtLink
-            to="/articles"
-            class="hover:text-[#F3F4F6] transition-colors"
-          >
+          <NuxtLink to="/articles" class="hover:text-[#F3F4F6] transition-colors">
             Articles
           </NuxtLink>
           <template v-if="article?.category">
@@ -281,10 +282,7 @@ useSeoMeta({
           </h1>
 
           <!-- Description -->
-          <p
-            v-if="article?.description"
-            class="text-base text-[#F3F4F6]/70 mb-4 max-w-3xl"
-          >
+          <p v-if="article?.description" class="text-base text-[#F3F4F6]/70 mb-4 max-w-3xl">
             {{ article.description }}
           </p>
 
@@ -321,7 +319,7 @@ useSeoMeta({
                 v-for="tag in article.tags"
                 :key="tag.slug"
                 :to="`/tags/${tag.slug}`"
-                class="text-xs text-zinc-500 hover:text-primary transition-colors"
+                class="text-xs text-zinc-500 hover:text-white transition-colors"
               >
                 #{{ tag.name }}
               </NuxtLink>
@@ -359,11 +357,11 @@ useSeoMeta({
 
           <!-- Article content -->
           <div
-            v-if="content"
+            v-if="article?.content"
             ref="articleContent"
             class="prose-article bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-6 sm:p-8 mb-6"
           >
-            <ContentRenderer :value="content" />
+            <ContentRenderer v-if="parsed" :value="parsed" />
           </div>
 
           <!-- Action bar -->
@@ -403,9 +401,7 @@ useSeoMeta({
 
           <!-- Related articles -->
           <section v-if="relatedArticles?.length" class="mb-8">
-            <h2
-              class="text-[24px] sm:text-[32px] font-bold text-[#FFFFFF] mb-4"
-            >
+            <h2 class="text-[24px] sm:text-[32px] font-bold text-[#FFFFFF] mb-4">
               Articles similaires
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -420,11 +416,7 @@ useSeoMeta({
 
           <!-- Comments section -->
           <section class="mb-8">
-            <h2
-              class="text-[24px] sm:text-[32px] font-bold text-[#FFFFFF] mb-4"
-            >
-              Commentaires
-            </h2>
+            <h2 class="text-[24px] sm:text-[32px] font-bold text-[#FFFFFF] mb-4">Commentaires</h2>
 
             <!-- Post a comment -->
             <div class="mb-6">
@@ -491,19 +483,14 @@ useSeoMeta({
 </template>
 
 <style scoped>
-/* Article prose styles */
+/* Article prose styles — dark mode only (texte clair par défaut) */
 .prose-article :deep(h2),
 .prose-article :deep(h3) {
-  color: rgb(15, 15, 15);
+  color: #ffffff;
   font-weight: 700;
   margin-top: 2rem;
   margin-bottom: 1rem;
   scroll-margin-top: 5rem;
-}
-
-.dark .prose-article :deep(h2),
-.dark .prose-article :deep(h3) {
-  color: #ffffff;
 }
 
 .prose-article :deep(h2) {
@@ -515,13 +502,9 @@ useSeoMeta({
 }
 
 .prose-article :deep(p) {
-  color: rgba(15, 15, 15, 0.85);
+  color: rgba(243, 244, 246, 0.85);
   line-height: 1.75;
   margin-bottom: 1.25rem;
-}
-
-.dark .prose-article :deep(p) {
-  color: rgba(243, 244, 246, 0.85);
 }
 
 .prose-article :deep(a) {
@@ -536,14 +519,9 @@ useSeoMeta({
 
 .prose-article :deep(ul),
 .prose-article :deep(ol) {
-  color: rgba(15, 15, 15, 0.85);
+  color: rgba(243, 244, 246, 0.85);
   padding-left: 1.5rem;
   margin-bottom: 1.25rem;
-}
-
-.dark .prose-article :deep(ul),
-.dark .prose-article :deep(ol) {
-  color: rgba(243, 244, 246, 0.85);
 }
 
 .prose-article :deep(li) {
@@ -560,48 +538,31 @@ useSeoMeta({
 }
 
 .prose-article :deep(blockquote) {
-  border-left: 2px dashed rgba(15, 15, 15, 0.3);
+  border-left: 2px dashed rgba(229, 231, 235, 0.27);
   padding-left: 1rem;
   margin: 1.5rem 0;
-  color: rgba(15, 15, 15, 0.6);
-  font-style: italic;
-}
-
-.dark .prose-article :deep(blockquote) {
-  border-left-color: rgba(229, 231, 235, 0.27);
   color: rgba(243, 244, 246, 0.6);
+  font-style: italic;
 }
 
 .prose-article :deep(hr) {
   border: none;
-  border-top: 0.1px dashed rgba(15, 15, 15, 0.3);
+  border-top: 0.1px dashed rgba(229, 231, 235, 0.27);
   margin: 2rem 0;
-}
-
-.dark .prose-article :deep(hr) {
-  border-top-color: rgba(229, 231, 235, 0.27);
 }
 
 .prose-article :deep(strong) {
   font-weight: 700;
-  color: rgb(15, 15, 15);
-}
-
-.dark .prose-article :deep(strong) {
   color: #ffffff;
 }
 
 .prose-article :deep(code:not(pre code)) {
   font-size: 0.85em;
   padding: 0.15em 0.35em;
-  background-color: rgba(15, 15, 15, 0.07);
-  border: 0.1px solid rgba(15, 15, 15, 0.15);
-  border-radius: 0;
-}
-
-.dark .prose-article :deep(code:not(pre code)) {
+  color: rgba(243, 244, 246, 0.9);
   background-color: rgba(255, 255, 255, 0.07);
-  border-color: rgba(229, 231, 235, 0.2);
+  border: 0.1px solid rgba(229, 231, 235, 0.2);
+  border-radius: 0;
 }
 
 .prose-article :deep(pre) {
@@ -625,10 +586,10 @@ useSeoMeta({
   height: 2rem;
   background: rgba(255, 255, 255, 0.08);
   border: 0.1px solid rgba(229, 231, 235, 0.2);
-  color: rgba(229, 231, 235, 0.5);
+  color: rgba(229, 231, 235, 0.7);
   cursor: pointer;
   transition: all 0.15s ease;
-  opacity: 0;
+  opacity: 0.6;
 }
 
 .prose-article :deep(pre:hover .copy-btn) {
@@ -636,7 +597,8 @@ useSeoMeta({
 }
 
 .prose-article :deep(.copy-btn:hover) {
-  background: rgba(255, 255, 255, 0.15);
+  background: oklch(62.7% 0.194 149.214 / 0.2);
+  border-color: oklch(62.7% 0.194 149.214 / 0.5);
   color: #fff;
 }
 
@@ -649,12 +611,8 @@ useSeoMeta({
   width: 100%;
   max-width: 100%;
   height: auto;
-  border: 0.1px dashed rgba(15, 15, 15, 0.3);
+  border: 0.1px dashed rgba(229, 231, 235, 0.27);
   margin: 1.5rem 0;
-}
-
-.dark .prose-article :deep(img) {
-  border-color: rgba(229, 231, 235, 0.27);
 }
 
 .prose-article :deep(table) {
@@ -666,23 +624,14 @@ useSeoMeta({
 
 .prose-article :deep(th),
 .prose-article :deep(td) {
-  border: 0.1px dashed rgba(15, 15, 15, 0.3);
+  border: 0.1px dashed rgba(229, 231, 235, 0.27);
+  color: rgba(243, 244, 246, 0.85);
   padding: 0.5rem 0.75rem;
   text-align: left;
 }
 
-.dark .prose-article :deep(th),
-.dark .prose-article :deep(td) {
-  border-color: rgba(229, 231, 235, 0.27);
-  color: rgba(243, 244, 246, 0.85);
-}
-
 .prose-article :deep(th) {
   font-weight: 600;
-  background-color: rgba(15, 15, 15, 0.04);
-}
-
-.dark .prose-article :deep(th) {
   background-color: rgba(255, 255, 255, 0.04);
 }
 </style>

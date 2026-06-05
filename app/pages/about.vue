@@ -24,7 +24,7 @@ useSeoMeta({ title: 'À propos', description: 'En savoir plus sur ce blog techni
               <a
                 href="https://github.com"
                 target="_blank"
-                class="text-sm hover:text-primary flex items-center gap-1"
+                class="text-sm flex items-center gap-1"
               >
                 <UIcon
                   name="i-simple-icons-github"

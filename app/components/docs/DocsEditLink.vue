@@ -11,7 +11,7 @@ const editUrl = computed(() => `${repoUrl}/edit/main/content/${props.path}.md`)
     :href="editUrl"
     target="_blank"
     rel="noopener"
-    class="inline-flex items-center gap-1 text-xs text-zinc-500 hover:text-primary transition mt-6"
+    class="inline-flex items-center gap-1 text-xs text-zinc-500 hover:text-white transition mt-6"
   >
     <UIcon
       name="i-lucide-pencil"

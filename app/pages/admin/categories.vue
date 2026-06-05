@@ -279,7 +279,7 @@ async function deleteTag(id: number) {
           >
             {{ tag.name }}
             <button
-              class="text-zinc-400 hover:text-primary ml-1"
+              class="text-zinc-400 hover:text-white ml-1"
               @click="startEditTag(tag)"
             >
               ✎

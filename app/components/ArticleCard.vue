@@ -82,7 +82,7 @@ function formatDate(date?: string | Date | null) {
         <NuxtLink
           v-if="article.category"
           :to="`/categories/${article.category.slug}`"
-          class="font-semibold uppercase tracking-wider hover:text-primary transition-colors"
+          class="font-semibold uppercase tracking-wider transition-colors"
           :style="article.category.color ? `color: ${article.category.color}` : ''"
         >
           {{ article.category.name }}

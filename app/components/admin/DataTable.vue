@@ -43,7 +43,7 @@ function sortBy(key) {
           <th
             v-for="col in columns"
             :key="col.key"
-            :class="col.sortable ? 'cursor-pointer hover:text-primary' : ''"
+            :class="col.sortable ? 'cursor-pointer hover:text-white' : ''"
             class="text-left px-4 py-3 font-medium text-zinc-500"
             @click="col.sortable ? sortBy(col.key) : null"
           >

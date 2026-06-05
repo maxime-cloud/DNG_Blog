@@ -5,7 +5,7 @@
   >
     <slot />
     <button
-      class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-zinc-400 hover:text-primary"
+      class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-zinc-400 hover:text-white"
       :aria-label="`Copy link to section`"
       @click="copyAnchor"
     >

@@ -78,7 +78,7 @@ const seriesList = computed(() => seriesData.value?.data ?? [])
               </div>
 
               <h3
-                class="text-base font-semibold text-[#F3F4F6] line-clamp-2 group-hover:text-primary transition-colors leading-snug"
+                class="text-base font-semibold text-[#F3F4F6] line-clamp-2 transition-colors leading-snug"
               >
                 {{ series.title }}
               </h3>
@@ -102,7 +102,7 @@ const seriesList = computed(() => seriesData.value?.data ?? [])
                     series.articlesCount > 1 ? 's' : ''
                   }}</span>
                 </div>
-                <div class="flex items-center gap-1 group-hover:text-primary transition-colors">
+                <div class="flex items-center gap-1 group-hover:text-white transition-colors">
                   <span>Voir la série</span>
                   <UIcon
                     name="i-lucide-arrow-right"

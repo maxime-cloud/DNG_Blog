@@ -14,7 +14,7 @@ const segments = computed(() => {
   <nav class="flex items-center gap-2 text-sm text-zinc-500 mb-6">
     <NuxtLink
       to="/docs"
-      class="hover:text-primary transition"
+      class="hover:text-white transition"
     > Docs </NuxtLink>
     <span
       v-for="seg in segments.slice(1)"
@@ -27,7 +27,7 @@ const segments = computed(() => {
       />
       <NuxtLink
         :to="seg.path"
-        class="hover:text-primary capitalize transition"
+        class="hover:text-white capitalize transition"
       >
         {{ seg.label }}
       </NuxtLink>

@@ -135,7 +135,7 @@ async function del(id: number) {
           class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex flex-col items-center justify-center gap-2"
         >
           <button
-            class="text-white hover:text-primary transition"
+            class="text-white transition"
             @click="copyUrl(media.url)"
           >
             <UIcon

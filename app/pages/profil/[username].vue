@@ -1,6 +1,23 @@
 <script setup lang="ts">
 const route = useRoute()
 
+interface PopularArticle {
+  slug: string
+  title: string
+  coverImage: string | null
+  publishedAt: string | null
+  viewsCount: number
+  likesCount: number
+}
+
+interface ProfileStats {
+  totalArticles: number
+  totalViews: number
+  totalLikes: number
+  lastPublishedAt: string | null
+  popularArticles: PopularArticle[]
+}
+
 interface UserProfile {
   id: string
   name: string
@@ -11,6 +28,7 @@ interface UserProfile {
   role: 'reader' | 'author' | 'admin'
   createdAt: string
   _count: { articles: number }
+  stats: ProfileStats | null
 }
 
 interface Article {
@@ -74,6 +92,12 @@ function formatJoinDate(dateStr: string) {
     year: 'numeric'
   })
 }
+
+const stats = computed(() => user.value?.stats ?? null)
+
+function formatNumber(n: number) {
+  return new Intl.NumberFormat('fr-FR', { notation: 'compact', maximumFractionDigits: 1 }).format(n)
+}
 </script>
 
 <template>
@@ -85,9 +109,7 @@ function formatJoinDate(dateStr: string) {
           <NuxtLink
             to="/"
             class="hover:text-[#F3F4F6] transition-colors"
-          >
-            Accueil
-          </NuxtLink>
+          > Accueil </NuxtLink>
           <UIcon
             name="i-lucide-chevron-right"
             class="w-3 h-3"
@@ -197,12 +219,102 @@ function formatJoinDate(dateStr: string) {
           </div>
         </div>
 
+        <!-- Stats (author/admin) -->
+        <div
+          v-if="canShowArticles && stats"
+          class="mb-8"
+        >
+          <!-- Totals -->
+          <div class="grid grid-cols-3 gap-4 mb-6">
+            <div
+              v-for="card in [
+                { label: 'Articles', value: stats.totalArticles, icon: 'i-lucide-file-text' },
+                { label: 'Vues', value: stats.totalViews, icon: 'i-lucide-eye' },
+                { label: 'Likes', value: stats.totalLikes, icon: 'i-lucide-heart' }
+              ]"
+              :key="card.label"
+              class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-4 sm:p-5"
+            >
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-xs text-zinc-500">
+                    {{ card.label }}
+                  </p>
+                  <p class="text-2xl sm:text-3xl font-bold text-white mt-1">
+                    {{ formatNumber(card.value) }}
+                  </p>
+                </div>
+                <UIcon
+                  :name="card.icon"
+                  class="w-6 h-6 sm:w-7 sm:h-7 text-primary opacity-60"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Last activity -->
+          <p
+            v-if="stats.lastPublishedAt"
+            class="flex items-center gap-1.5 text-sm text-zinc-500 mb-6"
+          >
+            <UIcon
+              name="i-lucide-activity"
+              class="w-3.5 h-3.5"
+            />
+            <span>Dernière publication le {{ formatDate(stats.lastPublishedAt) }}</span>
+          </p>
+
+          <!-- Popular articles -->
+          <div v-if="stats.popularArticles.length">
+            <h2 class="text-base font-semibold text-[#FFFFFF] mb-3 flex items-center gap-2">
+              <UIcon
+                name="i-lucide-flame"
+                class="w-4 h-4 text-primary"
+              />
+              Articles populaires
+            </h2>
+            <div class="flex flex-col gap-3">
+              <NuxtLink
+                v-for="(article, index) in stats.popularArticles"
+                :key="article.slug"
+                :to="`/article/${article.slug}`"
+                class="group bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-4 flex items-center gap-4 transition hover:border-blue-500/50"
+              >
+                <div
+                  class="shrink-0 w-8 h-8 flex items-center justify-center bg-primary/10 border-[0.1px] border-dashed border-primary/40 rounded-none text-primary font-bold text-sm"
+                >
+                  {{ index + 1 }}
+                </div>
+                <p
+                  class="flex-1 min-w-0 text-sm font-semibold text-[#F3F4F6] truncate transition-colors"
+                >
+                  {{ article.title }}
+                </p>
+                <div class="shrink-0 flex items-center gap-4 text-xs text-zinc-500">
+                  <span class="flex items-center gap-1">
+                    <UIcon
+                      name="i-lucide-eye"
+                      class="w-3.5 h-3.5"
+                    />
+                    {{ formatNumber(article.viewsCount) }}
+                  </span>
+                  <span class="flex items-center gap-1">
+                    <UIcon
+                      name="i-lucide-heart"
+                      class="w-3.5 h-3.5"
+                    />
+                    {{ formatNumber(article.likesCount) }}
+                  </span>
+                </div>
+              </NuxtLink>
+            </div>
+          </div>
+        </div>
+
         <!-- Tabs (only for author/admin) -->
         <div v-if="canShowArticles">
           <!-- Tab buttons -->
-          <div
-            class="flex border-b-[0.1px] border-dashed border-dashcolor/50 mb-6"
-          >
+          <div class="flex border-b-[0.1px] border-dashed border-dashcolor/50 mb-6">
             <button
               class="px-4 py-2 text-sm font-semibold transition-colors border-b-2 -mb-[1px]"
               :class="
@@ -280,7 +392,7 @@ function formatJoinDate(dateStr: string) {
 
                   <!-- Title -->
                   <h3
-                    class="text-base font-semibold text-[#F3F4F6] mb-2 leading-snug group-hover:text-primary transition-colors"
+                    class="text-base font-semibold text-[#F3F4F6] mb-2 leading-snug transition-colors"
                   >
                     {{ article.title }}
                   </h3>

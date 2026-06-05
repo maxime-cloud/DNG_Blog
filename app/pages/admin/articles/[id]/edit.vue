@@ -163,7 +163,7 @@ async function restoreRevision(revisionId: number) {
         <button
           v-for="rev in revisions"
           :key="rev.id"
-          class="text-xs px-2 py-1 border-[0.1px] border-dashed border-dashcolor/50 hover:border-primary/50 hover:text-primary transition-colors"
+          class="text-xs px-2 py-1 border-[0.1px] border-dashed border-dashcolor/50 hover:border-primary/50 transition-colors"
           @click="restoreRevision(rev.id)"
         >
           {{

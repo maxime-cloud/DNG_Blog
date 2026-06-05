@@ -40,7 +40,7 @@ function fileIcon(name: string): string {
     <!-- Directory -->
     <div
       v-if="node.type === 'dir'"
-      class="flex items-center gap-1.5 py-0.5 cursor-pointer hover:text-primary transition-colors"
+      class="flex items-center gap-1.5 py-0.5 cursor-pointer hover:text-white transition-colors"
       @click="isOpen = !isOpen"
     >
       <UIcon

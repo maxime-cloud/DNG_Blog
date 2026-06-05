@@ -117,7 +117,7 @@ async function moveStep(step: Step, direction: 'up' | 'down') {
     <div class="flex items-center gap-4 mb-6">
       <NuxtLink
         to="/admin/parcours"
-        class="text-zinc-500 hover:text-primary transition-colors"
+        class="text-zinc-500 hover:text-white transition-colors"
       >
         <UIcon
           name="i-lucide-arrow-left"
