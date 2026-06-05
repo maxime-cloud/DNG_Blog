@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   try {
     const session = await requireAuth(event)
 
-    const id = Number(getRouterParam(event, 'id'))
+    const id = Number(getRouterParam(event, 'slug'))
     if (isNaN(id))
       throw createError({ statusCode: 400, statusMessage: 'ID invalide' })
 

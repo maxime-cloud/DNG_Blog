@@ -1,10 +1,10 @@
 import { defineEventHandler, readBody, createError, getRouterParam } from 'h3'
 
-export default defineEventHandler(async event => {
+export default defineEventHandler(async (event) => {
   try {
     const session = await requireAuth(event)
 
-    const id = Number(getRouterParam(event, 'id'))
+    const id = Number(getRouterParam(event, 'slug'))
     if (isNaN(id)) throw createError({ statusCode: 400, statusMessage: 'ID invalide' })
 
     const article = await prisma.article.findUnique({ where: { id } })
@@ -38,7 +38,7 @@ export default defineEventHandler(async event => {
       metaDescription
     } = parsed.data
 
-    await prisma.$transaction(async tx => {
+    await prisma.$transaction(async (tx) => {
       // Update main article fields
       await tx.article.update({
         where: { id },

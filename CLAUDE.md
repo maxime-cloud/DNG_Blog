@@ -75,7 +75,10 @@ Après toute modification du schéma Prisma, il faut relancer `prisma generate` 
 - `nuxt.config.ts` force `colorMode: { preference: 'dark', fallback: 'dark' }`.
 - NEVER utiliser le préfixe `dark:` dans les classes Tailwind — toutes les classes sont désormais base (pas de variante conditionnelle).
 - NEVER utiliser `bg-CustomLight` — utiliser `bg-CustomColor-900` (#0A0A0A).
-- Les couleurs de texte sont blanches/claires par défaut : `text-white`, `text-[#F3F4F6]`, etc.
+- NEVER doubler les classes (`bg-CustomLight dark:bg-CustomColor-900`) — une seule valeur dark.
+- Les couleurs de texte sont blanches/claires par défaut : `text-white`, `text-[#F3F4F6]`, etc. NEVER de texte sombre en base (ex. `text-[#0F0F0F]`).
+- **CSS dans `<style>` / `<style scoped>`** (prose, contenu rendu) : mêmes règles. Couleurs claires **directement** sur le sélecteur ; NEVER gater le clair derrière `.dark .selector { ... }` ni mettre du texte sombre (`rgb(15,15,15)`) en base. Cf. `.claude/rules/design.md` § « CSS dans les blocs `<style>` ».
+- Attention casse : la couleur custom est `CustomColor` (majuscules). `bg-customcolor-900` n'existe pas → fond transparent silencieux.
 - Aucun bouton de toggle de thème — ne pas en ajouter.
 
 ### Composants

@@ -23,6 +23,14 @@ Public. Paginated list of published articles with optional filters.
 
 ---
 
+### `GET /api/articles/:slug/content`
+
+Corps Markdown de l'article (`Article.content`) parsé en AST MDC côté serveur (le parseur n'est jamais envoyé au client). Consommé par la page article via `<ContentRenderer>`.
+
+- **Params:** `slug` (string)
+- **Response:** objet MDC `{ data, body, toc, excerpt }`
+- **Errors:** `404` article introuvable/non publié, `500`
+
 ## Categories
 
 ### `GET /api/categories`
@@ -298,3 +306,40 @@ Author (ses propres articles) ou admin. Stats détaillées d'un article.
 - **Query:** `days` (défaut 30)
 - **Response:** `{ title, slug, totalViews, likesCount, favoritesCount, commentCount, dailyViews: [{ date, views }] }`
 - **Errors:** `403` si author non-propriétaire, `404` article introuvable
+
+## Users (public / self)
+
+### `GET /api/users/:username`
+
+Profil public d'un utilisateur (lookup par `name`). Pour les créateurs (`author`/`admin`), inclut des statistiques publiques.
+
+- **Params:** `username` (string)
+- **Response:** `{ id, name, image, bio, githubUrl, websiteUrl, createdAt, role, _count: { articles }, stats }`
+  - `stats` = `null` pour les `reader`, sinon `{ totalArticles, totalViews, totalLikes, lastPublishedAt, popularArticles: [{ slug, title, coverImage, publishedAt, viewsCount, likesCount }] }`
+- **Errors:** `400` paramètre manquant, `404` utilisateur introuvable, `500`
+
+### `GET /api/users/me/stats`
+
+Statistiques privées de l'utilisateur courant, strictement limitées à ses propres articles. Réservé `author`/`admin`.
+
+- **Query:** `days` (7–365, défaut 30)
+- **Response:** `{ totals: { articles, drafts, views, likes, comments }, trends: { views }, lastPublishedAt, viewsSeries: [{ label, value }], topArticles: [{ slug, title, status, publishedAt, viewsCount, likesCount, commentsCount }], days }`
+- **Errors:** `401` non authentifié, `403` rôle insuffisant, `500`
+
+## Search
+
+### `GET /api/search`
+
+Recherche d'articles publiés (titre + extrait).
+
+- **Query:** `q` (string), `category`, `tag`, `page` (défaut 1), `limit` (défaut 20, max 100)
+- **Response:** `{ data: [{ type, slug, title, description, coverImage, publishedAt, category, author }], total, page, limit }`
+- **Errors:** `500`
+
+### `GET /api/search/suggestions`
+
+Suggestions rapides (max 5 titres d'articles).
+
+- **Query:** `q` (string, requis)
+- **Response:** `[{ slug, title }]` (tableau vide si `q` absent)
+- **Errors:** `500`
