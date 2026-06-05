@@ -32,7 +32,7 @@ async function deleteArticle(id) {
 <template>
   <div class="p-6">
     <div class="flex items-center justify-between mb-6">
-      <h1 class="text-2xl font-bold text-[#0F0F0F] dark:text-white">
+      <h1 class="text-2xl font-bold text-white">
         Articles
       </h1>
       <NuxtLink to="/admin/articles/new">
@@ -52,7 +52,7 @@ async function deleteArticle(id) {
       />
       <select
         v-model="status"
-        class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 px-3 text-sm text-[#0F0F0F] dark:text-white rounded-none"
+        class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 text-sm text-white rounded-none"
       >
         <option value="">
           Tous les statuts

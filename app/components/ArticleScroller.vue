@@ -9,9 +9,10 @@
     wheel-gestures
     :items="articles"
     :ui="{
-      item: 'basis-1/1 xl:basis-1/3 sm:basis-[70%] md:basis-[60%] lg:basis-[45%]',
-      prev: 'sm:start-8 hover:bg-white dark:hover:bg-primary -translate-y-20 cursor-pointer',
-      next: 'sm:end-8 hover:bg-white dark:hover:bg-primary -translate-y-20 cursor-pointer'
+      item: 'basis-1/1 xl:basis-1/3 sm:basis-[70%] md:basis-[60%] lg:basis-[45%] flex flex-col',
+      container: 'items-stretch',
+      prev: 'sm:start-4 -translate-y-20 cursor-pointer bg-CustomColor-900 border-[0.1px] border-dashcolor/50 hover:bg-primary [&_svg]:opacity-100 [&_svg]:text-white',
+      next: 'sm:end-4 -translate-y-20 cursor-pointer bg-CustomColor-900 border-[0.1px] border-dashcolor/50 hover:bg-primary [&_svg]:opacity-100 [&_svg]:text-white'
     }"
   >
     <ArticleCard :article="item" />

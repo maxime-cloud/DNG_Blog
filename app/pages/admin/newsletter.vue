@@ -126,7 +126,7 @@ async function deleteSub(id: number) {
           class="flex items-center justify-between p-3 border-[0.1px] border-dashed border-dashcolor/50"
         >
           <div>
-            <p class="text-sm font-medium text-[#0F0F0F] dark:text-white">
+            <p class="text-sm font-medium text-white">
               {{ sub.email }}
             </p>
             <p class="text-xs text-zinc-500">
@@ -169,7 +169,7 @@ async function deleteSub(id: number) {
         v-if="showNewCampaign"
         class="border-[0.1px] border-dashed border-dashcolor/50 p-4 mb-6"
       >
-        <h3 class="font-semibold mb-3 text-[#0F0F0F] dark:text-white">
+        <h3 class="font-semibold mb-3 text-white">
           Nouvelle campagne
         </h3>
         <div class="space-y-3">
@@ -181,7 +181,7 @@ async function deleteSub(id: number) {
             v-model="newCampaign.bodyHtml"
             rows="6"
             placeholder="Corps HTML..."
-            class="w-full bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-3 text-sm outline-none rounded-none text-[#0F0F0F] dark:text-white placeholder-[#0F0F0F]/40 dark:placeholder-[#F3F4F6]/60"
+            class="w-full bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-3 text-sm outline-none rounded-none text-white placeholder-[#F3F4F6]/60"
           />
           <div class="flex gap-2">
             <CUButton
@@ -203,7 +203,7 @@ async function deleteSub(id: number) {
           class="flex items-center justify-between p-4 border-[0.1px] border-dashed border-dashcolor/50"
         >
           <div>
-            <p class="font-medium text-[#0F0F0F] dark:text-white">
+            <p class="font-medium text-white">
               {{ c.subject }}
             </p>
             <p class="text-xs text-zinc-500">

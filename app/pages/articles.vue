@@ -157,7 +157,7 @@ function changePage(p: number) {
         <!-- Header -->
         <div class="mb-8">
           <SectionTitle label="Articles" />
-          <p class="text-sm text-[#0F0F0F]/60 dark:text-[#F3F4F6]/60 mt-2">
+          <p class="text-sm text-[#F3F4F6]/60 mt-2">
             Tutoriels pratiques, guides techniques et retours d'expérience.
           </p>
           <p v-if="meta" class="text-xs text-zinc-500 mt-1">
@@ -176,7 +176,7 @@ function changePage(p: number) {
             />
             <button
               v-if="searchInput"
-              class="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 hover:text-zinc-300"
               @click="clearSearch"
             >
               <UIcon name="i-lucide-x" class="w-4 h-4" />
@@ -189,7 +189,7 @@ function changePage(p: number) {
             value-key="value"
             label-key="label"
             :ui="{
-              base: 'bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-CustomColor-900/30 dark:border-dashcolor/50 rounded-none shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)]'
+              base: 'bg-CustomColor-900 border-[0.1px] border-dashcolor/50 rounded-none shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)]'
             }"
             @change="filters.page = 1"
           />
@@ -230,7 +230,7 @@ function changePage(p: number) {
         <div v-if="hasActiveFilters" class="flex flex-wrap items-center gap-2 mb-6">
           <div
             v-if="filters.category"
-            class="flex items-center gap-1 text-xs border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 px-2 py-1 text-[#0F0F0F]/70 dark:text-[#F3F4F6]/70"
+            class="flex items-center gap-1 text-xs border-[0.1px] border-dashed border-dashcolor/50 px-2 py-1 text-[#F3F4F6]/70"
           >
             <span>Catégorie : {{ activeCategoryName }}</span>
             <button class="ml-1 hover:text-red-400" @click="clearCategory">
@@ -240,7 +240,7 @@ function changePage(p: number) {
 
           <div
             v-if="filters.search"
-            class="flex items-center gap-1 text-xs border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 px-2 py-1 text-[#0F0F0F]/70 dark:text-[#F3F4F6]/70"
+            class="flex items-center gap-1 text-xs border-[0.1px] border-dashed border-dashcolor/50 px-2 py-1 text-[#F3F4F6]/70"
           >
             <span>Recherche : "{{ filters.search }}"</span>
             <button class="ml-1 hover:text-red-400" @click="clearSearch">

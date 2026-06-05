@@ -45,7 +45,7 @@ onUnmounted(() => ctx?.revert())
 
 <template>
   <div class="p-6">
-    <h1 class="text-2xl font-bold mb-6 text-[#0F0F0F] dark:text-white">
+    <h1 class="text-2xl font-bold mb-6 text-white">
       Dashboard
     </h1>
 
@@ -60,7 +60,7 @@ onUnmounted(() => ctx?.revert())
         icon="i-lucide-file-text"
       >
         <template #value>
-          <span class="kpi-value text-3xl font-bold mt-1 text-[#0F0F0F] dark:text-white">{{
+          <span class="kpi-value text-3xl font-bold mt-1 text-white">{{
             overview?.totalArticles ?? 0
           }}</span>
         </template>
@@ -87,9 +87,9 @@ onUnmounted(() => ctx?.revert())
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <div
-        class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 p-4 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none"
+        class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none"
       >
-        <h2 class="text-lg font-semibold mb-4 text-[#0F0F0F] dark:text-white">
+        <h2 class="text-lg font-semibold mb-4 text-white">
           Articles populaires
         </h2>
         <div
@@ -97,7 +97,7 @@ onUnmounted(() => ctx?.revert())
           :key="article.id"
           class="flex justify-between items-center py-2 border-b border-[0.1px] border-dashed border-dashcolor/30 last:border-0"
         >
-          <span class="text-sm truncate text-[#0F0F0F] dark:text-white">{{ article.title }}</span>
+          <span class="text-sm truncate text-white">{{ article.title }}</span>
           <span class="text-xs text-zinc-500 ml-2 shrink-0">{{ article._count?.views ?? article.viewsCount ?? 0 }} vues</span>
         </div>
         <p
@@ -109,9 +109,9 @@ onUnmounted(() => ctx?.revert())
       </div>
 
       <div
-        class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 p-4 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none"
+        class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none"
       >
-        <h2 class="text-lg font-semibold mb-4 text-[#0F0F0F] dark:text-white">
+        <h2 class="text-lg font-semibold mb-4 text-white">
           Commentaires récents
         </h2>
         <div
@@ -119,7 +119,7 @@ onUnmounted(() => ctx?.revert())
           :key="comment.id"
           class="py-2 border-b border-[0.1px] border-dashed border-dashcolor/30 last:border-0"
         >
-          <p class="text-sm truncate text-[#0F0F0F] dark:text-white">
+          <p class="text-sm truncate text-white">
             {{ comment.content }}
           </p>
           <div class="flex gap-2 mt-1">

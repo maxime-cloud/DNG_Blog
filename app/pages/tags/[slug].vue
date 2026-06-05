@@ -69,7 +69,7 @@ function normalizeArticle(a: TagArticle) {
         <nav class="flex items-center gap-2 text-xs text-zinc-500 mb-6">
           <NuxtLink
             to="/"
-            class="hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors"
+            class="hover:text-[#F3F4F6] transition-colors"
           >
             Accueil
           </NuxtLink>
@@ -77,16 +77,16 @@ function normalizeArticle(a: TagArticle) {
             name="i-lucide-chevron-right"
             class="w-3 h-3"
           />
-          <span class="text-[#0F0F0F] dark:text-[#F3F4F6]">#{{ tag?.name }}</span>
+          <span class="text-[#F3F4F6]">#{{ tag?.name }}</span>
         </nav>
 
         <!-- Tag header -->
         <div
-          class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-6 sm:p-8 mb-10 flex items-center gap-3"
+          class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-6 sm:p-8 mb-10 flex items-center gap-3"
         >
           <span class="text-3xl font-bold text-primary">#</span>
           <div>
-            <h1 class="text-[24px] sm:text-[32px] font-bold text-[#0F0F0F] dark:text-[#FFFFFF]">
+            <h1 class="text-[24px] sm:text-[32px] font-bold text-[#FFFFFF]">
               {{ tag?.name }}
             </h1>
             <p class="text-xs text-zinc-500 mt-1">

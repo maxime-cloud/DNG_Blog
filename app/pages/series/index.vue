@@ -32,7 +32,7 @@ const seriesList = computed(() => seriesData.value?.data ?? [])
           <div
             v-for="i in 6"
             :key="i"
-            class="h-72 bg-[#EEE] dark:bg-[#111] border-[0.1px] border-dashed border-primary/20 dark:border-dashcolor/30 animate-pulse"
+            class="h-72 bg-[#111] border-[0.1px] border-dashed border-dashcolor/30 animate-pulse"
           />
         </div>
 
@@ -45,10 +45,10 @@ const seriesList = computed(() => seriesData.value?.data ?? [])
             v-for="series in seriesList"
             :key="series.id"
             :to="`/series/${series.slug}`"
-            class="group bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none flex flex-col transition hover:border-blue-500/30"
+            class="group bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none flex flex-col transition hover:border-blue-500/30"
           >
             <!-- Cover -->
-            <div class="h-44 overflow-hidden bg-[#EEE] dark:bg-[#111]">
+            <div class="h-44 overflow-hidden bg-[#111]">
               <img
                 v-if="series.coverImageUrl"
                 :src="series.coverImageUrl"
@@ -78,20 +78,20 @@ const seriesList = computed(() => seriesData.value?.data ?? [])
               </div>
 
               <h3
-                class="text-base font-semibold text-[#0F0F0F] dark:text-[#F3F4F6] line-clamp-2 group-hover:text-primary transition-colors leading-snug"
+                class="text-base font-semibold text-[#F3F4F6] line-clamp-2 group-hover:text-primary transition-colors leading-snug"
               >
                 {{ series.title }}
               </h3>
 
               <p
                 v-if="series.description"
-                class="text-sm text-[#0F0F0F]/60 dark:text-[#F3F4F6]/60 line-clamp-2 flex-1"
+                class="text-sm text-[#F3F4F6]/60 line-clamp-2 flex-1"
               >
                 {{ series.description }}
               </p>
 
               <div
-                class="flex items-center justify-between pt-2 border-t border-dashed border-primary/20 dark:border-dashcolor/30 text-xs text-zinc-500"
+                class="flex items-center justify-between pt-2 border-t border-dashed border-dashcolor/30 text-xs text-zinc-500"
               >
                 <div class="flex items-center gap-1.5">
                   <UIcon

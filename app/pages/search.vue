@@ -63,7 +63,7 @@ useSeoMeta({ title: 'Recherche' })
               v-for="r in results"
               :key="r.id"
               :to="`/article/${r.slug}`"
-              class="block p-4 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 hover:border-primary/60 transition"
+              class="block p-4 border-[0.1px] border-dashed border-dashcolor/50 hover:border-primary/60 transition"
             >
               <h3 class="font-semibold mb-1">{{ r.title }}</h3>
               <p class="text-sm text-zinc-500 line-clamp-2">{{ r.description }}</p>

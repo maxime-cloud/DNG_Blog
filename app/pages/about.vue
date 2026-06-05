@@ -65,7 +65,7 @@ useSeoMeta({ title: 'À propos', description: 'En savoir plus sur ce blog techni
                 'Git'
               ]"
               :key="tech"
-              class="px-3 py-1 text-sm border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50"
+              class="px-3 py-1 text-sm border-[0.1px] border-dashed border-dashcolor/50"
             >
               {{ tech }}
             </span>

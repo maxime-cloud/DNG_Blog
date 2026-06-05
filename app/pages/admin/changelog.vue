@@ -14,12 +14,12 @@ const editForm = reactive({ type: 'FEATURE', title: '', description: '' })
 
 const TYPES = ['FEATURE', 'FIX', 'CONTENT', 'DESIGN', 'PERF', 'SECURITY']
 const typeColors: Record<string, string> = {
-  FEATURE: 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300',
-  FIX: 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300',
-  CONTENT: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
-  DESIGN: 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300',
-  PERF: 'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300',
-  SECURITY: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300'
+  FEATURE: 'bg-green-100 text-green-700 bg-green-900/40 text-green-300',
+  FIX: 'bg-red-100 text-red-700 bg-red-900/40 text-red-300',
+  CONTENT: 'bg-blue-100 text-blue-700 bg-blue-900/40 text-blue-300',
+  DESIGN: 'bg-purple-100 text-purple-700 bg-purple-900/40 text-purple-300',
+  PERF: 'bg-orange-100 text-orange-700 bg-orange-900/40 text-orange-300',
+  SECURITY: 'bg-yellow-100 text-yellow-700 bg-yellow-900/40 text-yellow-300'
 }
 
 async function create() {
@@ -87,7 +87,7 @@ async function del(id: number) {
     >
       <select
         v-model="newEntry.type"
-        class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none w-full text-[#0F0F0F] dark:text-white"
+        class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none w-full text-white"
       >
         <option
           v-for="t in TYPES"
@@ -105,7 +105,7 @@ async function del(id: number) {
         v-model="newEntry.description"
         rows="3"
         placeholder="Description..."
-        class="w-full bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-3 text-sm outline-none rounded-none text-[#0F0F0F] dark:text-white placeholder-[#0F0F0F]/40 dark:placeholder-[#F3F4F6]/60"
+        class="w-full bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-3 text-sm outline-none rounded-none text-white placeholder-[#F3F4F6]/60"
       />
       <div class="flex gap-2">
         <CUButton
@@ -131,7 +131,7 @@ async function del(id: number) {
         >
           <select
             v-model="editForm.type"
-            class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none w-full text-[#0F0F0F] dark:text-white"
+            class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none w-full text-white"
           >
             <option
               v-for="t in TYPES"
@@ -149,7 +149,7 @@ async function del(id: number) {
             v-model="editForm.description"
             rows="3"
             placeholder="Description..."
-            class="w-full bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-3 text-sm outline-none rounded-none text-[#0F0F0F] dark:text-white placeholder-[#0F0F0F]/40 dark:placeholder-[#F3F4F6]/60"
+            class="w-full bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-3 text-sm outline-none rounded-none text-white placeholder-[#F3F4F6]/60"
           />
           <div class="flex gap-2">
             <CUButton

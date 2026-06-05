@@ -84,7 +84,7 @@ function formatJoinDate(dateStr: string) {
         <nav class="flex items-center gap-2 text-xs text-zinc-500 mb-6">
           <NuxtLink
             to="/"
-            class="hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors"
+            class="hover:text-[#F3F4F6] transition-colors"
           >
             Accueil
           </NuxtLink>
@@ -92,14 +92,14 @@ function formatJoinDate(dateStr: string) {
             name="i-lucide-chevron-right"
             class="w-3 h-3"
           />
-          <span class="text-[#0F0F0F] dark:text-[#F3F4F6] truncate max-w-[200px]">
+          <span class="text-[#F3F4F6] truncate max-w-[200px]">
             {{ user?.name }}
           </span>
         </nav>
 
         <!-- Profile header -->
         <div
-          class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-6 sm:p-8 mb-8"
+          class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-6 sm:p-8 mb-8"
         >
           <div class="flex flex-col sm:flex-row items-start sm:items-center gap-5">
             <!-- Avatar -->
@@ -113,7 +113,7 @@ function formatJoinDate(dateStr: string) {
             <!-- Info -->
             <div class="flex-1 min-w-0">
               <div class="flex flex-wrap items-center gap-2 mb-1">
-                <h1 class="text-xl lg:text-2xl font-semibold text-[#0F0F0F] dark:text-[#FFFFFF]">
+                <h1 class="text-xl lg:text-2xl font-semibold text-[#FFFFFF]">
                   {{ user?.name }}
                 </h1>
                 <!-- Role badge -->
@@ -132,7 +132,7 @@ function formatJoinDate(dateStr: string) {
 
               <p
                 v-if="user?.bio"
-                class="text-sm text-[#0F0F0F]/70 dark:text-[#F3F4F6]/70 mb-3 max-w-xl"
+                class="text-sm text-[#F3F4F6]/70 mb-3 max-w-xl"
               >
                 {{ user.bio }}
               </p>
@@ -169,7 +169,7 @@ function formatJoinDate(dateStr: string) {
                   :href="user.githubUrl"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="flex items-center gap-1.5 hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors"
+                  class="flex items-center gap-1.5 hover:text-[#F3F4F6] transition-colors"
                 >
                   <UIcon
                     name="i-simple-icons-github"
@@ -184,7 +184,7 @@ function formatJoinDate(dateStr: string) {
                   :href="user.websiteUrl"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="flex items-center gap-1.5 hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors"
+                  class="flex items-center gap-1.5 hover:text-[#F3F4F6] transition-colors"
                 >
                   <UIcon
                     name="i-lucide-globe"
@@ -201,14 +201,14 @@ function formatJoinDate(dateStr: string) {
         <div v-if="canShowArticles">
           <!-- Tab buttons -->
           <div
-            class="flex border-b-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 mb-6"
+            class="flex border-b-[0.1px] border-dashed border-dashcolor/50 mb-6"
           >
             <button
               class="px-4 py-2 text-sm font-semibold transition-colors border-b-2 -mb-[1px]"
               :class="
                 activeTab === 'articles'
                   ? 'border-primary text-primary'
-                  : 'border-transparent text-zinc-500 hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6]'
+                  : 'border-transparent text-zinc-500 hover:text-[#F3F4F6]'
               "
               @click="activeTab = 'articles'"
             >
@@ -219,7 +219,7 @@ function formatJoinDate(dateStr: string) {
               :class="
                 activeTab === 'activite'
                   ? 'border-primary text-primary'
-                  : 'border-transparent text-zinc-500 hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6]'
+                  : 'border-transparent text-zinc-500 hover:text-[#F3F4F6]'
               "
               @click="activeTab = 'activite'"
             >
@@ -249,7 +249,7 @@ function formatJoinDate(dateStr: string) {
                 v-for="article in articles"
                 :key="article.id"
                 :to="`/article/${article.slug}`"
-                class="group bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none flex flex-col transition hover:border-blue-500/50"
+                class="group bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none flex flex-col transition hover:border-blue-500/50"
               >
                 <!-- Cover -->
                 <div
@@ -280,7 +280,7 @@ function formatJoinDate(dateStr: string) {
 
                   <!-- Title -->
                   <h3
-                    class="text-base font-semibold text-[#0F0F0F] dark:text-[#F3F4F6] mb-2 leading-snug group-hover:text-primary transition-colors"
+                    class="text-base font-semibold text-[#F3F4F6] mb-2 leading-snug group-hover:text-primary transition-colors"
                   >
                     {{ article.title }}
                   </h3>
@@ -311,7 +311,7 @@ function formatJoinDate(dateStr: string) {
             <!-- Empty state -->
             <div
               v-else
-              class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-8 text-center text-sm text-zinc-500"
+              class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-8 text-center text-sm text-zinc-500"
             >
               Aucun article publié pour le moment.
             </div>
@@ -320,7 +320,7 @@ function formatJoinDate(dateStr: string) {
           <!-- Activité tab -->
           <div v-else-if="activeTab === 'activite'">
             <div
-              class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-8 text-center text-sm text-zinc-500"
+              class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-8 text-center text-sm text-zinc-500"
             >
               <UIcon
                 name="i-lucide-activity"

@@ -10,7 +10,7 @@ onMounted(async () => {
 
 <template>
   <aside
-    class="w-64 shrink-0 border-r border-[0.1px] border-dashed border-dashcolor/50 dark:border-dashcolor/50 h-full overflow-y-auto p-4 bg-CustomLight dark:bg-CustomColor-900"
+    class="w-64 shrink-0 border-r border-[0.1px] border-dashed border-dashcolor/50 border-dashcolor/50 h-full overflow-y-auto p-4 bg-CustomColor-900"
   >
     <nav class="space-y-1">
       <template
@@ -23,7 +23,7 @@ onMounted(async () => {
           :class="
             route.path === item.path
               ? 'text-primary font-medium bg-primary/5'
-              : 'text-[#0F0F0F]/70 dark:text-[#F3F4F6]/70'
+              : 'text-[#F3F4F6]/70'
           "
         >
           {{ item.title }}
@@ -40,7 +40,7 @@ onMounted(async () => {
             :class="
               route.path === child.path
                 ? 'text-primary font-medium bg-primary/5'
-                : 'text-zinc-500 dark:text-zinc-500'
+                : 'text-zinc-500'
             "
           >
             {{ child.title }}

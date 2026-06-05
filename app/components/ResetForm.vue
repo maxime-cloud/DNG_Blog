@@ -2,7 +2,7 @@
   <UForm
     :schema="schema"
     :state="state"
-    class="flex flex-col items-center justify-center w-full max-w-md p-8 bg-CustomLight dark:bg-CustomColor-900 relative shadow-[6px_-7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0, 0.51)] dark:border-dashcolor/50 border-[0.1px] border-primary/30"
+    class="flex flex-col items-center justify-center w-full max-w-md p-8 bg-CustomColor-900 relative shadow-[6px_-7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0, 0.51)] border-dashcolor/50 border-[0.1px]"
     @submit="onSubmit"
   >
     <div class="w-full">
@@ -15,7 +15,7 @@
         </div>
         <h2
           v-if="!tokentError"
-          class="text-2xl font-bold mb-1 text-[#0F0F0F] dark:text-[#F3F4F6]"
+          class="text-2xl font-bold mb-1 text-[#F3F4F6]"
         >
           Réinitialisez votre mot de passe
         </h2>
@@ -23,7 +23,7 @@
 
       <UAlert
         v-if="error && !tokentError"
-        class="mb-4 flex flex-col rounded-none ring-0 items-center justify-center bg-CustomLight dark:bg-CustomColor-900 relative shadow-[6px_-7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0, 0.51)] text-red-400 dark:border-red-400/50 border-[0.1px] border-red-400/30"
+        class="mb-4 flex flex-col rounded-none ring-0 items-center justify-center bg-CustomColor-900 relative shadow-[6px_-7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0, 0.51)] text-red-400 border-red-400/50 border-[0.1px] border-red-400/30"
         :description="error"
         color="neutral"
         variant="outline"
@@ -31,7 +31,7 @@
 
       <UAlert
         v-if="error && tokentError"
-        class="mb-4 flex flex-col rounded-none ring-0 items-center justify-center bg-CustomLight dark:bg-CustomColor-900 relative shadow-[6px_-7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0, 0.51)] text-red-400 dark:border-red-400/50 border-[0.1px] border-red-400/30"
+        class="mb-4 flex flex-col rounded-none ring-0 items-center justify-center bg-CustomColor-900 relative shadow-[6px_-7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0, 0.51)] text-red-400 border-red-400/50 border-[0.1px] border-red-400/30"
         :description="error"
         color="neutral"
         variant="outline"

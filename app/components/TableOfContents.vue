@@ -3,7 +3,7 @@
     <!-- Mobile: collapsible -->
     <div class="lg:hidden">
       <button
-        class="w-full flex items-center justify-between px-4 py-3 bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none transition-colors"
+        class="w-full flex items-center justify-between px-4 py-3 bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none transition-colors"
         @click="mobileOpen = !mobileOpen"
       >
         <span
@@ -18,7 +18,7 @@
       </button>
       <nav
         v-show="mobileOpen"
-        class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-t-0 border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-4"
+        class="bg-CustomColor-900 border-[0.1px] border-t-0 border-dashed border-dashcolor/50 shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-4"
         aria-label="Table des matières"
       >
         <ul class="text-sm space-y-1">
@@ -33,7 +33,7 @@
               :class="
                 activeId === heading.id
                   ? 'text-primary font-semibold'
-                  : 'text-[#0F0F0F]/70 dark:text-[#F3F4F6]/70 hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6]'
+                  : 'text-[#F3F4F6]/70 hover:text-[#F3F4F6]'
               "
               @click.prevent="
                 scrollTo(heading.id);
@@ -49,7 +49,7 @@
 
     <!-- Desktop: sticky sidebar -->
     <nav
-      class="hidden lg:block sticky top-20 bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-4"
+      class="hidden lg:block sticky top-20 bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-4"
       aria-label="Table des matières"
     >
       <p
@@ -69,7 +69,7 @@
             :class="
               activeId === heading.id
                 ? 'text-primary font-semibold'
-                : 'text-[#0F0F0F]/70 dark:text-[#F3F4F6]/70 hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6]'
+                : 'text-[#F3F4F6]/70 hover:text-[#F3F4F6]'
             "
             @click.prevent="scrollTo(heading.id)"
           >

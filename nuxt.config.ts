@@ -14,6 +14,11 @@ export default defineNuxtConfig({
   ],
   ssr: true,
 
+  colorMode: {
+    preference: 'dark',
+    fallback: 'dark'
+  },
+
   devtools: {
     enabled: true
   },
@@ -28,10 +33,7 @@ export default defineNuxtConfig({
     build: {
       markdown: {
         highlight: {
-          theme: {
-            default: 'github-light',
-            dark: 'github-dark'
-          },
+          theme: 'github-dark',
           langs: [
             'typescript',
             'javascript',

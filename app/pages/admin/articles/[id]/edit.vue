@@ -115,31 +115,15 @@ async function restoreRevision(revisionId: number) {
     <div class="flex items-center justify-between mb-6">
       <div class="flex items-center gap-3">
         <NuxtLink to="/admin/articles">
-          <CUButton
-            size="sm"
-            logo-name="i-lucide-arrow-left"
-            logo-position="left"
-            label="Retour"
-          />
+          <CUButton size="sm" logo-name="i-lucide-arrow-left" logo-position="left" label="Retour" />
         </NuxtLink>
         <div>
-          <h1 class="text-2xl font-bold text-[#0F0F0F] dark:text-white">
-            Éditer l'article
-          </h1>
-          <UBadge
-            :label="form.status"
-            size="xs"
-            class="mt-1"
-          />
+          <h1 class="text-2xl font-bold text-white">Éditer l'article</h1>
+          <UBadge :label="form.status" size="xs" class="mt-1" />
         </div>
       </div>
       <div class="flex gap-2">
-        <CUButton
-          label="Sauvegarder"
-          size="md"
-          :loading="loading"
-          @click="save"
-        />
+        <CUButton label="Sauvegarder" size="md" :loading="loading" @click="save" />
         <CUButton
           v-if="form.status !== 'PUBLISHED'"
           label="Publier"
@@ -163,12 +147,9 @@ async function restoreRevision(revisionId: number) {
     <!-- Revisions selector -->
     <div
       v-if="revisions.length"
-      class="mb-4 flex items-center gap-3 p-3 bg-[#EEE] dark:bg-[#111] border-[0.1px] border-dashed border-dashcolor/50"
+      class="mb-4 flex items-center gap-3 p-3 bg-[#111] border-[0.1px] border-dashed border-dashcolor/50"
     >
-      <UIcon
-        name="i-lucide-history"
-        class="w-4 h-4 text-zinc-500"
-      />
+      <UIcon name="i-lucide-history" class="w-4 h-4 text-zinc-500" />
       <span class="text-sm text-zinc-500">Révisions :</span>
       <div class="flex gap-2 flex-wrap">
         <button
@@ -195,11 +176,7 @@ async function restoreRevision(revisionId: number) {
         <!-- Title -->
         <div>
           <label class="block text-sm font-medium mb-1">Titre *</label>
-          <CUInput
-            v-model="form.title"
-            placeholder="Titre de l'article"
-            class="w-full"
-          />
+          <CUInput v-model="form.title" placeholder="Titre de l'article" class="w-full" />
         </div>
 
         <!-- Excerpt -->
@@ -208,7 +185,7 @@ async function restoreRevision(revisionId: number) {
           <textarea
             v-model="form.description"
             rows="2"
-            class="w-full bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-3 outline-none text-sm resize-none"
+            class="w-full bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-3 outline-none text-sm resize-none"
             placeholder="Résumé court affiché dans les cartes..."
           />
         </div>
@@ -221,7 +198,7 @@ async function restoreRevision(revisionId: number) {
 
         <!-- SEO -->
         <details class="border-[0.1px] border-dashed border-dashcolor/50">
-          <summary class="px-4 py-3 cursor-pointer text-sm font-medium bg-[#EEE] dark:bg-[#111]">
+          <summary class="px-4 py-3 cursor-pointer text-sm font-medium bg-[#111]">
             SEO (optionnel)
           </summary>
           <div class="p-4 flex flex-col gap-3">
@@ -238,7 +215,7 @@ async function restoreRevision(revisionId: number) {
               <textarea
                 v-model="form.metaDescription"
                 rows="2"
-                class="w-full bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-3 outline-none text-sm resize-none"
+                class="w-full bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-3 outline-none text-sm resize-none"
                 placeholder="Max 160 caractères"
               />
             </div>
@@ -250,56 +227,66 @@ async function restoreRevision(revisionId: number) {
       <div class="flex flex-col gap-4">
         <!-- Cover image -->
         <div
-          class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4"
+          class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4"
         >
           <AdminCoverUpload v-model="form.coverImage" />
         </div>
 
         <!-- Category -->
         <div
-          class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4"
+          class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4"
         >
           <label class="block text-sm font-medium mb-2">Catégorie</label>
           <select
             v-model="form.categoryId"
-            class="w-full bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none"
+            class="w-full bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none"
           >
-            <option :value="null">
-              Aucune catégorie
-            </option>
-            <option
-              v-for="cat in categories"
-              :key="cat.id"
-              :value="cat.id"
-            >
+            <option :value="null">Aucune catégorie</option>
+            <option v-for="cat in categories" :key="cat.id" :value="cat.id">
               {{ cat.name }}
             </option>
           </select>
         </div>
 
         <!-- Tags -->
-        <div
-          class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4"
-        >
+        <div class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4">
           <label class="block text-sm font-medium mb-2">Tags</label>
+
+          <!-- Top 6 popular tags -->
+          <div v-if="popularTags.length" class="flex flex-wrap gap-1 mb-3">
+            <button
+              v-for="tag in popularTags"
+              :key="tag"
+              type="button"
+              class="inline-flex items-center text-xs px-2 py-0.5 border-[0.1px] border-dashed transition-colors cursor-pointer"
+              :class="
+                form.tags.includes(tag)
+                  ? 'bg-primary border-primary text-white'
+                  : 'bg-[#111] border-dashcolor/50 text-[#F3F4F6]/70 hover:border-primary/50 hover:text-[#F3F4F6]'
+              "
+              @click="togglePopularTag(tag)"
+            >
+              {{ tag }}
+            </button>
+          </div>
+
+          <!-- Custom tag input -->
           <div class="flex gap-2 mb-2">
             <CUInput
               v-model="newTag"
-              placeholder="Ajouter un tag"
+              placeholder="Ajouter un tag personnalisé"
               class="flex-1"
               @keyup.enter="addTag"
             />
-            <CUButton
-              size="sm"
-              label="+"
-              @click="addTag"
-            />
+            <CUButton size="sm" label="+" @click="addTag" />
           </div>
-          <div class="flex flex-wrap gap-1">
+
+          <!-- Selected tags -->
+          <div v-if="form.tags.length" class="flex flex-wrap gap-1">
             <span
               v-for="tag in form.tags"
               :key="tag"
-              class="inline-flex items-center gap-1 text-xs px-2 py-0.5 bg-primary/10 border-[0.1px] border-dashed border-primary/40 text-primary cursor-pointer"
+              class="inline-flex items-center gap-1 text-xs px-2 py-0.5 bg-[#1a1a1a] border-[0.1px] border-dashed border-dashcolor/50 text-[#F3F4F6] cursor-pointer hover:border-red-400/50 hover:text-red-400 transition-colors"
               @click="removeTag(tag)"
             >
               {{ tag }} ×
@@ -309,32 +296,21 @@ async function restoreRevision(revisionId: number) {
 
         <!-- Series -->
         <div
-          class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4"
+          class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4"
         >
           <label class="block text-sm font-medium mb-2">Série</label>
           <select
             v-model="form.seriesId"
-            class="w-full bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none mb-2"
+            class="w-full bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none mb-2"
           >
-            <option :value="null">
-              Aucune série
-            </option>
-            <option
-              v-for="s in seriesList"
-              :key="s.id"
-              :value="s.id"
-            >
+            <option :value="null">Aucune série</option>
+            <option v-for="s in seriesList" :key="s.id" :value="s.id">
               {{ s.title }}
             </option>
           </select>
           <div v-if="form.seriesId">
             <label class="block text-xs text-zinc-500 mb-1">Ordre dans la série</label>
-            <CUInput
-              v-model.number="form.seriesOrder"
-              type="number"
-              min="1"
-              class="w-full"
-            />
+            <CUInput v-model.number="form.seriesOrder" type="number" min="1" class="w-full" />
           </div>
         </div>
       </div>

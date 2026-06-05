@@ -58,7 +58,7 @@ const parsedTree = computed(() => (slotText.value ? parseLines(slotText.value) :
 
 <template>
   <div
-    class="bg-[#EEE] dark:bg-[#111] border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-4 my-4 font-mono text-sm"
+    class="bg-[#111] border-[0.1px] border-dashed border-dashcolor/50 shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-4 my-4 font-mono text-sm"
   >
     <template
       v-for="(node, i) in tree ?? parsedTree"

@@ -15,14 +15,14 @@
               >
                 Tutoriels techniques en
                 <span
-                  class="hero-highlight dark:bg-[#DEDEDE] bg-[#0F0F0F] opacity-85 text-[#DEDEDE] dark:text-[#414141] px-1"
+                  class="hero-highlight bg-[#DEDEDE] bg-[#0F0F0F] opacity-85 text-[#414141] px-1"
                 >Développement Web</span>, <br class="block sm:hidden md:block">
                 <span
-                  class="hero-highlight dark:bg-[#DEDEDE] bg-[#0F0F0F] opacity-85 text-[#DEDEDE] dark:text-[#414141] px-1"
+                  class="hero-highlight bg-[#DEDEDE] bg-[#0F0F0F] opacity-85 text-[#414141] px-1"
                 >Réseau et Linux</span>
               </h1>
               <p
-                class="hero-subtitle text-sm sm:text-[16px] lg:text-lg text-center dark:text-[#F3F4F6]/70 text-[#0F0F0F]/70"
+                class="hero-subtitle text-sm sm:text-[16px] lg:text-lg text-center text-[#F3F4F6]/70"
               >
                 Tutoriels pratiques et solutions concrètes pour développeurs et sysadmins.
               </p>

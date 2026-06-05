@@ -37,7 +37,7 @@ function sortBy(key) {
       class="w-full text-sm"
     >
       <thead
-        class="border-b border-[0.1px] border-dashed border-dashcolor/50 bg-[#EEE] dark:bg-[#111]"
+        class="border-b border-[0.1px] border-dashed border-dashcolor/50 bg-[#111]"
       >
         <tr>
           <th
@@ -69,7 +69,7 @@ function sortBy(key) {
           <td
             v-for="col in columns"
             :key="col.key"
-            class="px-4 py-3 text-[#0F0F0F] dark:text-white"
+            class="px-4 py-3 text-white"
           >
             <slot
               :name="col.key"

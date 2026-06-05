@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-3">
     <div
-      class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-4"
+      class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-4"
     >
       <!-- Header -->
       <div class="flex items-center gap-3 mb-3">
@@ -12,7 +12,7 @@
           class="rounded-none"
         />
         <div class="flex-1 min-w-0">
-          <p class="text-sm font-semibold text-[#0F0F0F] dark:text-[#F3F4F6] truncate">
+          <p class="text-sm font-semibold text-[#F3F4F6] truncate">
             {{ comment.user?.name ?? 'Anonyme' }}
           </p>
           <p class="text-xs text-zinc-500">
@@ -30,7 +30,7 @@
       </div>
 
       <!-- Content -->
-      <p class="text-sm text-[#0F0F0F]/80 dark:text-[#F3F4F6]/80 mb-3 whitespace-pre-wrap">
+      <p class="text-sm text-[#F3F4F6]/80 mb-3 whitespace-pre-wrap">
         {{ comment.content }}
       </p>
 
@@ -48,7 +48,7 @@
 
         <!-- Reply -->
         <button
-          class="flex items-center gap-1 text-xs text-zinc-500 hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors"
+          class="flex items-center gap-1 text-xs text-zinc-500 hover:text-[#F3F4F6] transition-colors"
           @click="showReplyForm = !showReplyForm"
         >
           <UIcon name="i-lucide-message-square" class="w-4 h-4" />
@@ -78,7 +78,7 @@
       <!-- Inline reply form -->
       <div
         v-if="showReplyForm"
-        class="mt-3 border-t border-dashed border-primary/20 dark:border-dashcolor/30 pt-3"
+        class="mt-3 border-t border-dashed border-dashcolor/30 pt-3"
       >
         <CommentForm :slug="slug" :parent-id="comment.id" @submitted="onReplySubmitted" />
       </div>

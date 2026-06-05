@@ -79,7 +79,7 @@ const columns = [
     <div class="flex gap-3 mb-4">
       <select
         v-model="status"
-        class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none text-[#0F0F0F] dark:text-white"
+        class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none text-white"
       >
         <option value="">
           Tous

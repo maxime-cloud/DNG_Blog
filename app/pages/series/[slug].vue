@@ -49,7 +49,7 @@ function formatDate(dateStr: string | null) {
         <nav class="flex items-center gap-2 text-xs text-zinc-500 mb-6">
           <NuxtLink
             to="/"
-            class="hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors"
+            class="hover:text-[#F3F4F6] transition-colors"
           >
             Accueil
           </NuxtLink>
@@ -59,7 +59,7 @@ function formatDate(dateStr: string | null) {
           />
           <NuxtLink
             to="/series"
-            class="hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors"
+            class="hover:text-[#F3F4F6] transition-colors"
           >
             Séries
           </NuxtLink>
@@ -67,14 +67,14 @@ function formatDate(dateStr: string | null) {
             name="i-lucide-chevron-right"
             class="w-3 h-3"
           />
-          <span class="text-[#0F0F0F] dark:text-[#F3F4F6] truncate max-w-[200px]">
+          <span class="text-[#F3F4F6] truncate max-w-[200px]">
             {{ series?.title }}
           </span>
         </nav>
 
         <!-- Header -->
         <div
-          class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none mb-8"
+          class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none mb-8"
         >
           <!-- Cover image -->
           <div
@@ -99,14 +99,14 @@ function formatDate(dateStr: string | null) {
             </div>
 
             <h1
-              class="text-[24px] sm:text-[32px] lg:text-[38px] font-bold text-[#0F0F0F] dark:text-[#FFFFFF] leading-tight mb-4"
+              class="text-[24px] sm:text-[32px] lg:text-[38px] font-bold text-[#FFFFFF] leading-tight mb-4"
             >
               {{ series?.title }}
             </h1>
 
             <p
               v-if="series?.description"
-              class="text-base text-[#0F0F0F]/70 dark:text-[#F3F4F6]/70 mb-4 max-w-3xl"
+              class="text-base text-[#F3F4F6]/70 mb-4 max-w-3xl"
             >
               {{ series.description }}
             </p>
@@ -125,7 +125,7 @@ function formatDate(dateStr: string | null) {
 
         <!-- Episode list -->
         <div class="mb-10">
-          <h2 class="text-xl font-semibold text-[#0F0F0F] dark:text-[#FFFFFF] mb-4">
+          <h2 class="text-xl font-semibold text-[#FFFFFF] mb-4">
             Épisodes
           </h2>
 
@@ -137,7 +137,7 @@ function formatDate(dateStr: string | null) {
               v-for="(article, index) in series.articles"
               :key="article.id"
               :to="`/article/${article.slug}`"
-              class="group bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-4 sm:p-5 flex items-center gap-4 transition hover:border-blue-500/50"
+              class="group bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-4 sm:p-5 flex items-center gap-4 transition hover:border-blue-500/50"
             >
               <!-- Episode number badge -->
               <div
@@ -149,7 +149,7 @@ function formatDate(dateStr: string | null) {
               <!-- Episode info -->
               <div class="flex-1 min-w-0">
                 <p
-                  class="text-[#0F0F0F] dark:text-[#F3F4F6] font-semibold text-sm sm:text-base truncate group-hover:text-primary transition-colors"
+                  class="text-[#F3F4F6] font-semibold text-sm sm:text-base truncate group-hover:text-primary transition-colors"
                 >
                   {{ article.title }}
                 </p>
@@ -171,7 +171,7 @@ function formatDate(dateStr: string | null) {
 
           <div
             v-else
-            class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-6 text-center text-sm text-zinc-500"
+            class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-6 text-center text-sm text-zinc-500"
           >
             Aucun épisode disponible pour le moment.
           </div>

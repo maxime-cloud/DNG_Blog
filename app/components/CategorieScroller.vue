@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
     :to="`/categories/${category.slug}`"
-    class="card max-w-60 md:max-w-80 bg-CustomLight dark:bg-CustomColor-900 w-80 flex relative items-center p-4 text-white cursor-pointer rounded-none button border-primary/30 dark:border-dashcolor/50 transition hover:border-blue-500/50 border shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)]"
+    class="card max-w-60 md:max-w-80 bg-CustomColor-900 w-80 flex relative items-center p-4 text-white cursor-pointer rounded-none button border-dashcolor/50 transition hover:border-blue-500/50 border shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)]"
   >
     <img
       v-if="category.imageUrl && category.imageUrl.startsWith('https://')"
@@ -18,7 +18,7 @@
       </h5>
       <p
         v-if="category.description"
-        class="line-clamp-2 text-sm sm:text-[16px] dark:text-[#F3F4F6]/70 text-[#0F0F0F]/70"
+        class="line-clamp-2 text-sm sm:text-[16px] text-[#F3F4F6]/70"
       >
         {{ category.description }}
       </p>

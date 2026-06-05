@@ -12,7 +12,7 @@ defineProps({
     <NuxtLink
       v-if="prev"
       :to="prev.path"
-      class="flex flex-col items-start p-4 border-[0.1px] border-dashed border-dashcolor/50 hover:border-primary/50 flex-1 rounded-none transition text-[#0F0F0F] dark:text-[#F3F4F6]"
+      class="flex flex-col items-start p-4 border-[0.1px] border-dashed border-dashcolor/50 hover:border-primary/50 flex-1 rounded-none transition text-[#F3F4F6]"
     >
       <span class="text-xs text-zinc-500 mb-1">← Précédent</span>
       <span class="text-sm font-medium">{{ prev.title }}</span>
@@ -24,7 +24,7 @@ defineProps({
     <NuxtLink
       v-if="next"
       :to="next.path"
-      class="flex flex-col items-end p-4 border-[0.1px] border-dashed border-dashcolor/50 hover:border-primary/50 flex-1 rounded-none transition text-[#0F0F0F] dark:text-[#F3F4F6]"
+      class="flex flex-col items-end p-4 border-[0.1px] border-dashed border-dashcolor/50 hover:border-primary/50 flex-1 rounded-none transition text-[#F3F4F6]"
     >
       <span class="text-xs text-zinc-500 mb-1">Suivant →</span>
       <span class="text-sm font-medium">{{ next.title }}</span>

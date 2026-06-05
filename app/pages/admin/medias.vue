@@ -106,7 +106,7 @@ async function del(id: number) {
           <input
             v-model="editAltText"
             placeholder="Texte alt..."
-            class="w-full text-xs bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-2 py-1 outline-none text-[#0F0F0F] dark:text-white"
+            class="w-full text-xs bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-2 py-1 outline-none text-white"
           >
           <div class="flex gap-1">
             <button
@@ -125,7 +125,7 @@ async function del(id: number) {
         </div>
         <p
           v-else
-          class="text-xs truncate px-1 py-0.5 bg-CustomLight dark:bg-CustomColor-900 text-[#0F0F0F] dark:text-white"
+          class="text-xs truncate px-1 py-0.5 bg-CustomColor-900 text-white"
         >
           {{ media.filename }}
         </p>

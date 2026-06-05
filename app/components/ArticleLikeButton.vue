@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center gap-2">
     <button
-      class="flex items-center gap-2 px-3 py-1.5 rounded-none border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] bg-CustomLight dark:bg-CustomColor-900 transition-colors hover:border-red-400/50 group"
+      class="flex items-center gap-2 px-3 py-1.5 rounded-none border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] bg-CustomColor-900 transition-colors hover:border-red-400/50 group"
       :disabled="loading"
       @click="toggle"
     >
@@ -24,14 +24,14 @@
     <UModal v-model:open="showLoginPrompt">
       <template #content>
         <div
-          class="flex flex-col items-center gap-4 p-8 bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none"
+          class="flex flex-col items-center gap-4 p-8 bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none"
         >
           <UIcon
             name="i-lucide-heart"
             class="w-8 h-8 text-red-400"
           />
           <p
-            class="text-sm text-[#0F0F0F]/70 dark:text-[#F3F4F6]/70 text-center"
+            class="text-sm text-[#F3F4F6]/70 text-center"
           >
             Connecte-toi pour liker cet article.
           </p>

@@ -21,9 +21,9 @@ interface StepArticle {
   excerpt: string | null
   coverImageUrl: string | null
   publishedAt: string | null
-  author: { id: string, name: string, image: string | null } | null
-  tags: { id: number, name: string, slug: string }[]
-  categories: { id: number, name: string, slug: string }[]
+  author: { id: string; name: string; image: string | null } | null
+  tags: { id: number; name: string; slug: string }[]
+  categories: { id: number; name: string; slug: string }[]
 }
 
 interface StepData {
@@ -42,8 +42,8 @@ interface StepData {
     article: StepArticle
   }
   navigation: {
-    prev: { stepOrder: number | null, stepTitle: string | null, articleSlug: string | null }
-    next: { stepOrder: number | null, stepTitle: string | null, articleSlug: string | null }
+    prev: { stepOrder: number | null; stepTitle: string | null; articleSlug: string | null }
+    next: { stepOrder: number | null; stepTitle: string | null; articleSlug: string | null }
   }
 }
 
@@ -151,17 +151,14 @@ function formatDate(dateStr?: string | null) {
     <BaseLayaoutContent>
       <!-- Path context bar -->
       <div
-        class="sticky top-12 lg:top-16 z-40 bg-CustomLight dark:bg-CustomColor-900 border-b border-dashed border-[0.1px] border-primary/20 dark:border-dashcolor/40"
+        class="sticky top-12 lg:top-16 z-40 bg-CustomColor-900 border-b border-dashed border-[0.1px] border-primary/20 border-dashcolor/40"
       >
         <div class="max-w-7xl mx-auto px-4 py-2 flex items-center gap-4">
           <NuxtLink
             :to="`/training/${pathSlug}`"
             class="flex items-center gap-1.5 text-sm text-zinc-500 hover:text-primary transition-colors shrink-0"
           >
-            <UIcon
-              name="i-lucide-arrow-left"
-              class="w-3.5 h-3.5"
-            />
+            <UIcon name="i-lucide-arrow-left" class="w-3.5 h-3.5" />
             <span class="truncate max-w-[160px] sm:max-w-xs">{{ path?.title }}</span>
           </NuxtLink>
 
@@ -170,7 +167,7 @@ function formatDate(dateStr?: string | null) {
               Étape {{ step?.stepOrder }} / {{ path?.stepsCount }}
             </span>
             <div
-              class="hidden sm:block w-24 h-1 bg-[#0F0F0F]/10 dark:bg-[#F3F4F6]/10 border-[0.1px] border-dashed border-primary/20 dark:border-dashcolor/30 rounded-none overflow-hidden"
+              class="hidden sm:block w-24 h-1 bg-[#F3F4F6]/10 border-[0.1px] border-dashed border-dashcolor/30 rounded-none overflow-hidden"
             >
               <div
                 class="h-full bg-primary transition-all duration-500"
@@ -185,37 +182,20 @@ function formatDate(dateStr?: string | null) {
       <div class="px-4 pt-8 pb-4">
         <!-- Breadcrumb -->
         <nav class="flex items-center gap-2 text-xs text-zinc-500 mb-6 flex-wrap">
-          <NuxtLink
-            to="/"
-            class="hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors"
-          >
-            Accueil
-          </NuxtLink>
-          <UIcon
-            name="i-lucide-chevron-right"
-            class="w-3 h-3"
-          />
-          <NuxtLink
-            to="/training"
-            class="hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors"
-          >
+          <NuxtLink to="/" class="hover:text-[#F3F4F6] transition-colors"> Accueil </NuxtLink>
+          <UIcon name="i-lucide-chevron-right" class="w-3 h-3" />
+          <NuxtLink to="/training" class="hover:text-[#F3F4F6] transition-colors">
             Parcours
           </NuxtLink>
-          <UIcon
-            name="i-lucide-chevron-right"
-            class="w-3 h-3"
-          />
+          <UIcon name="i-lucide-chevron-right" class="w-3 h-3" />
           <NuxtLink
             :to="`/training/${pathSlug}`"
-            class="hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors truncate max-w-[120px]"
+            class="hover:text-[#F3F4F6] transition-colors truncate max-w-[120px]"
           >
             {{ path?.title }}
           </NuxtLink>
-          <UIcon
-            name="i-lucide-chevron-right"
-            class="w-3 h-3"
-          />
-          <span class="text-[#0F0F0F] dark:text-[#F3F4F6] truncate max-w-[160px]">
+          <UIcon name="i-lucide-chevron-right" class="w-3 h-3" />
+          <span class="text-[#F3F4F6] truncate max-w-[160px]">
             {{ step?.stepTitle ?? step?.article.title }}
           </span>
         </nav>
@@ -234,51 +214,33 @@ function formatDate(dateStr?: string | null) {
           </div>
 
           <h1
-            class="text-[24px] sm:text-[32px] lg:text-[40px] font-bold text-[#0F0F0F] dark:text-[#FFFFFF] leading-tight mb-4"
+            class="text-[24px] sm:text-[32px] lg:text-[40px] font-bold text-[#FFFFFF] leading-tight mb-4"
           >
             {{ step?.stepTitle ?? step?.article.title }}
           </h1>
 
-          <p
-            v-if="step?.article.excerpt"
-            class="text-base text-[#0F0F0F]/70 dark:text-[#F3F4F6]/70 mb-4 max-w-3xl"
-          >
+          <p v-if="step?.article.excerpt" class="text-base text-[#F3F4F6]/70 mb-4 max-w-3xl">
             {{ step.article.excerpt }}
           </p>
 
           <div class="flex flex-wrap items-center gap-4 text-sm text-zinc-500">
-            <div
-              v-if="step?.article.author"
-              class="flex items-center gap-2"
-            >
+            <div v-if="step?.article.author" class="flex items-center gap-2">
               <UAvatar
                 :src="step.article.author.image ?? undefined"
                 :alt="step.article.author.name"
                 size="xs"
                 class="rounded-none"
               />
-              <span class="text-[#0F0F0F]/70 dark:text-[#F3F4F6]/70 font-medium">
+              <span class="text-[#F3F4F6]/70 font-medium">
                 {{ step.article.author.name }}
               </span>
             </div>
-            <div
-              v-if="step?.article.publishedAt"
-              class="flex items-center gap-1"
-            >
-              <UIcon
-                name="i-lucide-calendar"
-                class="w-3.5 h-3.5"
-              />
+            <div v-if="step?.article.publishedAt" class="flex items-center gap-1">
+              <UIcon name="i-lucide-calendar" class="w-3.5 h-3.5" />
               <span>{{ formatDate(step.article.publishedAt) }}</span>
             </div>
-            <div
-              v-if="readingTime"
-              class="flex items-center gap-1"
-            >
-              <UIcon
-                name="i-lucide-clock"
-                class="w-3.5 h-3.5"
-              />
+            <div v-if="readingTime" class="flex items-center gap-1">
+              <UIcon name="i-lucide-clock" class="w-3.5 h-3.5" />
               <span>{{ readingTime }}</span>
             </div>
           </div>
@@ -292,60 +254,47 @@ function formatDate(dateStr?: string | null) {
           <!-- Cover image -->
           <div
             v-if="step?.article.coverImageUrl"
-            class="mb-8 bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none overflow-hidden"
+            class="mb-8 bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none overflow-hidden"
           >
             <img
               :src="step.article.coverImageUrl"
               :alt="step.article.title"
               class="w-full h-64 sm:h-80 lg:h-96 object-cover"
               loading="eager"
-            >
+            />
           </div>
 
           <!-- Mobile: Table of Contents -->
-          <div
-            v-if="headings.length"
-            class="mb-6 lg:hidden"
-          >
+          <div v-if="headings.length" class="mb-6 lg:hidden">
             <TableOfContents :headings="headings" />
           </div>
 
           <!-- Article content -->
           <div
             v-if="content"
-            class="prose-article bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-6 sm:p-8 mb-6"
+            class="prose-article bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-6 sm:p-8 mb-6"
           >
             <ContentRenderer :value="content" />
           </div>
 
           <div
             v-else
-            class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-6 sm:p-8 mb-6 text-center text-sm text-zinc-500"
+            class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-6 sm:p-8 mb-6 text-center text-sm text-zinc-500"
           >
             Contenu non disponible.
           </div>
 
           <!-- Mark complete button -->
           <div
-            class="mb-6 bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-4 flex items-center justify-between gap-4"
+            class="mb-6 bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-4 flex items-center justify-between gap-4"
           >
             <div class="flex items-center gap-2 text-sm text-zinc-500">
-              <UIcon
-                name="i-lucide-trophy"
-                class="w-4 h-4"
-              />
+              <UIcon name="i-lucide-trophy" class="w-4 h-4" />
               <span>Progression du parcours</span>
             </div>
 
-            <UTooltip
-              v-if="!isLoggedIn"
-              text="Connectez-vous pour suivre votre progression"
-            >
-              <CUButton
-                label="Marquer comme terminé"
-                logo-name="i-lucide-check"
-                disabled
-              />
+            <UTooltip v-if="!isLoggedIn" text="Connectez-vous pour suivre votre progression">
+              <CUButton label="Marquer comme terminé" logo-name="i-lucide-check" disabled />
             </UTooltip>
 
             <CUButton
@@ -371,7 +320,7 @@ function formatDate(dateStr?: string | null) {
             <NuxtLink
               v-if="nav?.prev.articleSlug"
               :to="`/training/${pathSlug}/${nav.prev.articleSlug}`"
-              class="flex-1 group bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-4 flex items-center gap-3 transition hover:border-blue-500/50"
+              class="flex-1 group bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-4 flex items-center gap-3 transition hover:border-blue-500/50"
             >
               <UIcon
                 name="i-lucide-arrow-left"
@@ -380,7 +329,7 @@ function formatDate(dateStr?: string | null) {
               <div class="min-w-0">
                 <p class="text-xs text-zinc-500 mb-0.5">Étape précédente</p>
                 <p
-                  class="text-sm font-medium text-[#0F0F0F] dark:text-[#F3F4F6] truncate group-hover:text-primary transition-colors"
+                  class="text-sm font-medium text-[#F3F4F6] truncate group-hover:text-primary transition-colors"
                 >
                   {{ nav.prev.stepTitle }}
                 </p>
@@ -388,24 +337,21 @@ function formatDate(dateStr?: string | null) {
             </NuxtLink>
             <div
               v-else
-              class="flex-1 bg-[#0F0F0F]/5 dark:bg-[#F3F4F6]/5 border-[0.1px] border-dashed border-primary/10 dark:border-dashcolor/20 rounded-none p-4 flex items-center gap-3 opacity-40"
+              class="flex-1 bg-[#F3F4F6]/5 border-[0.1px] border-dashed border-dashcolor/20 rounded-none p-4 flex items-center gap-3 opacity-40"
             >
-              <UIcon
-                name="i-lucide-arrow-left"
-                class="w-4 h-4 text-zinc-500 shrink-0"
-              />
+              <UIcon name="i-lucide-arrow-left" class="w-4 h-4 text-zinc-500 shrink-0" />
               <span class="text-sm text-zinc-500">Première étape</span>
             </div>
 
             <NuxtLink
               v-if="nav?.next.articleSlug"
               :to="`/training/${pathSlug}/${nav.next.articleSlug}`"
-              class="flex-1 group bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-4 flex items-center justify-end gap-3 transition hover:border-blue-500/50"
+              class="flex-1 group bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-4 flex items-center justify-end gap-3 transition hover:border-blue-500/50"
             >
               <div class="min-w-0 text-right">
                 <p class="text-xs text-zinc-500 mb-0.5">Étape suivante</p>
                 <p
-                  class="text-sm font-medium text-[#0F0F0F] dark:text-[#F3F4F6] truncate group-hover:text-primary transition-colors"
+                  class="text-sm font-medium text-[#F3F4F6] truncate group-hover:text-primary transition-colors"
                 >
                   {{ nav.next.stepTitle }}
                 </p>
@@ -417,13 +363,10 @@ function formatDate(dateStr?: string | null) {
             </NuxtLink>
             <div
               v-else
-              class="flex-1 bg-[#0F0F0F]/5 dark:bg-[#F3F4F6]/5 border-[0.1px] border-dashed border-primary/10 dark:border-dashcolor/20 rounded-none p-4 flex items-center justify-end gap-3 opacity-40"
+              class="flex-1 bg-[#F3F4F6]/5 border-[0.1px] border-dashed border-dashcolor/20 rounded-none p-4 flex items-center justify-end gap-3 opacity-40"
             >
               <span class="text-sm text-zinc-500">Dernière étape</span>
-              <UIcon
-                name="i-lucide-arrow-right"
-                class="w-4 h-4 text-zinc-500 shrink-0"
-              />
+              <UIcon name="i-lucide-arrow-right" class="w-4 h-4 text-zinc-500 shrink-0" />
             </div>
           </div>
         </div>
@@ -432,14 +375,11 @@ function formatDate(dateStr?: string | null) {
         <aside class="hidden lg:block w-64 shrink-0">
           <div class="sticky top-32 flex flex-col gap-6">
             <!-- Table of contents -->
-            <TableOfContents
-              v-if="headings.length"
-              :headings="headings"
-            />
+            <TableOfContents v-if="headings.length" :headings="headings" />
 
             <!-- Steps list -->
             <div
-              class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-4"
+              class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-4"
             >
               <p class="text-xs font-semibold uppercase tracking-widest text-zinc-500 mb-3">
                 Étapes du parcours
@@ -453,7 +393,7 @@ function formatDate(dateStr?: string | null) {
                   :class="
                     s.articleSlug === stepSlug
                       ? 'bg-primary/10 border-[0.1px] border-dashed border-primary/40'
-                      : 'hover:bg-[#0F0F0F]/5 dark:hover:bg-[#F3F4F6]/5'
+                      : 'hover:bg-[#0F0F0F]/5 hover:bg-[#F3F4F6]/5'
                   "
                 >
                   <div
@@ -463,14 +403,10 @@ function formatDate(dateStr?: string | null) {
                         ? 'bg-green-500/10 border-green-500/40 text-green-500'
                         : s.articleSlug === stepSlug
                           ? 'bg-primary/20 border-primary/50 text-primary'
-                          : 'bg-[#0F0F0F]/5 dark:bg-[#F3F4F6]/5 border-[#0F0F0F]/20 dark:border-dashcolor/30 text-zinc-500'
+                          : 'bg-[#F3F4F6]/5 border-[#0F0F0F]/20 border-dashcolor/30 text-zinc-500'
                     "
                   >
-                    <UIcon
-                      v-if="s.isCompleted"
-                      name="i-lucide-check"
-                      class="w-3 h-3"
-                    />
+                    <UIcon v-if="s.isCompleted" name="i-lucide-check" class="w-3 h-3" />
                     <span v-else>{{ s.stepOrder }}</span>
                   </div>
                   <span
@@ -478,7 +414,7 @@ function formatDate(dateStr?: string | null) {
                     :class="
                       s.articleSlug === stepSlug
                         ? 'text-primary font-medium'
-                        : 'text-zinc-500 group-hover:text-[#0F0F0F] dark:group-hover:text-[#F3F4F6]'
+                        : 'text-zinc-500 group-hover:text-[#F3F4F6]'
                     "
                   >
                     {{ s.stepTitle ?? `Étape ${s.stepOrder}` }}

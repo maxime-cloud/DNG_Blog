@@ -40,14 +40,14 @@ async function save() {
       @submit.prevent="save"
     >
       <div>
-        <label class="text-sm font-medium block mb-1 text-[#0F0F0F] dark:text-white">Nom du site</label>
+        <label class="text-sm font-medium block mb-1 text-white">Nom du site</label>
         <CUInput
           v-model="form.siteName"
           placeholder="DNGBlog"
         />
       </div>
       <div>
-        <label class="text-sm font-medium block mb-1 text-[#0F0F0F] dark:text-white">Articles par page</label>
+        <label class="text-sm font-medium block mb-1 text-white">Articles par page</label>
         <CUInput
           v-model="form.articlesPerPage"
           type="number"
@@ -56,7 +56,7 @@ async function save() {
         />
       </div>
       <div>
-        <label class="text-sm font-medium block mb-1 text-[#0F0F0F] dark:text-white">Email de notification admin</label>
+        <label class="text-sm font-medium block mb-1 text-white">Email de notification admin</label>
         <CUInput
           v-model="form.notificationEmail"
           type="email"

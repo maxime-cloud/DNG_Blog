@@ -73,7 +73,7 @@ useSeoMeta({ title: 'Mon profil' })
             <textarea
               v-model="form.bio"
               rows="3"
-              class="w-full bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-3 outline-none text-sm"
+              class="w-full bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-3 outline-none text-sm"
             />
           </div>
           <div>

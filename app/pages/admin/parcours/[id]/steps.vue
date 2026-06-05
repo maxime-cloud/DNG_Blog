@@ -161,7 +161,7 @@ async function moveStep(step: Step, direction: 'up' | 'down') {
         />
         <div
           v-if="articleResults.length"
-          class="absolute z-10 top-full left-0 right-0 bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)]"
+          class="absolute z-10 top-full left-0 right-0 bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)]"
         >
           <button
             v-for="article in articleResults"

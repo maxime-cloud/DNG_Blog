@@ -15,24 +15,28 @@ Ne jamais modifier le design existant sans demande explicite. Respecter strictem
 ## Couleurs
 
 ### Variables CSS personnalisées (définies dans `main.css`)
+
 ```
---color-CustomColor-900: rgb(10, 10, 10)   // fond dark mode
---color-CustomLight: #FFF                   // fond light mode
---color-dashcolor: #E5E7EB44               // bordures pointillées dark
+--color-CustomColor-900: rgb(10, 10, 10)   // fond (dark only)
+--color-dashcolor: #E5E7EB44               // bordures pointillées
 ```
 
-### Palette exacte
-| Usage | Light | Dark |
-|-------|-------|------|
-| Fond principal | `#FFF` (CustomLight) | `#0A0A0A` (CustomColor-900) |
-| Fond alternatif | `#EEE` | `#111` |
-| Texte principal | `#0F0F0F` | `#FFFFFF` |
-| Texte secondaire | `#0F0F0F/70` | `#F3F4F6/70` |
-| Texte tertiaire | `zinc-500` | `zinc-500` |
-| Erreurs | `red-400` / `red-500` | idem |
-| Accent bleu | `blue-500` | idem |
+> **Dark mode uniquement** — `bg-CustomLight` ne doit plus être utilisé. Toujours `bg-CustomColor-900`.
+
+### Palette (dark mode uniquement)
+
+| Usage            | Valeur                          |
+| ---------------- | ------------------------------- | ---------- |
+| Fond principal   | `bg-CustomColor-900` (#0A0A0A)  |
+| Fond alternatif  | `bg-[#111]`                     |
+| Texte principal  | `text-white` / `text-[#FFFFFF]` |
+| Texte secondaire | `text-[#F3F4F6]/70`             |
+| Texte tertiaire  | `zinc-500`                      | `zinc-500` |
+| Erreurs          | `red-400` / `red-500`           | idem       |
+| Accent bleu      | `blue-500`                      | idem       |
 
 ### Couleurs catégories (OKLCH)
+
 ```
 Vue.js   : oklch(62.7% 0.194 149.214)
 Tailwind : oklch(54.6% 0.245 262.881)
@@ -40,6 +44,7 @@ CSS      : oklch(70.7% 0.165 254.624)
 ```
 
 ### Config (`app.config.ts`)
+
 - Primary : `green`
 - Secondary : `blue`
 - Neutral : `CustomColor`
@@ -53,6 +58,7 @@ shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)]
 shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)]
 shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)]
 ```
+
 Crée un effet 3D avec ombres multidirectionnelles. Utilisé sur : cartes, inputs, boutons, formulaires.
 
 Ombre nav au scroll : `rgba(0,0,0,0.16) 0px 3px 6px, rgba(0,0,0,0.23) 0px 3px 6px`
@@ -71,13 +77,11 @@ Ombre nav au scroll : `rgba(0,0,0,0.16) 0px 3px 6px, rgba(0,0,0,0.23) 0px 3px 6p
 ## Pattern de carte / conteneur (réutiliser tel quel)
 
 ```html
-class="bg-CustomLight dark:bg-CustomColor-900
-       border-[0.1px] border-primary/30 dark:border-dashcolor/50
-       shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)]
-       shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)]
-       shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)]
-       rounded-none"
+class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-primary/30
+dark:border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)]
+shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none"
 ```
+
 Utilisé dans : `ArticleCard`, `LoginForm`, `RegisterForm`, `ForgotForm`, `ResetForm`, `CUButton`, `CUInput`, `NewsLetter`.
 
 ---
@@ -85,6 +89,7 @@ Utilisé dans : `ArticleCard`, `LoginForm`, `RegisterForm`, `ForgotForm`, `Reset
 ## Composants custom (préfixe CU)
 
 ### `CUButton` (wrapper UButton)
+
 ```
 rounded-none
 border-[0.1px] border-dashcolor/50
@@ -93,6 +98,7 @@ hover:bg-primary
 ```
 
 ### `CUInput` (wrapper UInput)
+
 ```
 rounded-none
 bg-CustomLight dark:bg-CustomColor-900
@@ -116,6 +122,7 @@ placeholder-[#0F0F0F]/40 dark:placeholder-[#F3F4F6]/60
 ```
 
 Pour les pages de formulaire (auth) :
+
 ```html
 <NoAdminPage>
   <BaseLayaoutContent>
@@ -130,13 +137,13 @@ Pour les pages de formulaire (auth) :
 
 ## Typographie
 
-| Élément | Classes |
-|---------|---------|
-| Hero H1 | `text-[24px] sm:text-[32px] lg:text-[40px] font-bold` |
-| Header H1 | `text-xl lg:text-2xl font-semibold` |
+| Élément       | Classes                                               |
+| ------------- | ----------------------------------------------------- |
+| Hero H1       | `text-[24px] sm:text-[32px] lg:text-[40px] font-bold` |
+| Header H1     | `text-xl lg:text-2xl font-semibold`                   |
 | Titre section | `text-[24px] sm:text-[32px] lg:text-[38px] font-bold` |
-| H2 formulaire | `text-3xl font-bold` |
-| H3 carte | `text-2xl font-semibold` |
+| H2 formulaire | `text-3xl font-bold`                                  |
+| H3 carte      | `text-2xl font-semibold`                              |
 
 ---
 
@@ -153,10 +160,12 @@ Pour les pages de formulaire (auth) :
 ## Backgrounds spéciaux
 
 ### `.bgHero` (Hero section — défini dans `main.css`)
+
 - Light : `#EEE` avec points `radial-gradient(circle, #888 2px, transparent 1px)` 22x22px + noise SVG + fade elliptique
 - Dark : `#111` avec points `#555` + fade elliptique vers `#111`
 
 ### `.bgCategorie`
+
 - Light : `#DEDEDE` avec même structure que bgHero
 
 **Ne pas recréer ces classes inline — toujours utiliser les classes CSS définies.**
@@ -166,11 +175,13 @@ Pour les pages de formulaire (auth) :
 ## Animations
 
 ### Carousels catégories (CSS pur, `main.css`)
+
 - `scrolling` : de gauche à droite, 20s linear infinite
 - `scrollingRight` : de droite à gauche, 20s linear infinite
 - Pause au hover : `animation-play-state: paused`
 
 ### Transitions
+
 - Header au scroll : `transition-all duration-300` + `backdrop-blur-sm`
 - Hover cartes : `transition hover:border-blue-500/50`
 - Durée standard : 300ms

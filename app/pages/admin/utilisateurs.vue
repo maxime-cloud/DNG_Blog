@@ -276,9 +276,9 @@ async function deleteUser() {
     <!-- Create form -->
     <div
       v-if="showCreate"
-      class="mb-6 p-4 border-[0.1px] border-dashed border-primary/40 dark:border-dashcolor/50 space-y-3"
+      class="mb-6 p-4 border-[0.1px] border-dashed border-dashcolor/50 space-y-3"
     >
-      <p class="text-sm font-semibold text-[#0F0F0F] dark:text-white">
+      <p class="text-sm font-semibold text-white">
         Nouvel utilisateur
       </p>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -298,7 +298,7 @@ async function deleteUser() {
         />
         <select
           v-model="newUser.role"
-          class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 px-3 py-2 text-sm rounded-none text-[#0F0F0F] dark:text-white"
+          class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none text-white"
         >
           <option value="reader">
             Reader
@@ -333,7 +333,7 @@ async function deleteUser() {
       />
       <select
         v-model="roleFilter"
-        class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 px-3 py-2 text-sm rounded-none text-[#0F0F0F] dark:text-white"
+        class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none text-white"
       >
         <option value="">
           Tous les rôles
@@ -419,7 +419,7 @@ async function deleteUser() {
     <!-- User management panel -->
     <div
       v-if="selectedId && selected"
-      class="mt-6 border-[0.1px] border-dashed border-primary/40 dark:border-dashcolor/50"
+      class="mt-6 border-[0.1px] border-dashed border-dashcolor/50"
     >
       <!-- Panel header -->
       <div class="flex items-center gap-4 p-4 border-b border-dashed border-dashcolor/30">
@@ -438,7 +438,7 @@ async function deleteUser() {
               @change="onAvatarChange"
             >
             <span
-              class="flex items-center justify-center w-6 h-6 bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 hover:border-primary/50 transition-colors"
+              class="flex items-center justify-center w-6 h-6 bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 hover:border-primary/50 transition-colors"
             >
               <UIcon
                 :name="uploadingAvatar ? 'i-lucide-loader' : 'i-lucide-camera'"
@@ -494,7 +494,7 @@ async function deleteUser() {
           :class="
             activeTab === tab.key
               ? 'border-primary text-primary'
-              : 'border-transparent text-zinc-500 hover:text-[#0F0F0F] dark:hover:text-white'
+              : 'border-transparent text-zinc-500 hover:text-white'
           "
           @click="activeTab = tab.key as any"
         >
@@ -588,7 +588,7 @@ async function deleteUser() {
           </p>
           <div class="flex items-center gap-2">
             <select
-              class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 px-3 py-2 text-sm rounded-none text-[#0F0F0F] dark:text-white"
+              class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none text-white"
               :value="selected.role"
               @change="changeRole(selected.id, ($event.target as HTMLSelectElement).value)"
             >

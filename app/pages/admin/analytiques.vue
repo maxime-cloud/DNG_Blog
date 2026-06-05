@@ -29,7 +29,7 @@ watch(period, () => {
       </h1>
       <select
         v-model="period"
-        class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none"
+        class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none"
       >
         <option value="7">
           7 jours
@@ -69,7 +69,7 @@ watch(period, () => {
 
     <!-- Traffic chart (simple table) -->
     <div
-      class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4 mb-6"
+      class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4 mb-6"
     >
       <h2 class="font-semibold mb-4">
         Trafic journalier
@@ -106,7 +106,7 @@ watch(period, () => {
 
     <!-- Top articles -->
     <div
-      class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4"
+      class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-4"
     >
       <h2 class="font-semibold mb-4">
         Top articles

@@ -45,7 +45,7 @@ async function del(id: number) {
       />
       <select
         v-model="newPath.difficulty"
-        class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none w-full"
+        class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none w-full"
       >
         <option value="BEGINNER">
           Débutant

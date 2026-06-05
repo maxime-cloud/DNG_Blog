@@ -86,7 +86,7 @@ function progressPercent(path: LearningPath) {
           <div
             v-for="i in 6"
             :key="i"
-            class="h-80 bg-[#EEE] dark:bg-[#111] border-[0.1px] border-dashed border-primary/20 dark:border-dashcolor/30 animate-pulse"
+            class="h-80 bg-[#111] border-[0.1px] border-dashed border-dashcolor/30 animate-pulse"
           />
         </div>
 
@@ -99,10 +99,10 @@ function progressPercent(path: LearningPath) {
             v-for="path in filtered"
             :key="path.id"
             :to="`/training/${path.slug}`"
-            class="group bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none flex flex-col transition hover:border-blue-500/30"
+            class="group bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none flex flex-col transition hover:border-blue-500/30"
           >
             <!-- Cover -->
-            <div class="h-44 overflow-hidden bg-[#EEE] dark:bg-[#111]">
+            <div class="h-44 overflow-hidden bg-[#111]">
               <img
                 v-if="path.coverImageUrl"
                 :src="path.coverImageUrl"
@@ -141,14 +141,14 @@ function progressPercent(path: LearningPath) {
               </div>
 
               <h3
-                class="text-base font-semibold text-[#0F0F0F] dark:text-[#F3F4F6] line-clamp-2 group-hover:text-primary transition-colors leading-snug"
+                class="text-base font-semibold text-[#F3F4F6] line-clamp-2 group-hover:text-primary transition-colors leading-snug"
               >
                 {{ path.title }}
               </h3>
 
               <p
                 v-if="path.description"
-                class="text-sm text-[#0F0F0F]/60 dark:text-[#F3F4F6]/60 line-clamp-2 flex-1"
+                class="text-sm text-[#F3F4F6]/60 line-clamp-2 flex-1"
               >
                 {{ path.description }}
               </p>
@@ -163,7 +163,7 @@ function progressPercent(path: LearningPath) {
                   <span>{{ progressPercent(path) }}%</span>
                 </div>
                 <div
-                  class="w-full h-1 bg-[#0F0F0F]/10 dark:bg-[#F3F4F6]/10 rounded-none overflow-hidden"
+                  class="w-full h-1 bg-[#F3F4F6]/10 rounded-none overflow-hidden"
                 >
                   <div
                     class="h-full bg-primary transition-all"

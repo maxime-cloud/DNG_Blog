@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50"
+    class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50"
   >
     <USkeleton class="h-36 w-full rounded-none" />
     <div class="p-4 space-y-2">

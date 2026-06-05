@@ -25,7 +25,7 @@ useSeoMeta({
         v-for="section in navigation"
         :key="section.path"
         :to="section.children?.[0]?.path ?? section.path"
-        class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 p-6 hover:border-primary/60 transition block"
+        class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 p-6 hover:border-primary/60 transition block"
       >
         <h2 class="text-lg font-semibold mb-2">{{ section.title }}</h2>
         <p class="text-sm text-zinc-500">

@@ -57,11 +57,11 @@ function formatDate(date?: string | Date | null) {
 <template>
   <div
     v-motion-fade-visible
-    class="bg-CustomLight dark:bg-CustomColor-900 flex flex-col h-full border-primary/30 dark:border-dashcolor/50 border-[0.1px] shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] transition hover:border-blue-500/30 group"
+    class="bg-CustomColor-900 flex flex-col flex-1 border-dashcolor/50 border-[0.1px] shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] transition hover:border-blue-500/30 group"
   >
     <!-- Cover image -->
     <NuxtLink :to="`/article/${article.slug}`">
-      <div class="overflow-hidden h-48 bg-[#EEE] dark:bg-[#111]">
+      <div class="overflow-hidden h-48 bg-[#111]">
         <img
           v-if="cover"
           :src="cover"
@@ -95,24 +95,19 @@ function formatDate(date?: string | Date | null) {
 
       <!-- Title -->
       <NuxtLink :to="`/article/${article.slug}`">
-        <h3
-          class="text-base font-semibold text-[#0F0F0F] dark:text-[#F3F4F6] leading-snug line-clamp-2 group-hover:text-primary transition-colors"
-        >
+        <h3 class="text-base font-semibold text-[#F3F4F6] leading-snug line-clamp-2">
           {{ article.title }}
         </h3>
       </NuxtLink>
 
       <!-- Excerpt -->
-      <p
-        v-if="excerpt"
-        class="text-sm text-[#0F0F0F]/60 dark:text-[#F3F4F6]/60 line-clamp-2 flex-1"
-      >
+      <p v-if="excerpt" class="text-sm text-[#F3F4F6]/60 line-clamp-2 flex-1">
         {{ excerpt }}
       </p>
 
       <!-- Footer: author + stats -->
       <div
-        class="flex items-center justify-between gap-2 pt-2 border-t border-dashed border-primary/20 dark:border-dashcolor/30"
+        class="mt-auto flex items-center justify-between gap-2 pt-2 border-t border-dashed border-dashcolor/30"
       >
         <!-- Author -->
         <div v-if="article.author" class="flex items-center gap-2 text-xs text-zinc-500">

@@ -51,7 +51,7 @@ function fileIcon(name: string): string {
         :name="isOpen ? 'i-lucide-folder-open' : 'i-lucide-folder'"
         class="w-3.5 h-3.5 text-yellow-500 shrink-0"
       />
-      <span class="text-[#0F0F0F] dark:text-[#F3F4F6] font-medium">{{ node.name }}</span>
+      <span class="text-[#F3F4F6] font-medium">{{ node.name }}</span>
     </div>
 
     <!-- File -->

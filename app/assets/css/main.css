@@ -6,23 +6,22 @@
   --font-sans: Roboto, sans-serif;
 
   --color-CustomColor-900: rgb(10, 10, 10);
-  --color-CustomLight: #fff;
   --color-dashcolor: #e5e7eb44;
 }
 
 :root {
   --ui-primary: #0f0f0f;
-  --ui-text: #0f0f0f;
+  --ui-text: white;
+}
+
+html,
+body {
+  background-color: rgb(10, 10, 10);
 }
 
 /*div {
   transition: background-color 4s ease-in-out;
 }*/
-
-.dark {
-  --ui-primary: #0f0f0f;
-  --ui-text: white;
-}
 
 .shadowNav {
   box-shadow:
@@ -46,37 +45,27 @@
 }
 
 .bgHero {
-  background-color: #eee;
-  background-image: radial-gradient(circle, #888 2px, transparent 1px);
+  background-color: #111;
+  background-image: radial-gradient(circle, #555 2px, transparent 1px);
   background-size: 22px 22px;
   position: relative;
 }
 
 .bgCategorie {
-  background-color: #dedede;
-  /*background-image: radial-gradient(circle, #888 2px, transparent 1px);*/
-  background-size: 22px 22px;
-  position: relative;
-}
-
-.dark .bgCategorie {
   background-color: #0f0f0f;
   /*background-image: radial-gradient(circle, #555 2px, transparent 1px);*/
-}
-
-.dark .bgHero {
-  background-color: #111;
-  background-image: radial-gradient(circle, #555 2px, transparent 1px);
+  background-size: 22px 22px;
+  position: relative;
 }
 
 /* Fondu radial depuis le centre */
 .bgHero::after,
 .bgCategorie::after {
   @media (width >= 48rem /* 768px */) {
-    background: radial-gradient(ellipse at top, transparent 20%, #eee 80%);
+    background: radial-gradient(ellipse at top, transparent 20%, #111 80%);
   }
   @media (width <= 48rem /* 768px */) {
-    background: radial-gradient(ellipse at top, transparent 20%, #eee 110%);
+    background: radial-gradient(ellipse at top, transparent 20%, #111 110%);
   }
   content: '';
   transition: all 0.3s ease-in-out;
@@ -88,9 +77,6 @@
 /* ── Markdown preview ─────────────────────────────────────────────────────── */
 .md-preview {
   line-height: 1.75;
-  color: #0f0f0f;
-}
-.dark .md-preview {
   color: #f3f4f6;
 }
 
@@ -155,25 +141,19 @@
   color: inherit;
 }
 .md-preview code {
-  background: rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.1);
   padding: 0.15em 0.4em;
   border-radius: 2px;
   font-family: 'Fira Code', monospace;
   font-size: 0.875em;
-}
-.dark .md-preview code {
-  background: rgba(255, 255, 255, 0.1);
 }
 
 .md-preview blockquote {
   border-left: 3px solid oklch(62.7% 0.194 149.214);
   margin: 1em 0;
   padding: 0.5em 1em;
-  background: rgba(0, 0, 0, 0.03);
-  font-style: italic;
-}
-.dark .md-preview blockquote {
   background: rgba(255, 255, 255, 0.03);
+  font-style: italic;
 }
 
 .md-preview hr {
@@ -206,21 +186,6 @@
   font-weight: 600;
 }
 
-.dark .bgHero::after,
-.dark .bgCategorie::after {
-  @media (width >= 48rem /* 768px */) {
-    background: radial-gradient(ellipse at top, transparent 20%, #111 80%);
-  }
-  @media (width <= 48rem /* 768px */) {
-    background: radial-gradient(ellipse at top, transparent 20%, #111 110%);
-  }
-  content: '';
-  transition: all 0.3s ease-in-out;
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
 /* Page transitions (GSAP) */
 .page-enter-active,
 .page-leave-active {
@@ -229,10 +194,6 @@
 
 /* Skeleton CSS variables */
 :root {
-  --skeleton-base: #e5e7eb;
-  --skeleton-highlight: #f3f4f6;
-}
-.dark {
   --skeleton-base: #1f2937;
   --skeleton-highlight: #374151;
 }

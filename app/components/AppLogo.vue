@@ -1,6 +1,6 @@
 <template>
   <svg
-    class="dark:hidden"
+    class="hidden"
     width="31"
     height="38"
     viewBox="0 0 31 38"

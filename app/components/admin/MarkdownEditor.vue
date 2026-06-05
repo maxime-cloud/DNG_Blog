@@ -65,7 +65,7 @@ async function onDrop(event: DragEvent) {
   >
     <!-- Toolbar -->
     <div
-      class="flex items-center gap-1 p-2 border-b border-[0.1px] border-dashed border-dashcolor/30 bg-[#EEE] dark:bg-[#111]"
+      class="flex items-center gap-1 p-2 border-b border-[0.1px] border-dashed border-dashcolor/30 bg-[#111]"
     >
       <CUButton
         size="xs"
@@ -135,7 +135,7 @@ async function onDrop(event: DragEvent) {
         v-if="!showPreview"
         ref="textarea"
         :value="modelValue"
-        class="flex-1 p-4 bg-CustomLight dark:bg-CustomColor-900 text-[#0F0F0F] dark:text-white font-mono text-sm resize-none outline-none placeholder-[#0F0F0F]/40 dark:placeholder-[#F3F4F6]/60"
+        class="flex-1 p-4 bg-CustomColor-900 text-white font-mono text-sm resize-none outline-none placeholder-[#F3F4F6]/60"
         :class="uploadingImage ? 'opacity-60' : ''"
         placeholder="Écrivez votre contenu en Markdown… (glissez une image pour l'uploader)"
         @input="emit('update:modelValue', ($event.target as HTMLTextAreaElement).value)"
@@ -144,14 +144,14 @@ async function onDrop(event: DragEvent) {
       />
       <div
         v-else
-        class="flex-1 p-4 bg-CustomLight dark:bg-CustomColor-900 prose dark:prose-invert max-w-none overflow-auto"
+        class="flex-1 p-4 bg-CustomColor-900 prose prose-invert max-w-none overflow-auto"
         v-html="renderedHtml"
       />
     </div>
 
     <!-- Footer -->
     <div
-      class="flex justify-between px-4 py-1 border-t border-[0.1px] border-dashed border-dashcolor/30 bg-[#EEE] dark:bg-[#111]"
+      class="flex justify-between px-4 py-1 border-t border-[0.1px] border-dashed border-dashcolor/30 bg-[#111]"
     >
       <span class="text-xs text-zinc-500">Glissez une image dans l'éditeur pour l'uploader</span>
       <span class="text-xs text-zinc-500">{{ modelValue?.length ?? 0 }} caractères</span>

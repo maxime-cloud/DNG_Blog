@@ -1,8 +1,8 @@
 <template>
-  <div class="min-h-screen bg-CustomLight dark:bg-CustomColor-900">
+  <div class="min-h-screen bg-CustomColor-900">
     <!-- Docs header -->
     <header
-      class="sticky top-0 z-30 h-14 flex items-center px-4 lg:px-8 gap-4 border-b border-[0.1px] border-dashed border-dashcolor/50 bg-CustomLight dark:bg-CustomColor-900"
+      class="sticky top-0 z-30 h-14 flex items-center px-4 lg:px-8 gap-4 border-b border-[0.1px] border-dashed border-dashcolor/50 bg-CustomColor-900"
     >
       <NuxtLink
         to="/"
@@ -23,13 +23,13 @@
       <div class="relative w-full max-w-xs">
         <UIcon
           name="i-lucide-search"
-          class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0F0F0F]/40 dark:text-[#F3F4F6]/40 pointer-events-none"
+          class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#F3F4F6]/40 pointer-events-none"
         />
         <input
           v-model="search"
           type="text"
           placeholder="Rechercher..."
-          class="w-full pl-9 pr-3 py-1.5 text-sm bg-CustomLight dark:bg-CustomColor-900 border border-[0.1px] border-dashed border-dashcolor/50 rounded-none text-[#0F0F0F] dark:text-white placeholder-[#0F0F0F]/40 dark:placeholder-[#F3F4F6]/60 outline-none focus:border-primary/50 transition-colors"
+          class="w-full pl-9 pr-3 py-1.5 text-sm bg-CustomColor-900 border border-[0.1px] border-dashed border-dashcolor/50 rounded-none text-white placeholder-[#F3F4F6]/60 outline-none focus:border-primary/50 transition-colors"
         >
       </div>
     </header>
@@ -51,7 +51,7 @@
           <NuxtLink
             v-if="prevPage"
             :to="prevPage.to"
-            class="flex items-center gap-2 text-sm text-[#0F0F0F]/70 dark:text-[#F3F4F6]/70 hover:text-[#0F0F0F] dark:hover:text-white transition-colors"
+            class="flex items-center gap-2 text-sm text-[#F3F4F6]/70 hover:text-white transition-colors"
           >
             <UIcon
               name="i-lucide-arrow-left"
@@ -65,7 +65,7 @@
           <NuxtLink
             v-if="nextPage"
             :to="nextPage.to"
-            class="flex items-center gap-2 text-sm text-[#0F0F0F]/70 dark:text-[#F3F4F6]/70 hover:text-[#0F0F0F] dark:hover:text-white transition-colors"
+            class="flex items-center gap-2 text-sm text-[#F3F4F6]/70 hover:text-white transition-colors"
           >
             <span>{{ nextPage.label }}</span>
             <UIcon
@@ -88,7 +88,7 @@
               v-for="heading in toc"
               :key="heading.id"
               :href="`#${heading.id}`"
-              class="block px-3 py-1 text-sm text-[#0F0F0F]/60 dark:text-[#F3F4F6]/60 hover:text-[#0F0F0F] dark:hover:text-white transition-colors rounded-none"
+              class="block px-3 py-1 text-sm text-[#F3F4F6]/60 hover:text-white transition-colors rounded-none"
               :class="{ 'pl-5 text-xs': heading.depth === 3 }"
             >
               {{ heading.text }}

@@ -3,7 +3,7 @@
     v-if="!AcountCreated"
     :schema="schema"
     :state="state"
-    class="flex flex-col items-center justify-center w-full max-w-md p-8 bg-CustomLight dark:bg-CustomColor-900 relative shadow-[6px_-7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0, 0.51)] dark:border-dashcolor/50 border-[0.1px] border-primary/30"
+    class="flex flex-col items-center justify-center w-full max-w-md p-8 bg-CustomColor-900 relative shadow-[6px_-7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0, 0.51)] border-dashcolor/50 border-[0.1px]"
     @submit="onSubmit"
   >
     <div class="w-full">
@@ -14,7 +14,7 @@
             DNG Blog
           </h1>
         </div>
-        <h2 class="text-3xl font-bold mb-8 text-[#0F0F0F] dark:text-[#F3F4F6]">
+        <h2 class="text-3xl font-bold mb-8 text-[#F3F4F6]">
           Créer un compte
         </h2>
       </div>
@@ -30,16 +30,16 @@
       />
 
       <div class="flex items-center justify-between mb-4">
-        <div class="grow border-t border-gray-300 dark:border-gray-700" />
-        <p class="mx-4 text-[#0F0F0F]/70 dark:text-[#F3F4F6]/70">
+        <div class="grow border-t border-gray-700" />
+        <p class="mx-4 text-[#F3F4F6]/70">
           — or —
         </p>
-        <div class="grow border-t border-gray-300 dark:border-gray-700" />
+        <div class="grow border-t border-gray-700" />
       </div>
 
       <UAlert
         v-if="error"
-        class="mb-4 flex flex-col rounded-none ring-0 items-center justify-center bg-CustomLight dark:bg-CustomColor-900 relative shadow-[6px_-7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0, 0.51)] text-red-400 dark:border-red-400/50 border-[0.1px] border-red-400/30"
+        class="mb-4 flex flex-col rounded-none ring-0 items-center justify-center bg-CustomColor-900 relative shadow-[6px_-7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0, 0.51)] text-red-400 border-red-400/50 border-[0.1px] border-red-400/30"
         :description="error"
         color="neutral"
         variant="outline"
@@ -110,7 +110,7 @@
         class="w-full mb-4 justify-center"
       />
 
-      <p class="text-center text-[#0F0F0F]/70 dark:text-[#F3F4F6]/70 text-sm">
+      <p class="text-center text-[#F3F4F6]/70 text-sm">
         J'ai déjà un compte
         <NuxtLink
           to="/auth/login"

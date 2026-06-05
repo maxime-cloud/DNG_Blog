@@ -207,7 +207,6 @@ const pageUrl = computed(() => {
   const base = (runtimeConfig.public.siteUrl as string | undefined) ?? origin
   return `${base}/article/${slug}`
 })
-
 // Formatted date
 function formatDate(dateStr?: string | null) {
   if (!dateStr) return ''
@@ -232,13 +231,13 @@ useSeoMeta({
       <div class="px-4 pt-10 pb-4">
         <!-- Breadcrumb -->
         <nav class="flex items-center gap-2 text-xs text-zinc-500 mb-6">
-          <NuxtLink to="/" class="hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors">
+          <NuxtLink to="/" class="hover:text-[#F3F4F6] transition-colors">
             Accueil
           </NuxtLink>
           <UIcon name="i-lucide-chevron-right" class="w-3 h-3" />
           <NuxtLink
             to="/articles"
-            class="hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors"
+            class="hover:text-[#F3F4F6] transition-colors"
           >
             Articles
           </NuxtLink>
@@ -246,13 +245,13 @@ useSeoMeta({
             <UIcon name="i-lucide-chevron-right" class="w-3 h-3" />
             <NuxtLink
               :to="`/categories/${article.category.slug}`"
-              class="hover:text-[#0F0F0F] dark:hover:text-[#F3F4F6] transition-colors"
+              class="hover:text-[#F3F4F6] transition-colors"
             >
               {{ article.category.name }}
             </NuxtLink>
           </template>
           <UIcon name="i-lucide-chevron-right" class="w-3 h-3" />
-          <span class="text-[#0F0F0F] dark:text-[#F3F4F6] truncate max-w-[200px]">
+          <span class="text-[#F3F4F6] truncate max-w-[200px]">
             {{ article?.title }}
           </span>
         </nav>
@@ -276,7 +275,7 @@ useSeoMeta({
 
           <!-- Title -->
           <h1
-            class="text-[24px] sm:text-[32px] lg:text-[40px] font-bold text-[#0F0F0F] dark:text-[#FFFFFF] leading-tight mb-4"
+            class="text-[24px] sm:text-[32px] lg:text-[40px] font-bold text-[#FFFFFF] leading-tight mb-4"
           >
             {{ article?.title }}
           </h1>
@@ -284,7 +283,7 @@ useSeoMeta({
           <!-- Description -->
           <p
             v-if="article?.description"
-            class="text-base text-[#0F0F0F]/70 dark:text-[#F3F4F6]/70 mb-4 max-w-3xl"
+            class="text-base text-[#F3F4F6]/70 mb-4 max-w-3xl"
           >
             {{ article.description }}
           </p>
@@ -299,7 +298,7 @@ useSeoMeta({
                 size="xs"
                 class="rounded-none"
               />
-              <span class="text-[#0F0F0F]/70 dark:text-[#F3F4F6]/70 font-medium">
+              <span class="text-[#F3F4F6]/70 font-medium">
                 {{ article.author.name }}
               </span>
             </div>
@@ -343,7 +342,7 @@ useSeoMeta({
           <!-- Cover image -->
           <div
             v-if="article?.coverImage"
-            class="mb-8 bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none overflow-hidden"
+            class="mb-8 bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none overflow-hidden"
           >
             <img
               :src="article.coverImage"
@@ -362,14 +361,14 @@ useSeoMeta({
           <div
             v-if="content"
             ref="articleContent"
-            class="prose-article bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-6 sm:p-8 mb-6"
+            class="prose-article bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-6 sm:p-8 mb-6"
           >
             <ContentRenderer :value="content" />
           </div>
 
           <!-- Action bar -->
           <div
-            class="flex flex-wrap items-center gap-3 py-4 px-4 mb-6 bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none"
+            class="flex flex-wrap items-center gap-3 py-4 px-4 mb-6 bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none"
           >
             <ArticleLikeButton
               v-if="article"
@@ -405,7 +404,7 @@ useSeoMeta({
           <!-- Related articles -->
           <section v-if="relatedArticles?.length" class="mb-8">
             <h2
-              class="text-[24px] sm:text-[32px] font-bold text-[#0F0F0F] dark:text-[#FFFFFF] mb-4"
+              class="text-[24px] sm:text-[32px] font-bold text-[#FFFFFF] mb-4"
             >
               Articles similaires
             </h2>
@@ -422,7 +421,7 @@ useSeoMeta({
           <!-- Comments section -->
           <section class="mb-8">
             <h2
-              class="text-[24px] sm:text-[32px] font-bold text-[#0F0F0F] dark:text-[#FFFFFF] mb-4"
+              class="text-[24px] sm:text-[32px] font-bold text-[#FFFFFF] mb-4"
             >
               Commentaires
             </h2>
@@ -449,7 +448,7 @@ useSeoMeta({
 
             <div
               v-else
-              class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-6 text-center text-sm text-zinc-500"
+              class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-6 text-center text-sm text-zinc-500"
             >
               Aucun commentaire pour l'instant. Sois le premier !
             </div>
@@ -465,7 +464,7 @@ useSeoMeta({
             <!-- Author card -->
             <div
               v-if="article?.author"
-              class="bg-CustomLight dark:bg-CustomColor-900 border-[0.1px] border-dashed border-primary/30 dark:border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-4"
+              class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-4"
             >
               <p class="text-xs font-semibold uppercase tracking-widest text-zinc-500 mb-3">
                 Auteur
@@ -478,7 +477,7 @@ useSeoMeta({
                   class="rounded-none"
                 />
                 <div class="min-w-0">
-                  <p class="text-sm font-semibold text-[#0F0F0F] dark:text-[#F3F4F6] truncate">
+                  <p class="text-sm font-semibold text-[#F3F4F6] truncate">
                     {{ article.author.name }}
                   </p>
                 </div>

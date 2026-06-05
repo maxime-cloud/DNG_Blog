@@ -3,7 +3,7 @@
     v-if="!emailSent"
     :schema="schema"
     :state="state"
-    class="flex flex-col items-center justify-center w-full max-w-md p-8 bg-CustomLight dark:bg-CustomColor-900 relative shadow-[6px_-7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0, 0.51)] dark:border-dashcolor/50 border-[0.1px] border-primary/30"
+    class="flex flex-col items-center justify-center w-full max-w-md p-8 bg-CustomColor-900 relative shadow-[6px_-7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0, 0.51)] border-dashcolor/50 border-[0.1px]"
     @submit="onSubmit"
   >
     <div class="w-full">
@@ -14,17 +14,17 @@
             DNG Blog
           </h1>
         </div>
-        <h2 class="text-3xl font-bold mb-1 text-[#0F0F0F] dark:text-[#F3F4F6]">
+        <h2 class="text-3xl font-bold mb-1 text-[#F3F4F6]">
           Mot de passe oublié
         </h2>
-        <p class="text-[#0F0F0F]/70 dark:text-[#F3F4F6]/70 mb-8">
+        <p class="text-[#F3F4F6]/70 mb-8">
           Réinitialisez votre mot de passe
         </p>
       </div>
 
       <UAlert
         v-if="error"
-        class="mb-4 flex flex-col rounded-none ring-0 items-center justify-center bg-CustomLight dark:bg-CustomColor-900 relative shadow-[6px_-7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0, 0.51)] text-red-400 dark:border-red-400/50 border-[0.1px] border-red-400/30"
+        class="mb-4 flex flex-col rounded-none ring-0 items-center justify-center bg-CustomColor-900 relative shadow-[6px_-7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0, 0.51)] text-red-400 border-red-400/50 border-[0.1px] border-red-400/30"
         :description="error"
         color="neutral"
         variant="outline"
@@ -57,7 +57,7 @@
 
   <div
     v-else
-    class="p-8 flex flex-col rounded-none ring-0 items-center justify-center w-full max-w-md bg-CustomLight dark:bg-CustomColor-900 relative shadow-[6px_-7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0, 0.51)] dark:border-dashcolor/50 border-[0.1px] border-primary/30"
+    class="p-8 flex flex-col rounded-none ring-0 items-center justify-center w-full max-w-md bg-CustomColor-900 relative shadow-[6px_-7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0, 0.51)] border-dashcolor/50 border-[0.1px]"
   >
     <div
       class="bg-base-100 shadow-base-300/20 z-1 w-full space-y-6 rounded-xl shadow-md sm:max-w-md"

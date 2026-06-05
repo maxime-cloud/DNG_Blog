@@ -47,7 +47,7 @@ const filePath = computed(() => path.value.replace('/docs', 'docs'))
         {{ page?.description }}
       </p>
 
-      <div class="prose dark:prose-invert max-w-none">
+      <div class="prose prose-invert max-w-none">
         <ContentRenderer
           v-if="page"
           :value="page"

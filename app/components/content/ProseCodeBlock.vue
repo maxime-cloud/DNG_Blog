@@ -1,11 +1,11 @@
 <template>
   <div
-    class="bg-zinc-900 dark:bg-zinc-950 rounded-none border-[0.1px] border-zinc-700 overflow-hidden my-4"
+    class="bg-zinc-900 bg-zinc-950 rounded-none border-[0.1px] border-zinc-700 overflow-hidden my-4"
   >
     <!-- Top bar -->
     <div
       v-if="filename || language"
-      class="flex items-center justify-between px-4 py-2 bg-zinc-800 dark:bg-zinc-900 border-b border-[0.1px] border-zinc-700"
+      class="flex items-center justify-between px-4 py-2 bg-zinc-900 border-b border-[0.1px] border-zinc-700"
     >
       <span class="text-zinc-400 text-sm font-mono">{{ filename }}</span>
       <div class="flex items-center gap-2">
@@ -27,7 +27,7 @@
     <!-- Copy button when no filename bar -->
     <div
       v-else
-      class="flex items-center justify-end px-4 py-2 bg-zinc-800 dark:bg-zinc-900 border-b border-[0.1px] border-zinc-700"
+      class="flex items-center justify-end px-4 py-2 bg-zinc-900 border-b border-[0.1px] border-zinc-700"
     >
       <button
         class="text-zinc-400 hover:text-white transition-colors duration-200 text-sm font-mono"

@@ -41,7 +41,7 @@ const keys = computed(() =>
       :key="i"
     >
       <span
-        class="inline-flex items-center justify-center min-w-[1.5rem] h-6 px-1.5 text-xs font-mono font-semibold bg-[#EEE] dark:bg-[#222] text-[#0F0F0F] dark:text-[#F3F4F6] border-[0.1px] border-[#0F0F0F]/20 dark:border-dashcolor/50 shadow-[0px_2px_0px_0px_rgb(0,0,0,0.25)] rounded-none select-none"
+        class="inline-flex items-center justify-center min-w-[1.5rem] h-6 px-1.5 text-xs font-mono font-semibold bg-[#EEE] bg-[#222] text-[#F3F4F6] border-[0.1px] border-[#0F0F0F]/20 border-dashcolor/50 shadow-[0px_2px_0px_0px_rgb(0,0,0,0.25)] rounded-none select-none"
       >
         {{ k }}
       </span>
