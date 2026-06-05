@@ -249,7 +249,6 @@ const showProgress = computed(() => isLoggedIn.value && (path.value?.steps?.leng
                   class="w-4 h-4 text-zinc-500 group-hover:text-white transition-colors"
                 />
               </div>
-              </div>
             </NuxtLink>
           </div>
 
