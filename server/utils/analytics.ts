@@ -12,7 +12,7 @@ function sha256(value: string): string {
 export function bucketByDay(
   dates: Array<Date | string | null | undefined>,
   days: number
-): Array<{ date: string, count: number }> {
+): Array<{ date: string; count: number }> {
   const buckets = new Map<string, number>()
   const today = new Date()
   today.setHours(0, 0, 0, 0)
@@ -31,6 +31,33 @@ export function bucketByDay(
   }
 
   return Array.from(buckets.entries()).map(([date, count]) => ({ date, count }))
+}
+
+/**
+ * Zero-fills a pre-aggregated daily series over the last `days` days. Takes
+ * entries that already carry a value (e.g. summed view counts) and returns a
+ * continuous ascending `{ date, value }` series with gaps filled to 0.
+ */
+export function zeroFillDaily(
+  entries: Array<{ date: Date | string; value: number }>,
+  days: number
+): Array<{ date: string; value: number }> {
+  const known = new Map<string, number>()
+  for (const e of entries) {
+    known.set(new Date(e.date).toISOString().slice(0, 10), e.value)
+  }
+
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  const series: Array<{ date: string; value: number }> = []
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date(today)
+    d.setDate(d.getDate() - i)
+    const key = d.toISOString().slice(0, 10)
+    series.push({ date: key, value: known.get(key) ?? 0 })
+  }
+  return series
 }
 
 /** Percentage change between two values, rounded; 0 when previous is 0. */

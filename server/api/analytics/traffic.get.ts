@@ -5,7 +5,7 @@ const querySchema = z.object({
   days: z.coerce.number().int().min(1).max(365).default(30)
 })
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async event => {
   await requireRole(event, 'admin')
 
   try {
@@ -21,10 +21,11 @@ export default defineEventHandler(async (event) => {
       orderBy: { viewDate: 'asc' }
     })
 
-    const data = rows.map(r => ({
-      date: r.viewDate,
-      views: r._sum.viewCount ?? 0
-    }))
+    // Zero-fill missing days so the timeline is continuous over the period
+    const data = zeroFillDaily(
+      rows.map(r => ({ date: r.viewDate, value: r._sum.viewCount ?? 0 })),
+      days
+    ).map(d => ({ date: d.date, views: d.value }))
 
     return { data, days }
   } catch (error: any) {

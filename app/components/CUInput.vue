@@ -25,4 +25,24 @@ const props = defineProps({
   color: #e5e7eb;
   opacity: 0.4;
 }
+
+/* Garde le fond sombre quand le champ est auto-rempli par le navigateur */
+:deep(input:-webkit-autofill),
+:deep(input:-webkit-autofill:hover),
+:deep(input:-webkit-autofill:focus),
+:deep(input:-webkit-autofill:active) {
+  -webkit-box-shadow:
+    0 0 0 1000px rgb(10, 10, 10) inset,
+    -6px 7px 24px 0px rgb(0 0 0 / 0.51),
+    0px -4px 4px 0px rgb(0 0 0 / 0.51) !important;
+  box-shadow:
+    0 0 0 1000px rgb(10, 10, 10) inset,
+    -6px 7px 24px 0px rgb(0 0 0 / 0.51),
+    0px -4px 4px 0px rgb(0 0 0 / 0.51) !important;
+  -webkit-text-fill-color: #fff !important;
+  caret-color: #fff;
+  outline: none !important;
+  border-color: #e5e7eb44 !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
 </style>

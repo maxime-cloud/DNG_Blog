@@ -33,6 +33,18 @@ const tickValues = computed(() => {
 
 const xTickFormat = (i: number) => props.data[i]?.label ?? ''
 
+// Counts are always whole numbers → force integer-only y-axis ticks (no 0.2, 0.4…)
+const yTickValues = computed(() => {
+  const max = Math.max(1, ...props.data.map(d => d.value))
+  const step = Math.max(1, Math.ceil(max / 5))
+  const ticks: number[] = []
+  for (let v = 0; v <= max; v += step) ticks.push(v)
+  if (ticks[ticks.length - 1] !== max) ticks.push(max)
+  return ticks
+})
+
+const yTickFormat = (v: number) => String(Math.round(v))
+
 const tooltipTemplate = (d: Point) =>
   `<div style="font-size:12px"><strong>${d.value}</strong><br/><span style="opacity:.6">${d.label}</span></div>`
 </script>
@@ -57,7 +69,8 @@ const tooltipTemplate = (d: Point) =>
         />
         <VisAxis
           type="y"
-          :num-ticks="4"
+          :tick-values="yTickValues"
+          :tick-format="yTickFormat"
           :grid-line="false"
           :tick-line="false"
           :domain-line="false"
