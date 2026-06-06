@@ -5,7 +5,7 @@ const page = ref(1)
 const search = ref('')
 const status = ref('')
 
-const { data, refresh } = await useFetch('/api/admin/articles', {
+const { data, refresh, pending } = await useLazyFetch('/api/admin/articles', {
   query: computed(() => ({
     page: page.value,
     search: search.value || undefined,
@@ -72,14 +72,21 @@ async function deleteArticle(id) {
     <!-- DataTable with scoped slots -->
     <AdminDataTable
       :columns="columns"
-      :rows="data?.data ?? []"
+      :rows="pending ? [] : (data?.data ?? [])"
       :total="data?.total"
       :page="page"
       @page-change="page = $event"
     >
+      <template v-if="pending" #default>
+        <div class="space-y-2 p-4">
+          <USkeleton v-for="i in 5" :key="i" class="h-12 w-full rounded-none" />
+        </div>
+      </template>
+
       <template #status="{ row }">
         <UBadge
           :label="row.status"
+          color="neutral"
           size="sm"
         />
       </template>

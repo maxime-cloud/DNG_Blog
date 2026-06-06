@@ -1,5 +1,8 @@
 <template>
-  <div class="carousel z-10">
+  <div v-if="pending" class="flex gap-4 overflow-hidden">
+    <SkeletonsCategoryCardSkeleton v-for="i in 5" :key="i" />
+  </div>
+  <div v-else class="carousel z-10">
     <div
       class="group"
       :class="props.direction"
@@ -29,7 +32,7 @@ const props = defineProps<{
   direction: 'left' | 'right'
 }>()
 
-const { data } = await useFetch('/api/categories')
+const { data, pending } = await useLazyFetch('/api/categories')
 const categories = computed(() => data.value?.data ?? [])
 </script>
 

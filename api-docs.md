@@ -181,7 +181,33 @@ Admin only. Remove a step from a path. Does not delete the linked article.
 
 ---
 
-## Admin — Newsletter Campaigns
+## Admin — Users
+
+Tous les endpoints sont **admin only**. Erreurs communes : `401`, `403`.
+
+### `POST /api/admin/ban`
+
+Admin only. Bannit un utilisateur.
+
+- **Body:** `{ userId: string, reason?: string, banExpiresIn?: number }`
+- **Response:** `{ success: true }`
+- **Errors:** `400` validation, `401`, `403`
+
+### `POST /api/admin/unban`
+
+Admin only. Annule le bannissement d'un utilisateur.
+
+- **Body:** `{ userId: string }`
+- **Response:** `{ success: true }`
+- **Errors:** `400` validation, `401`, `403`
+
+### `POST /api/admin/update-user`
+
+Admin only. Met à jour les informations d'un utilisateur (ex: emailVerified).
+
+- **Body:** `{ userId: string, data: Record<string, any> }`
+- **Response:** `{ success: true }`
+- **Errors:** `400` validation, `401`, `403`
 
 ### `POST /api/admin/newsletter/campaigns`
 

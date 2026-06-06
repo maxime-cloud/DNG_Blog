@@ -379,6 +379,7 @@ async function deleteUser() {
       <template #role="{ row }">
         <UBadge
           :label="row.role"
+          color="neutral"
           size="sm"
         />
       </template>
@@ -459,6 +460,7 @@ async function deleteUser() {
           <div class="flex items-center gap-2 mt-1">
             <UBadge
               :label="selected.role"
+              color="neutral"
               size="sm"
             />
             <UBadge

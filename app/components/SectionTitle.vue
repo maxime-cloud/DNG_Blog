@@ -1,6 +1,5 @@
 <template>
   <div
-    v-motion-slide-bottom
     class="section-title flex justify-between w-full cursor-normal items-center"
   >
     <NuxtLink

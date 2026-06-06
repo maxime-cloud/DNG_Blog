@@ -56,7 +56,6 @@ function formatDate(date?: string | Date | null) {
 
 <template>
   <div
-    v-motion-fade-visible
     class="bg-CustomColor-900 flex flex-col flex-1 border-dashcolor/50 border-[0.1px] shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] transition hover:border-blue-500/30 group"
   >
     <!-- Cover image -->
