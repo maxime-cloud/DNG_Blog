@@ -9,8 +9,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxt/fonts',
     '@nuxt/content',
-    '@vueuse/motion/nuxt',
-    'vue-sonner/nuxt'
+    '@vueuse/motion/nuxt'
   ],
   ssr: true,
 
