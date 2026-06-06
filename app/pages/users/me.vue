@@ -112,7 +112,7 @@ useSeoMeta({ title: 'Mon Tableau de Bord' })
 
         <!-- Dashboard Content with Tabs Navigation -->
         <div class="max-w-5xl mx-auto">
-          <div class="flex justify-end border-b-[0.1px] border-dashed border-dashcolor/50 mb-6">
+          <div class="flex justify-start border-b-[0.1px] border-dashed border-dashcolor/50 mb-6">
             <nav class="flex gap-2">
               <NuxtLink
                 v-for="item in tabs"
