@@ -6,7 +6,7 @@
     >
       <slot />
       <div
-        v-if="!home"
+        v-if="!home && !route.path.startsWith('/users')"
         class="contentCarousel mb-20 p-8 flex gap-4 relative justify-center"
       >
         <NewsLetter />
@@ -16,6 +16,7 @@
 </template>
 
 <script setup>
+const route = useRoute()
 const props = defineProps({
   home: Boolean
 })
