@@ -64,7 +64,7 @@
               logo-name="i-lucide-user"
             />
             <CUButton
-              to="/users/favorite"
+              to="/users/me/favorite"
               class="border-0 w-full"
               label="Favoris"
               size="md"
