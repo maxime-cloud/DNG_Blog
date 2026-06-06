@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { toast } from 'vue-sonner'
-
 const props = defineProps<{
   user: any
 }>()
 
 const emit = defineEmits(['updated'])
 
+const { success, error: toastError } = useAppToast()
 const open = defineModel<boolean>('open')
 const loading = ref(false)
 
@@ -24,11 +23,11 @@ async function save() {
       method: 'PATCH',
       body: form
     })
-    toast.success('Profil mis à jour')
+    success('Profil mis à jour')
     emit('updated')
     open.value = false
-  } catch (error: any) {
-    toast.error(error.data?.message || 'Impossible de mettre à jour le profil')
+  } catch (err: any) {
+    toastError(err.data?.message || 'Impossible de mettre à jour le profil')
   } finally {
     loading.value = false
   }

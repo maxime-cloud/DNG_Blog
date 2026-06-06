@@ -12,11 +12,11 @@ export default defineAppConfig({
     },
     toast: {
       slots: {
-        root: 'ring-0 rounded-none bg-CustomColor-900 shadow-[6px_-7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0, 0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0, 0.51)] border-dashcolor/50 border-[0.1px]',
-        // wrapper: 'ring-0 ',
-        title: 'text-sm font-medium text-white',
-        description: 'text-sm text-[#F3F4F6]/70',
-        indicator: 'bg-white'
+        root: 'ring-0 rounded-none bg-CustomColor-900 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] border-dashcolor/50 border-[0.1px] flex items-center p-4 gap-3',
+        title: 'text-sm font-bold text-white uppercase tracking-tight',
+        description: 'text-xs text-zinc-400',
+        icon: 'w-5 h-5 shrink-0',
+        close: 'hover:bg-white/5 rounded-none'
       }
     }
   }
