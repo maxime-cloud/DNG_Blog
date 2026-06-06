@@ -36,12 +36,21 @@ async function save() {
 </script>
 
 <template>
-  <UModal v-model:open="open">
+  <UModal
+    v-model:open="open"
+    :ui="{
+      overlay: 'bg-CustomColor-900/60 backdrop-blur-xs',
+      content: 'ring-0 flex justify-center bg-transparent items-center'
+    }"
+  >
     <template #content>
-      <div class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] p-6 sm:p-8 w-full max-w-lg">
-        <h2 class="text-xl font-bold mb-6 text-white">Modifier le profil</h2>
+      <div class="bg-CustomColor-900 border-dashcolor/50 border-[0.1px] shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] p-6 sm:p-8 w-full max-w-lg">
+        <h2 class="text-xl font-bold mb-6 text-white uppercase tracking-tight">Modifier le profil</h2>
 
-        <form @submit.prevent="save" class="space-y-4">
+        <form
+          class="space-y-4"
+          @submit.prevent="save"
+        >
           <div>
             <label class="text-xs font-semibold uppercase tracking-widest text-zinc-500 mb-1.5 block">Nom</label>
             <CUInput v-model="form.name" placeholder="Votre nom" />
