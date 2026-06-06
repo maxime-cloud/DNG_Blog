@@ -97,7 +97,7 @@ const { data: likeStatus } = await useAsyncData<LikeStatus>(`article-likes-${slu
 )
 
 // Fetch related articles
-const { data: relatedArticles } = await useAsyncData<ArticleDetail[]>(
+const { data: relatedArticles, pending: relatedPending } = await useAsyncData<ArticleDetail[]>(
   `article-related-${slug}`,
   () => fetchRelated(slug) as Promise<ArticleDetail[]>
 )
@@ -400,11 +400,16 @@ useSeoMeta({
           </div>
 
           <!-- Related articles -->
-          <section v-if="relatedArticles?.length" class="mb-8">
+          <section v-if="relatedPending || relatedArticles?.length" class="mb-8">
             <h2 class="text-[24px] sm:text-[32px] font-bold text-[#FFFFFF] mb-4">
               Articles similaires
             </h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            
+            <div v-if="relatedPending" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <SkeletonsArticleCardSkeleton v-for="i in 2" :key="i" />
+            </div>
+
+            <div v-else class="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <ArticleCard
                 v-for="related in relatedArticles"
                 :key="related.slug"

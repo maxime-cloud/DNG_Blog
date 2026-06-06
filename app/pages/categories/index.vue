@@ -32,10 +32,10 @@ const categories = computed(() => categoriesData.value?.data ?? [])
           v-if="pending"
           class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8"
         >
-          <div
+          <SkeletonsCategoryCardSkeleton
             v-for="i in 6"
             :key="i"
-            class="h-40 bg-[#111] border-[0.1px] border-dashed border-dashcolor/30 animate-pulse"
+            class="h-40"
           />
         </div>
 

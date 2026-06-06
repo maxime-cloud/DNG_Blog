@@ -28,12 +28,14 @@ interface Category {
 
 const page = ref(Number(route.query.page) || 1)
 
-const { data: categoryData, error } = await useFetch<{ data: Category }>(
+const { data: categoryData, pending, error } = await useLazyFetch<{ data: Category }>(
   `/api/categories/${route.params.slug}`,
   { query: computed(() => ({ page: page.value, limit: 9 })) }
 )
 
-if (error.value) throw createError({ statusCode: 404, statusMessage: 'Catégorie introuvable' })
+watch(error, (err) => {
+  if (err) throw createError({ statusCode: 404, statusMessage: 'Catégorie introuvable' })
+})
 
 const category = computed(() => categoryData.value?.data ?? null)
 const articles = computed(() => category.value?.articles?.data ?? [])
@@ -134,8 +136,10 @@ function normalizeArticle(a: CategoryArticle) {
         </div>
 
         <!-- Articles grid -->
+        <SkeletonsArticleGridSkeleton v-if="pending" :count="6" />
+
         <div
-          v-if="articles.length"
+          v-else-if="articles.length"
           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           <ArticleCard
@@ -147,7 +151,7 @@ function normalizeArticle(a: CategoryArticle) {
 
         <!-- Empty -->
         <div
-          v-else
+          v-else-if="!pending"
           class="flex flex-col items-center justify-center py-24 text-zinc-500 gap-4"
         >
           <UIcon

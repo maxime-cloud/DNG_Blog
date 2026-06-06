@@ -7,9 +7,7 @@ const favorites = computed(() => favoritesData.value?.data ?? [])
 
 <template>
   <div class="pt-8">
-    <div v-if="pending" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div v-for="i in 3" :key="i" class="h-64 bg-white/5 animate-pulse border-[0.1px] border-dashed border-dashcolor/30" />
-    </div>
+    <SkeletonsArticleGridSkeleton v-if="pending" :count="3" />
 
     <div v-else-if="favorites.length" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <ArticleCard 

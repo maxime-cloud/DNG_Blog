@@ -344,18 +344,15 @@ function formatNumber(n: number) {
             <!-- Loading -->
             <div
               v-if="articlesPending"
-              class="flex justify-center py-10"
+              class="pt-4"
             >
-              <UIcon
-                name="i-lucide-loader-circle"
-                class="w-6 h-6 text-zinc-500 animate-spin"
-              />
+              <SkeletonsArticleGridSkeleton :count="3" />
             </div>
 
             <!-- Articles grid -->
             <div
               v-else-if="articles.length"
-              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-4"
             >
               <NuxtLink
                 v-for="article in articles"

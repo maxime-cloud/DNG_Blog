@@ -18,11 +18,13 @@ interface Series {
   articles: SeriesArticle[]
 }
 
-const { data: seriesData, error } = await useFetch<{ data: Series }>(
+const { data: seriesData, pending, error } = await useLazyFetch<{ data: Series }>(
   `/api/series/${route.params.slug}`
 )
 
-if (error.value) throw createError({ statusCode: 404, statusMessage: 'Série introuvable' })
+watch(error, (err) => {
+  if (err) throw createError({ statusCode: 404, statusMessage: 'Série introuvable' })
+})
 
 const series = computed(() => seriesData.value?.data ?? null)
 
@@ -129,8 +131,12 @@ function formatDate(dateStr: string | null) {
             Épisodes
           </h2>
 
+          <div v-if="pending" class="flex flex-col gap-3">
+             <div v-for="i in 3" :key="i" class="h-20 bg-white/5 animate-pulse border-[0.1px] border-dashed border-dashcolor/30" />
+          </div>
+
           <div
-            v-if="series?.articles?.length"
+            v-else-if="series?.articles?.length"
             class="flex flex-col gap-3"
           >
             <NuxtLink

@@ -25,11 +25,13 @@ interface Tag {
 
 const page = ref(Number(route.query.page) || 1)
 
-const { data: tagData, error } = await useFetch<{ data: Tag }>(`/api/tags/${route.params.slug}`, {
+const { data: tagData, pending, error } = await useLazyFetch<{ data: Tag }>(`/api/tags/${route.params.slug}`, {
   query: computed(() => ({ page: page.value, limit: 9 }))
 })
 
-if (error.value) throw createError({ statusCode: 404, statusMessage: 'Tag introuvable' })
+watch(error, (err) => {
+  if (err) throw createError({ statusCode: 404, statusMessage: 'Tag introuvable' })
+})
 
 const tag = computed(() => tagData.value?.data ?? null)
 const articles = computed(() => tag.value?.articles?.data ?? [])
@@ -98,8 +100,10 @@ function normalizeArticle(a: TagArticle) {
         </div>
 
         <!-- Articles grid -->
+        <SkeletonsArticleGridSkeleton v-if="pending" :count="6" />
+
         <div
-          v-if="articles.length"
+          v-else-if="articles.length"
           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           <ArticleCard
@@ -111,7 +115,7 @@ function normalizeArticle(a: TagArticle) {
 
         <!-- Empty -->
         <div
-          v-else
+          v-else-if="!pending"
           class="flex flex-col items-center justify-center py-24 text-zinc-500 gap-4"
         >
           <UIcon

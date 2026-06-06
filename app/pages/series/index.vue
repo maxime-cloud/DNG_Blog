@@ -29,10 +29,10 @@ const seriesList = computed(() => seriesData.value?.data ?? [])
           v-if="pending"
           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8"
         >
-          <div
+          <SkeletonsSeriesCardSkeleton
             v-for="i in 6"
             :key="i"
-            class="h-72 bg-[#111] border-[0.1px] border-dashed border-dashcolor/30 animate-pulse"
+            class="h-72"
           />
         </div>
 

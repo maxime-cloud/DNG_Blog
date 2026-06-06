@@ -1,5 +1,9 @@
 <template>
+  <div v-if="pending" class="flex gap-6 overflow-hidden">
+    <SkeletonsArticleCardSkeleton v-for="i in 3" :key="i" class="basis-1/1 xl:basis-1/3 sm:basis-[70%] md:basis-[60%] lg:basis-[45%] shrink-0" />
+  </div>
   <UCarousel
+    v-else
     ref="myHoverableElement"
     v-slot="{ item }"
     class="mx-auto sm:w-full"
@@ -28,7 +32,7 @@ const props = defineProps<{
 const myHoverableElement = useTemplateRef('myHoverableElement')
 const isHovered = useElementHover(myHoverableElement)
 
-const { data } = await useFetch('/api/articles', {
+const { data, pending } = await useLazyFetch<any>('/api/articles', {
   query: {
     sort: props.sort ?? 'latest',
     limit: props.limit ?? 6
