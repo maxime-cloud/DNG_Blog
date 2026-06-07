@@ -86,13 +86,15 @@ async function del(id: number) {
         <div class="flex gap-2 items-center">
           <UBadge
             :label="path.isPublished ? 'Publié' : 'Brouillon'"
+            :color="path.isPublished ? 'green' : 'neutral'"
+            variant="subtle"
             size="sm"
+            class="rounded-none font-bold uppercase tracking-tight"
           />
-          <NuxtLink :to="`/admin/parcours/${path.id}/steps`">
+          <NuxtLink :to="`/admin/parcours/${path.id}`">
             <CUButton
               size="xs"
-              label="Étapes"
-              logo-name="i-lucide-list-ordered"
+              logo-name="i-lucide-pencil"
             />
           </NuxtLink>
           <CUButton

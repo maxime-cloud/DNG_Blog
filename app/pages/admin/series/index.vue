@@ -9,8 +9,6 @@ useSeoMeta({ title: 'Séries' })
 const { data, refresh } = await useFetch('/api/series')
 const showNew = ref(false)
 const newSeries = reactive({ title: '', description: '' })
-const editingId = ref<number | null>(null)
-const editForm = reactive({ title: '', description: '' })
 
 async function create() {
   if (!newSeries.title.trim()) return
@@ -22,36 +20,6 @@ async function create() {
     toast.success('Série créée')
   } catch {
     toast.error('Erreur lors de la création')
-  }
-}
-
-function startEdit(s: { id: number, title: string, description: string | null }) {
-  editingId.value = s.id
-  editForm.title = s.title
-  editForm.description = s.description ?? ''
-}
-
-async function saveEdit(id: number) {
-  try {
-    await $fetch(`/api/admin/series/${id}`, { method: 'PATCH', body: editForm })
-    editingId.value = null
-    refresh()
-    toast.success('Série mise à jour')
-  } catch {
-    toast.error('Erreur lors de la mise à jour')
-  }
-}
-
-async function togglePublish(s: { id: number, isPublished: boolean }) {
-  try {
-    await $fetch(`/api/admin/series/${s.id}`, {
-      method: 'PATCH',
-      body: { isPublished: !s.isPublished }
-    })
-    refresh()
-    toast.success(s.isPublished ? 'Série dépubliée' : 'Série publiée')
-  } catch {
-    toast.error('Erreur')
   }
 }
 
@@ -111,32 +79,6 @@ async function del(id: number) {
         class="border-[0.1px] border-dashed border-dashcolor/50 p-4"
       >
         <div
-          v-if="editingId === s.id"
-          class="space-y-2"
-        >
-          <CUInput
-            v-model="editForm.title"
-            placeholder="Titre"
-          />
-          <CUInput
-            v-model="editForm.description"
-            placeholder="Description"
-          />
-          <div class="flex gap-2">
-            <CUButton
-              size="xs"
-              label="Sauvegarder"
-              @click="saveEdit(s.id)"
-            />
-            <CUButton
-              size="xs"
-              label="Annuler"
-              @click="editingId = null"
-            />
-          </div>
-        </div>
-        <div
-          v-else
           class="flex items-center justify-between"
         >
           <div>
@@ -156,18 +98,17 @@ async function del(id: number) {
           <div class="flex gap-2 items-center">
             <UBadge
               :label="s.isPublished ? 'Publié' : 'Brouillon'"
+              :color="s.isPublished ? 'green' : 'neutral'"
+              variant="subtle"
               size="sm"
+              class="rounded-none font-bold uppercase tracking-tight"
             />
-            <CUButton
-              size="xs"
-              logo-name="i-lucide-pencil"
-              @click="startEdit(s)"
-            />
-            <CUButton
-              size="xs"
-              :logo-name="s.isPublished ? 'i-lucide-eye-off' : 'i-lucide-eye'"
-              @click="togglePublish(s)"
-            />
+            <NuxtLink :to="`/admin/series/${s.id}`">
+              <CUButton
+                size="xs"
+                logo-name="i-lucide-pencil"
+              />
+            </NuxtLink>
             <CUButton
               size="xs"
               logo-name="i-lucide-trash"

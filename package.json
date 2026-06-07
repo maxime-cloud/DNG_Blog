@@ -39,6 +39,7 @@
     "tailwindcss": "^4.1.18",
     "vee-validate": "^4.15.1",
     "vue-sonner": "^2.0.9",
+    "vuedraggable": "^4.1.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {

@@ -572,6 +572,7 @@ useSeoMeta({
 
 .prose-article :deep(pre) {
   margin: 1.5rem 0;
+  padding: 1.25rem;
   border: 0.1px dashed rgba(229, 231, 235, 0.27);
   box-shadow:
     6px -7px 24px 0px rgb(0, 0, 0, 0.51),
