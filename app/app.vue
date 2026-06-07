@@ -60,7 +60,6 @@ async function pageLeave(el: Element, done: () => void) {
 
 <template>
   <UApp>
-    <Toaster />
     <UOverlayProvider />
     <ConfirmDialog />
     <!-- {{ store.user }} -->
