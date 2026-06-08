@@ -64,6 +64,7 @@ const columns = [
   { key: 'user', label: 'Auteur' },
   { key: 'article', label: 'Article' },
   { key: 'status', label: 'Statut' },
+  { key: 'reportCount', label: 'Signalements' },
   { key: 'createdAt', label: 'Date' },
   { key: 'actions', label: 'Actions' }
 ]
@@ -81,7 +82,7 @@ const columns = [
         class="bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 px-3 py-2 text-sm rounded-none text-white"
       >
         <option value="">
-          Tous
+          Tous les statuts
         </option>
         <option value="PENDING">
           En attente
@@ -95,6 +96,9 @@ const columns = [
         <option value="SPAM">
           Spam
         </option>
+        <option value="DELETED">
+          Supprimés
+        </option>
       </select>
     </div>
 
@@ -106,7 +110,9 @@ const columns = [
       @page-change="page = $event"
     >
       <template #content="{ row }">
-        <span class="line-clamp-2 text-sm max-w-xs">{{ row.content }}</span>
+        <span class="line-clamp-2 text-sm max-w-xs" :class="{ 'opacity-50 italic': row.status === 'DELETED' }">
+          {{ row.status === 'DELETED' ? '[Commentaire supprimé]' : row.content }}
+        </span>
       </template>
       <template #user="{ row }">
         <span class="text-sm">{{ row.user?.name ?? 'Anonyme' }}</span>
@@ -120,6 +126,11 @@ const columns = [
           :color="statusBadgeColor[row.status] ?? 'neutral'"
           size="sm"
         />
+      </template>
+      <template #reportCount="{ row }">
+        <span class="text-sm" :class="{ 'text-red-400 font-bold': row.reportCount > 0 }">
+          {{ row.reportCount }}
+        </span>
       </template>
       <template #createdAt="{ row }">
         <span class="text-sm text-zinc-500">{{

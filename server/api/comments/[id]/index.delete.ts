@@ -19,7 +19,10 @@ export default defineEventHandler(async (event) => {
     const isAdmin = session.user.role === 'admin'
     if (!isOwner && !isAdmin) throw createError({ statusCode: 403 })
 
-    await prisma.comment.delete({ where: { id } })
+    await prisma.comment.update({
+      where: { id },
+      data: { status: 'DELETED' }
+    })
 
     return { success: true }
   } catch (error: any) {

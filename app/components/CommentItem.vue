@@ -19,14 +19,6 @@
             {{ formattedDate }}
           </p>
         </div>
-        <UBadge
-          v-if="comment.status && comment.status !== 'approved'"
-          :label="comment.status"
-          size="sm"
-          color="warning"
-          variant="subtle"
-          class="rounded-none capitalize"
-        />
       </div>
 
       <!-- Content -->
@@ -85,7 +77,7 @@
     </div>
 
     <!-- Nested replies (max depth 2 visually via pl-6) -->
-    <div v-if="comment.replies && comment.replies.length" class="pl-6 flex flex-col gap-3">
+    <div v-if="comment.replies && comment.replies.length" class="pl-6 border-l-[0.1px] border-dashed border-dashcolor/50 ml-4 flex flex-col gap-3">
       <CommentItem
         v-for="reply in comment.replies"
         :key="reply.id"
@@ -124,11 +116,21 @@ const emit = defineEmits<{
 }>()
 
 const { user, isAdmin, isLoggedIn } = useAuth()
-const { likeComment, unlikeComment } = useLike()
+const { likeComment, unlikeComment, isCommentLiked } = useLike()
+const { success: toastSuccess, error: toastError } = useAppToast()
 
 const liked = ref(false)
 const likeCountLocal = ref(props.comment.likes?.length ?? 0)
 const showReplyForm = ref(false)
+const loading = ref(false)
+
+onMounted(() => {
+  if (isLoggedIn.value) {
+    liked.value = props.comment.likes?.some((l: any) => l === user.value?.id) || false
+  } else {
+    liked.value = isCommentLiked(String(props.comment.id))
+  }
+})
 
 const canDelete = computed(
   () => isLoggedIn.value && (isAdmin.value || user.value?.id === props.comment.userId)
@@ -155,10 +157,11 @@ const formattedDate = computed(() => {
 })
 
 async function toggleLike() {
-  if (!isLoggedIn.value) return
+  if (loading.value) return
   const prev = liked.value
   liked.value = !liked.value
   likeCountLocal.value += liked.value ? 1 : -1
+  loading.value = true
   try {
     if (liked.value) {
       await likeComment(String(props.comment.id))
@@ -168,6 +171,8 @@ async function toggleLike() {
   } catch {
     liked.value = prev
     likeCountLocal.value += prev ? 1 : -1
+  } finally {
+    loading.value = false
   }
 }
 
@@ -180,8 +185,13 @@ async function deleteComment() {
   }
 }
 
-function report() {
-  // intentionally no-op for now; extend when report API is ready
+async function report() {
+  try {
+    await $fetch(`/api/comments/${props.comment.id}/report`, { method: 'POST' })
+    toastSuccess('Signalement envoyé', 'Merci de nous aider à maintenir la qualité des discussions.')
+  } catch {
+    toastError('Erreur', 'Impossible d\'envoyer le signalement pour le moment.')
+  }
 }
 
 function onReplySubmitted() {

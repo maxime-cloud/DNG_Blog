@@ -1,7 +1,7 @@
 import { defineEventHandler, getRouterParam, createError } from 'h3'
 
 export default defineEventHandler(async (event) => {
-  const session = await requireAuth(event)
+  const session = await getAuthSession(event)
 
   const articleIdParam = getRouterParam(event, 'articleId')
   const articleId = Number(articleIdParam)
@@ -11,14 +11,23 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    await prisma.favorite.delete({
-      where: {
-        userId_articleId: {
+    if (session) {
+      await prisma.favorite.deleteMany({
+        where: {
           userId: session.user.id,
           articleId
         }
+      })
+    } else {
+      const anonymousFavorite = await prisma.favorite.findFirst({
+        where: { articleId, userId: null }
+      })
+      if (anonymousFavorite) {
+        await prisma.favorite.delete({
+          where: { id: anonymousFavorite.id }
+        })
       }
-    })
+    }
 
     return { success: true }
   } catch (error: any) {

@@ -2,7 +2,7 @@ import { defineEventHandler, createError, getRouterParam } from 'h3'
 
 export default defineEventHandler(async (event) => {
   try {
-    const session = await requireAuth(event)
+    const session = await getAuthSession(event)
 
     const slug = getRouterParam(event, 'slug')
     if (!slug)
@@ -18,9 +18,20 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'Article introuvable'
       })
 
-    await prisma.articleLike.deleteMany({
-      where: { userId: session.user.id, articleId: article.id }
-    })
+    if (session) {
+      await prisma.articleLike.deleteMany({
+        where: { userId: session.user.id, articleId: article.id }
+      })
+    } else {
+      const anonymousLike = await prisma.articleLike.findFirst({
+        where: { articleId: article.id, userId: null }
+      })
+      if (anonymousLike) {
+        await prisma.articleLike.delete({
+          where: { id: anonymousLike.id }
+        })
+      }
+    }
 
     const updated = await prisma.article.findUnique({
       where: { id: article.id },

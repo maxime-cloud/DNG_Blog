@@ -2,8 +2,8 @@ import { defineEventHandler, createError, getRouterParam } from 'h3'
 
 export default defineEventHandler(async (event) => {
   try {
-    const session = await requireAuth(event)
-    checkBanned(session)
+    const session = await getAuthSession(event)
+    if (session) checkBanned(session)
 
     const id = Number(getRouterParam(event, 'id'))
     if (isNaN(id))
@@ -19,11 +19,20 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'Commentaire introuvable'
       })
 
-    await prisma.commentLike.upsert({
-      where: { userId_commentId: { userId: session.user.id, commentId: id } },
-      create: { userId: session.user.id, commentId: id },
-      update: {}
-    })
+    if (session) {
+      const existing = await prisma.commentLike.findFirst({
+        where: { userId: session.user.id, commentId: id }
+      })
+      if (!existing) {
+        await prisma.commentLike.create({
+          data: { userId: session.user.id, commentId: id }
+        })
+      }
+    } else {
+      await prisma.commentLike.create({
+        data: { commentId: id, userId: null }
+      })
+    }
 
     const updated = await prisma.comment.findUnique({
       where: { id },

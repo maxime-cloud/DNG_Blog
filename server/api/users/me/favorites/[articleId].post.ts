@@ -1,8 +1,8 @@
 import { defineEventHandler, getRouterParam, createError } from 'h3'
 
 export default defineEventHandler(async (event) => {
-  const session = await requireAuth(event)
-  checkBanned(session)
+  const session = await getAuthSession(event)
+  if (session) checkBanned(session)
 
   const articleIdParam = getRouterParam(event, 'articleId')
   const articleId = Number(articleIdParam)
@@ -24,19 +24,29 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    await prisma.favorite.upsert({
-      where: {
-        userId_articleId: {
+    if (session) {
+      const existing = await prisma.favorite.findFirst({
+        where: {
           userId: session.user.id,
           articleId
         }
-      },
-      create: {
-        userId: session.user.id,
-        articleId
-      },
-      update: {}
-    })
+      })
+      if (!existing) {
+        await prisma.favorite.create({
+          data: {
+            userId: session.user.id,
+            articleId
+          }
+        })
+      }
+    } else {
+      await prisma.favorite.create({
+        data: {
+          articleId,
+          userId: null
+        }
+      })
+    }
 
     return { success: true }
   } catch (error: any) {

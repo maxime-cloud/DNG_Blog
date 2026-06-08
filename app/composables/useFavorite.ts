@@ -69,14 +69,47 @@ export function useRemoveFavorite() {
 }
 
 export const useFavorite = () => {
-  const addFavorite = async (articleId: string): Promise<void> =>
+  const { isLoggedIn } = useAuth()
+
+  const getAnonymousFavorites = (): string[] => {
+    if (import.meta.server) return []
+    const key = 'anonymous_favorites'
+    return JSON.parse(localStorage.getItem(key) || '[]')
+  }
+
+  const toggleAnonymousFavorite = (articleId: string, favorited: boolean) => {
+    if (import.meta.server) return
+    const key = 'anonymous_favorites'
+    const favorites = getAnonymousFavorites()
+    if (favorited) {
+      if (!favorites.includes(articleId)) favorites.push(articleId)
+    } else {
+      const index = favorites.indexOf(articleId)
+      if (index > -1) favorites.splice(index, 1)
+    }
+    localStorage.setItem(key, JSON.stringify(favorites))
+  }
+
+  const addFavorite = async (articleId: string): Promise<void> => {
     await $fetch(`/api/users/me/favorites/${articleId}`, { method: 'POST' })
+    if (!isLoggedIn.value) toggleAnonymousFavorite(articleId, true)
+  }
 
-  const removeFavorite = async (articleId: string): Promise<void> =>
+  const removeFavorite = async (articleId: string): Promise<void> => {
     await $fetch(`/api/users/me/favorites/${articleId}`, { method: 'DELETE' })
+    if (!isLoggedIn.value) toggleAnonymousFavorite(articleId, false)
+  }
 
-  const getFavorites = async (params?: FavoritesParams): Promise<FavoritesResponse> =>
-    await $fetch<FavoritesResponse>('/api/users/me/favorites', { query: params })
+  const getFavorites = async (params?: FavoritesParams): Promise<FavoritesResponse> => {
+    const res = await $fetch<FavoritesResponse>('/api/users/me/favorites', { query: params })
+    // For anonymous users, the API might return empty list or we merge with local
+    return res
+  }
 
-  return { addFavorite, removeFavorite, getFavorites }
+  const isFavorited = (articleId: string): boolean => {
+    if (isLoggedIn.value) return false // Should be handled by data from API
+    return getAnonymousFavorites().includes(articleId)
+  }
+
+  return { addFavorite, removeFavorite, getFavorites, isFavorited, getAnonymousFavorites }
 }

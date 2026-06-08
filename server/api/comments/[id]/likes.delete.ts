@@ -2,7 +2,7 @@ import { defineEventHandler, createError, getRouterParam } from 'h3'
 
 export default defineEventHandler(async (event) => {
   try {
-    const session = await requireAuth(event)
+    const session = await getAuthSession(event)
 
     const id = Number(getRouterParam(event, 'id'))
     if (isNaN(id))
@@ -18,9 +18,20 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'Commentaire introuvable'
       })
 
-    await prisma.commentLike.deleteMany({
-      where: { userId: session.user.id, commentId: id }
-    })
+    if (session) {
+      await prisma.commentLike.deleteMany({
+        where: { userId: session.user.id, commentId: id }
+      })
+    } else {
+      const anonymousLike = await prisma.commentLike.findFirst({
+        where: { commentId: id, userId: null }
+      })
+      if (anonymousLike) {
+        await prisma.commentLike.delete({
+          where: { id: anonymousLike.id }
+        })
+      }
+    }
 
     const updated = await prisma.comment.findUnique({
       where: { id },

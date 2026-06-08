@@ -387,13 +387,15 @@ model CommentLike {
 // =============================================================================
 
 model Favorite {
-  userId    String
+  id        Int      @id @default(autoincrement())
+  userId    String?
   articleId Int
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 
-  @@id([userId, articleId])
+  @@index([userId])
+  @@index([articleId])
   @@map("favorites")
 }
 

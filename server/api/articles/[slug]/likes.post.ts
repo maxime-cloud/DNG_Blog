@@ -2,8 +2,8 @@ import { defineEventHandler, createError, getRouterParam } from 'h3'
 
 export default defineEventHandler(async (event) => {
   try {
-    const session = await requireAuth(event)
-    checkBanned(session)
+    const session = await getAuthSession(event)
+    if (session) checkBanned(session)
 
     const slug = getRouterParam(event, 'slug')
     if (!slug)
@@ -19,13 +19,20 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'Article introuvable'
       })
 
-    await prisma.articleLike.upsert({
-      where: {
-        userId_articleId: { userId: session.user.id, articleId: article.id }
-      },
-      create: { userId: session.user.id, articleId: article.id },
-      update: {}
-    })
+    if (session) {
+      const existing = await prisma.articleLike.findFirst({
+        where: { userId: session.user.id, articleId: article.id }
+      })
+      if (!existing) {
+        await prisma.articleLike.create({
+          data: { userId: session.user.id, articleId: article.id }
+        })
+      }
+    } else {
+      await prisma.articleLike.create({
+        data: { articleId: article.id, userId: null }
+      })
+    }
 
     const updated = await prisma.article.findUnique({
       where: { id: article.id },
