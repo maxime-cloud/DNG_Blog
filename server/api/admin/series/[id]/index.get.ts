@@ -10,7 +10,12 @@ export default defineEventHandler(async (event) => {
 
     const series = await prisma.series.findUnique({
       where: { id },
-      include: {
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        coverImageUrl: true,
+        isPublished: true,
         articles: {
           orderBy: { seriesOrder: 'asc' },
           select: {

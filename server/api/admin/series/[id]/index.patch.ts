@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
     const numId = parseInt(id, 10)
 
     const body = await readBody(event)
-    const { title, description, coverImage, isPublished } = body
+    const { title, description, coverImageUrl, isPublished } = body
 
     const current = await prisma.series.findUnique({
       where: { id: numId },
@@ -48,7 +48,7 @@ export default defineEventHandler(async (event) => {
         ...(title !== undefined && { title: title.trim() }),
         ...(slug !== undefined && { slug }),
         ...(description !== undefined && { description }),
-        ...(coverImage !== undefined && { coverImage }),
+        ...(coverImageUrl !== undefined && { coverImageUrl }),
         ...(isPublished !== undefined && { isPublished })
       }
     })

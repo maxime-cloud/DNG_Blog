@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { toast } from 'vue-sonner'
-
 const { confirm } = useConfirm()
+const { success, error: toastError } = useAppToast()
 
 definePageMeta({ layout: 'admin', middleware: 'admin' })
 useSeoMeta({ title: 'Séries' })
 
-const { data, refresh } = await useFetch('/api/series')
+const { data, refresh } = await useFetch('/api/admin/series')
 const showNew = ref(false)
 const newSeries = reactive({ title: '', description: '' })
 
@@ -17,9 +16,9 @@ async function create() {
     showNew.value = false
     Object.assign(newSeries, { title: '', description: '' })
     refresh()
-    toast.success('Série créée')
-  } catch {
-    toast.error('Erreur lors de la création')
+    success('Série créée')
+  } catch (err: any) {
+    toastError(err.data?.statusMessage || 'Erreur lors de la création')
   }
 }
 
@@ -28,9 +27,9 @@ async function del(id: number) {
   try {
     await $fetch(`/api/admin/series/${id}`, { method: 'DELETE' })
     refresh()
-    toast.success('Série supprimée')
-  } catch {
-    toast.error('Erreur lors de la suppression')
+    success('Série supprimée')
+  } catch (err: any) {
+    toastError(err.data?.statusMessage || 'Erreur lors de la suppression')
   }
 }
 </script>
@@ -81,25 +80,39 @@ async function del(id: number) {
         <div
           class="flex items-center justify-between"
         >
-          <div>
-            <p class="font-medium">
-              {{ s.title }}
-            </p>
-            <p
-              v-if="s.description"
-              class="text-xs text-zinc-500 mt-0.5"
-            >
-              {{ s.description }}
-            </p>
-            <p class="text-xs text-zinc-500">
-              {{ s.articlesCount ?? 0 }} épisodes
-            </p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 shrink-0 border-[0.1px] border-dashed border-dashcolor/30 flex items-center justify-center overflow-hidden">
+              <img
+                v-if="s.coverImageUrl"
+                :src="s.coverImageUrl"
+                :alt="s.title"
+                class="w-full h-full object-cover"
+              >
+              <UIcon
+                v-else
+                name="i-lucide-image"
+                class="w-5 h-5 text-zinc-400"
+              />
+            </div>
+            <div>
+              <p class="font-medium">
+                {{ s.title }}
+              </p>
+              <p
+                v-if="s.description"
+                class="text-xs text-zinc-500 mt-0.5"
+              >
+                {{ s.description }}
+              </p>
+              <p class="text-xs text-zinc-500">
+                {{ s.articlesCount ?? 0 }} épisodes
+              </p>
+            </div>
           </div>
           <div class="flex gap-2 items-center">
             <UBadge
               :label="s.isPublished ? 'Publié' : 'Brouillon'"
-              :color="s.isPublished ? 'green' : 'neutral'"
-              variant="subtle"
+              :class="s.isPublished ? 'bg-green-600 text-white' : 'bg-zinc-600 text-white'"
               size="sm"
               class="rounded-none font-bold uppercase tracking-tight"
             />

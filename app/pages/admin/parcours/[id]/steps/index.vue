@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { toast } from 'vue-sonner'
-
 definePageMeta({ layout: 'admin', middleware: 'admin' })
 
 const route = useRoute()
+const { confirm } = useConfirm()
+const { success, error: toastError } = useAppToast()
 const pathId = Number(route.params.id)
 
 interface Step {
@@ -61,7 +61,7 @@ function isAlreadyInPath(articleId: number) {
 
 async function addStepImmediately(article: { id: number, title: string, slug: string }) {
   if (isAlreadyInPath(article.id)) {
-    toast.error('Article déjà présent')
+    toastError('Article déjà présent')
     return
   }
 
@@ -72,9 +72,9 @@ async function addStepImmediately(article: { id: number, title: string, slug: st
       body: { articleId: article.id, stepOrder: nextOrder }
     })
     await refresh()
-    toast.success(`"${article.title}" ajouté`)
+    success(`"${article.title}" ajouté`)
   } catch {
-    toast.error('Erreur lors de l\'ajout')
+    toastError('Erreur lors de l\'ajout')
   }
 }
 
@@ -83,9 +83,9 @@ async function deleteStep(stepId: number) {
   try {
     await $fetch(`/api/admin/learning-paths/${pathId}/steps/${stepId}`, { method: 'DELETE' })
     await refresh()
-    toast.success('Étape supprimée')
+    success('Étape supprimée')
   } catch {
-    toast.error('Erreur lors de la suppression')
+    toastError('Erreur lors de la suppression')
   }
 }
 
@@ -99,9 +99,9 @@ async function handleReorder(newList: Step[]) {
       method: 'PATCH',
       body: { steps: reorderedSteps }
     })
-    toast.success('Ordre mis à jour')
+    success('Ordre mis à jour')
   } catch {
-    toast.error('Erreur lors de la mise à jour de l\'ordre')
+    toastError('Erreur lors de la mise à jour de l\'ordre')
     refresh()
   }
 }

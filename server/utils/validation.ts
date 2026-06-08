@@ -17,7 +17,7 @@ export const articleSchema = z.object({
 
 export const commentSchema = z.object({
   content: z.string().min(1).max(2000),
-  parentId: z.string().optional()
+  parentId: z.union([z.string(), z.number()]).nullable().optional()
 })
 
 export const userUpdateSchema = z.object({

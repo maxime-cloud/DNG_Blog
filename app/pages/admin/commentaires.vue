@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { toast } from 'vue-sonner'
-
 const { confirm } = useConfirm()
+const { success, error: toastError } = useAppToast()
 
 definePageMeta({ layout: 'admin', middleware: 'admin' })
 useSeoMeta({ title: 'Modération des commentaires' })
@@ -16,9 +15,9 @@ async function approve(id: number) {
   try {
     await $fetch(`/api/admin/comments/${id}/approve`, { method: 'PATCH' })
     refresh()
-    toast.success('Commentaire approuvé')
+    success('Commentaire approuvé')
   } catch {
-    toast.error('Erreur')
+    toastError('Erreur')
   }
 }
 
@@ -26,9 +25,9 @@ async function reject(id: number) {
   try {
     await $fetch(`/api/admin/comments/${id}/reject`, { method: 'PATCH' })
     refresh()
-    toast.success('Commentaire rejeté')
+    success('Commentaire rejeté')
   } catch {
-    toast.error('Erreur')
+    toastError('Erreur')
   }
 }
 
@@ -36,9 +35,9 @@ async function markSpam(id: number) {
   try {
     await $fetch(`/api/admin/comments/${id}/spam`, { method: 'PATCH' })
     refresh()
-    toast.success('Marqué comme spam')
+    success('Marqué comme spam')
   } catch {
-    toast.error('Erreur')
+    toastError('Erreur')
   }
 }
 
@@ -47,9 +46,9 @@ async function del(id: number) {
   try {
     await $fetch(`/api/admin/comments/${id}`, { method: 'DELETE' })
     refresh()
-    toast.success('Commentaire supprimé')
+    success('Commentaire supprimé')
   } catch {
-    toast.error('Erreur lors de la suppression')
+    toastError('Erreur lors de la suppression')
   }
 }
 
@@ -128,9 +127,9 @@ const columns = [
         }}</span>
       </template>
       <template #actions="{ row }">
-        <div class="flex gap-1 flex-wrap">
+        <div class="flex flex-row gap-1">
           <CUButton
-            v-if="row.status === 'PENDING'"
+            v-if="row.status === 'PENDING' || row.status === 'SPAM'"
             size="xs"
             label="✓"
             class="text-green-500"

@@ -218,3 +218,24 @@ textarea::placeholder {
   --skeleton-base: #1f2937;
   --skeleton-highlight: #374151;
 }
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(10, 10, 10);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border: 1px solid #404040;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #404040;
+  border-color: #525252;
+}
+

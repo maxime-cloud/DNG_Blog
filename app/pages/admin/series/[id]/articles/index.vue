@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { toast } from 'vue-sonner'
-
 definePageMeta({ layout: 'admin', middleware: 'admin' })
 
 const route = useRoute()
 const { confirm } = useConfirm()
+const { success, error: toastError } = useAppToast()
 const seriesId = Number(route.params.id)
 
 interface Article {
@@ -64,7 +63,7 @@ function isAlreadyInSeries(articleId: number) {
 
 async function addArticleToSeries(article: { id: number, title: string, slug: string }) {
   if (isAlreadyInSeries(article.id)) {
-    toast.error('Article déjà présent')
+    toastError('Article déjà présent')
     return
   }
 
@@ -82,10 +81,10 @@ async function addArticleToSeries(article: { id: number, title: string, slug: st
     })
     
     await refresh()
-    toast.success(`"${article.title}" ajouté`)
+    success(`"${article.title}" ajouté`)
   } catch (error: any) {
     console.error('Add to series error:', error)
-    toast.error(error.data?.statusMessage || 'Erreur lors de l\'ajout')
+    toastError(error.data?.statusMessage || 'Erreur lors de l\'ajout')
   } finally {
     addingId.value = null
   }
@@ -99,9 +98,9 @@ async function removeArticleFromSeries(articleId: number) {
       body: { seriesId: null, seriesOrder: null }
     })
     await refresh()
-    toast.success('Article retiré de la série')
+    success('Article retiré de la série')
   } catch {
-    toast.error('Erreur lors du retrait')
+    toastError('Erreur lors du retrait')
   }
 }
 
@@ -117,9 +116,9 @@ async function handleReorder(newList: Article[]) {
       body: { articles: reorderedArticles }
     })
     
-    toast.success('Ordre mis à jour')
+    success('Ordre mis à jour')
   } catch {
-    toast.error('Erreur lors de la mise à jour de l\'ordre')
+    toastError('Erreur lors de la mise à jour de l\'ordre')
     refresh()
   }
 }

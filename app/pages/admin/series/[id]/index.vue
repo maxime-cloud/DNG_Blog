@@ -1,34 +1,22 @@
 <script setup lang="ts">
-import { toast } from 'vue-sonner'
-
 definePageMeta({ layout: 'admin', middleware: 'admin' })
 
 const route = useRoute()
 const router = useRouter()
 const { confirm } = useConfirm()
+const { success, error: toastError } = useAppToast()
 const seriesId = Number(route.params.id)
 
-const { data, refresh } = await useAsyncData(`admin-series-edit-${seriesId}`, () =>
-  $fetch(`/api/admin/series/${seriesId}`)
-)
-
-const series = computed(() => data.value?.data ?? null)
+const { data: seriesData, error } = await useFetch(`/api/admin/series/${seriesId}`)
+if (error.value) throw createError({ statusCode: 404, statusMessage: 'Série introuvable' })
+console.log('seriesData:', seriesData.value?.data)
 
 const form = reactive({
-  title: '',
-  description: '',
-  isPublished: false,
-  coverImageUrl: ''
+  title: seriesData.value?.data?.title ?? '',
+  description: seriesData.value?.data?.description ?? '',
+  isPublished: seriesData.value?.data?.isPublished ?? false,
+  coverImageUrl: seriesData.value?.data?.coverImageUrl ?? ''
 })
-
-watch(series, (s) => {
-  if (s) {
-    form.title = s.title
-    form.description = s.description ?? ''
-    form.isPublished = s.isPublished
-    form.coverImageUrl = s.coverImageUrl ?? ''
-  }
-}, { immediate: true })
 
 const saving = ref(false)
 
@@ -39,10 +27,9 @@ async function save() {
       method: 'PATCH',
       body: form
     })
-    toast.success('Série mise à jour')
-    refresh()
+    success('Série mise à jour')
   } catch {
-    toast.error('Erreur lors de la mise à jour')
+    toastError('Erreur lors de la mise à jour')
   } finally {
     saving.value = false
   }
@@ -52,10 +39,10 @@ async function deleteSeries() {
   if (!await confirm('Supprimer définitivement cette série ? Les articles ne seront pas supprimés mais ne seront plus liés à cette série.')) return
   try {
     await $fetch(`/api/admin/series/${seriesId}`, { method: 'DELETE' })
-    toast.success('Série supprimée')
+    success('Série supprimée')
     router.push('/admin/series')
   } catch {
-    toast.error('Erreur lors de la suppression')
+    toastError('Erreur lors de la suppression')
   }
 }
 </script>

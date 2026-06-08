@@ -47,16 +47,16 @@ export default defineEventHandler(async event => {
       createdAt: c.createdAt,
       user: c.user,
       userId: c.user?.id,
-      likes: c.likes,
-      status: 'approved',
+      likes: c.likes.map(l => l.userId),
+      status: c.status,
       replies: c.replies.map(r => ({
         id: r.id,
         content: r.content,
         createdAt: r.createdAt,
         user: r.user,
         userId: r.user?.id,
-        likes: r.likes,
-        status: 'approved'
+        likes: r.likes.map(l => l.userId),
+        status: r.status
       }))
     }))
   } catch (error: any) {

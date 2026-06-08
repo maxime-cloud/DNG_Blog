@@ -87,14 +87,18 @@ export default defineEventHandler(async event => {
         id: c.id,
         content: c.content,
         createdAt: c.createdAt,
-        author: c.user,
-        likeCount: c.likes.length,
+        user: c.user,
+        userId: c.user?.id,
+        likes: c.likes.map(l => l.userId),
+        status: c.status,
         replies: c.replies.map(r => ({
           id: r.id,
           content: r.content,
           createdAt: r.createdAt,
-          author: r.user,
-          likeCount: r.likes.length
+          user: r.user,
+          userId: r.user?.id,
+          likes: r.likes.map(l => l.userId),
+          status: r.status
         }))
       }))
     }

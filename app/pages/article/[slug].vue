@@ -22,6 +22,8 @@ interface ArticleAuthor {
   id: string
   name: string
   image?: string | null
+  githubUrl?: string | null
+  websiteUrl?: string | null
 }
 
 interface SeriesArticle {
@@ -399,26 +401,6 @@ useSeoMeta({
             />
           </div>
 
-          <!-- Related articles -->
-          <section v-if="relatedPending || relatedArticles?.length" class="mb-8">
-            <h2 class="text-[24px] sm:text-[32px] font-bold text-[#FFFFFF] mb-4">
-              Articles similaires
-            </h2>
-            
-            <div v-if="relatedPending" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <SkeletonsArticleCardSkeleton v-for="i in 2" :key="i" />
-            </div>
-
-            <div v-else class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <ArticleCard
-                v-for="related in relatedArticles"
-                :key="related.slug"
-                :article="related"
-                class="mx-0"
-              />
-            </div>
-          </section>
-
           <!-- Comments section -->
           <section class="mb-8">
             <h2 class="text-[24px] sm:text-[32px] font-bold text-[#FFFFFF] mb-4">Commentaires</h2>
@@ -450,6 +432,26 @@ useSeoMeta({
               Aucun commentaire pour l'instant. Sois le premier !
             </div>
           </section>
+
+          <!-- Related articles -->
+          <section v-if="relatedPending || relatedArticles?.length" class="mb-8">
+            <h2 class="text-[24px] sm:text-[32px] font-bold text-[#FFFFFF] mb-4">
+              Articles similaires
+            </h2>
+
+            <div v-if="relatedPending" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <SkeletonsArticleCardSkeleton v-for="i in 2" :key="i" />
+            </div>
+
+            <div v-else class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <ArticleCard
+                v-for="related in relatedArticles"
+                :key="related.slug"
+                :article="related"
+                class="mx-0"
+              />
+            </div>
+          </section>
         </div>
 
         <!-- Sidebar (desktop only) -->
@@ -466,7 +468,10 @@ useSeoMeta({
               <p class="text-xs font-semibold uppercase tracking-widest text-zinc-500 mb-3">
                 Auteur
               </p>
-              <div class="flex items-center gap-3 mb-3">
+              <NuxtLink
+                :to="`/profil/${article.author.name}`"
+                class="flex items-center gap-3 mb-3 hover:opacity-80 transition-opacity"
+              >
                 <UAvatar
                   :src="article.author.image ?? undefined"
                   :alt="article.author.name"
@@ -478,6 +483,28 @@ useSeoMeta({
                     {{ article.author.name }}
                   </p>
                 </div>
+              </NuxtLink>
+
+              <!-- Social Links -->
+              <div v-if="article.author.githubUrl || article.author.websiteUrl" class="flex gap-3 mt-3 pt-3 border-t-[0.1px] border-dashed border-dashcolor/50">
+                <a
+                  v-if="article.author.githubUrl"
+                  :href="article.author.githubUrl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-zinc-500 hover:text-[#F3F4F6] transition-colors"
+                >
+                  <UIcon name="i-simple-icons-github" class="w-4 h-4" />
+                </a>
+                <a
+                  v-if="article.author.websiteUrl"
+                  :href="article.author.websiteUrl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-zinc-500 hover:text-[#F3F4F6] transition-colors"
+                >
+                  <UIcon name="i-lucide-globe" class="w-4 h-4" />
+                </a>
               </div>
             </div>
           </div>

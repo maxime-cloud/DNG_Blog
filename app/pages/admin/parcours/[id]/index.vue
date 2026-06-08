@@ -1,36 +1,22 @@
 <script setup lang="ts">
-import { toast } from 'vue-sonner'
-
 definePageMeta({ layout: 'admin', middleware: 'admin' })
 
 const route = useRoute()
 const router = useRouter()
 const { confirm } = useConfirm()
+const { success, error: toastError } = useAppToast()
 const pathId = Number(route.params.id)
 
-const { data, refresh } = await useAsyncData(`admin-path-edit-${pathId}`, () =>
-  $fetch(`/api/admin/learning-paths/${pathId}`)
-)
-
-const path = computed(() => data.value?.data ?? null)
+const { data: pathData, error } = await useFetch(`/api/admin/learning-paths/${pathId}`)
+if (error.value) throw createError({ statusCode: 404, statusMessage: 'Parcours introuvable' })
 
 const form = reactive({
-  title: '',
-  description: '',
-  difficulty: 'BEGINNER',
-  isPublished: false,
-  coverImageUrl: ''
+  title: pathData.value?.data?.title ?? '',
+  description: pathData.value?.data?.description ?? '',
+  difficulty: pathData.value?.data?.difficulty ?? 'BEGINNER',
+  isPublished: pathData.value?.data?.isPublished ?? false,
+  coverImageUrl: pathData.value?.data?.coverImageUrl ?? ''
 })
-
-watch(path, (p) => {
-  if (p) {
-    form.title = p.title
-    form.description = p.description ?? ''
-    form.difficulty = p.difficulty
-    form.isPublished = p.isPublished
-    form.coverImageUrl = p.coverImageUrl ?? ''
-  }
-}, { immediate: true })
 
 const saving = ref(false)
 
@@ -41,10 +27,9 @@ async function save() {
       method: 'PATCH',
       body: form
     })
-    toast.success('Parcours mis à jour')
-    refresh()
+    success('Parcours mis à jour')
   } catch {
-    toast.error('Erreur lors de la mise à jour')
+    toastError('Erreur lors de la mise à jour')
   } finally {
     saving.value = false
   }
@@ -54,10 +39,10 @@ async function deletePath() {
   if (!await confirm('Supprimer définitivement ce parcours et toutes ses étapes ?')) return
   try {
     await $fetch(`/api/admin/learning-paths/${pathId}`, { method: 'DELETE' })
-    toast.success('Parcours supprimé')
+    success('Parcours supprimé')
     router.push('/admin/parcours')
   } catch {
-    toast.error('Erreur lors de la suppression')
+    toastError('Erreur lors de la suppression')
   }
 }
 </script>

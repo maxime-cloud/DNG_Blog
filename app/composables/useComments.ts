@@ -38,7 +38,7 @@ export function usePostComment() {
     }: {
       slug: string
       content: string
-      parentId?: string | null
+      parentId?: string | number | null
     }) => $fetch(`/api/articles/${slug}/comments`, { method: 'POST', body: { content, parentId } }),
     onSuccess: (_data, { slug }) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.articles.comments(slug) })
@@ -81,7 +81,7 @@ export const useComments = (slug: string) => {
     }
   }
 
-  const postComment = async (content: string, parentId?: string): Promise<void> => {
+  const postComment = async (content: string, parentId?: string | number): Promise<void> => {
     await $fetch(`/api/articles/${slug}/comments`, { method: 'POST', body: { content, parentId } })
     await fetchComments()
   }

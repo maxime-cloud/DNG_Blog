@@ -62,6 +62,7 @@ const emit = defineEmits<{
 }>()
 
 const { isLoggedIn } = useAuth()
+const { success, error: toastError } = useAppToast()
 const content = ref('')
 const loading = ref(false)
 const error = ref<string | null>(null)
@@ -79,9 +80,11 @@ async function submit() {
       }
     })
     content.value = ''
+    success('Commentaire envoyé', 'Votre commentaire a été publié avec succès.')
     emit('submitted')
-  } catch {
+  } catch (err: any) {
     error.value = 'Erreur lors de la soumission'
+    toastError('Erreur', 'Impossible d\'envoyer le commentaire pour le moment.')
   } finally {
     loading.value = false
   }

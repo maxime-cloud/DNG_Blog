@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
     const id = parseInt(rawId, 10)
 
     const body = await readBody(event)
-    const { title, description, difficulty, isPublished } = body
+    const { title, description, difficulty, isPublished, coverImageUrl } = body
 
     if (
       difficulty !== undefined
@@ -62,6 +62,7 @@ export default defineEventHandler(async (event) => {
         ...(slug !== undefined && { slug }),
         ...(description !== undefined && { description }),
         ...(difficulty !== undefined && { difficulty }),
+        ...(coverImageUrl !== undefined && { coverImageUrl }),
         ...(isPublished !== undefined && { isPublished })
       }
     })

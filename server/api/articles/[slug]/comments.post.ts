@@ -1,5 +1,6 @@
 import { defineEventHandler, readBody, createError, getRouterParam } from 'h3'
 import sanitizeHtml from 'sanitize-html'
+import { commentSchema } from '../../../utils/validation'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -38,7 +39,7 @@ export default defineEventHandler(async (event) => {
     const comment = await prisma.comment.create({
       data: {
         content: sanitizedContent,
-        status: 'PENDING',
+        status: 'APPROVED',
         articleId: article.id,
         userId: session.user.id,
         ...(parsed.data.parentId && { parentId: Number(parsed.data.parentId) })
