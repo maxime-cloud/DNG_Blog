@@ -32,9 +32,22 @@ const props = defineProps<{
   initialBookmarked?: boolean
 }>()
 
-const { addFavorite, removeFavorite } = useFavorite()
+const { addFavorite, removeFavorite, getFavoriteStatus } = useFavorite()
+const { isLoggedIn } = useAuth()
 const bookmarked = ref(props.initialBookmarked ?? false)
 const loading = ref(false)
+
+onMounted(async () => {
+  // If not passed initially, or to sync with server/localStorage
+  loading.value = true
+  try {
+    bookmarked.value = await getFavoriteStatus(props.articleId)
+  } catch (error) {
+    console.error('Erreur lors du chargement du statut favori:', error)
+  } finally {
+    loading.value = false
+  }
+})
 
 async function toggle() {
   if (loading.value) return

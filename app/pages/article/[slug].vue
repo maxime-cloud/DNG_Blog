@@ -339,6 +339,22 @@ useSeoMeta({
       <div class="lg:flex lg:gap-8 px-4 pb-10">
         <!-- Main content -->
         <div class="flex-1 min-w-0">
+          <!-- Action bar -->
+          <div
+            class="flex flex-wrap items-center gap-3 py-4 px-4 mb-6 bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none"
+          >
+            <ArticleLikeButton
+              v-if="article"
+              :slug="article.slug"
+              :initial-count="likeStatus?.count ?? article.likesCount ?? 0"
+              :initial-liked="likeStatus?.liked ?? false"
+            />
+            <ArticleBookmarkButton v-if="article" :article-id="String(article.id)" />
+            <div class="ml-auto">
+              <ShareButtons :url="pageUrl" :title="article?.title ?? ''" />
+            </div>
+          </div>
+
           <!-- Cover image -->
           <div
             v-if="article?.coverImage"
@@ -356,7 +372,7 @@ useSeoMeta({
           <div v-if="headings.length" class="mb-6 lg:hidden">
             <TableOfContents :headings="headings" />
           </div>
-
+        
           <!-- Article content -->
           <div
             v-if="article?.content"
@@ -364,22 +380,6 @@ useSeoMeta({
             class="prose-article bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none p-6 sm:p-8 mb-6"
           >
             <ContentRenderer v-if="parsed" :value="parsed" />
-          </div>
-
-          <!-- Action bar -->
-          <div
-            class="flex flex-wrap items-center gap-3 py-4 px-4 mb-6 bg-CustomColor-900 border-[0.1px] border-dashed border-dashcolor/50 shadow-[6px_-7px_24px_0px_rgb(0,0,0,0.51)] shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)] rounded-none"
-          >
-            <ArticleLikeButton
-              v-if="article"
-              :slug="article.slug"
-              :initial-count="likeStatus?.count ?? article.likesCount ?? 0"
-              :initial-liked="likeStatus?.liked ?? false"
-            />
-            <ArticleBookmarkButton v-if="article" :article-id="String(article.id)" />
-            <div class="ml-auto">
-              <ShareButtons :url="pageUrl" :title="article?.title ?? ''" />
-            </div>
           </div>
 
           <!-- Series navigation -->

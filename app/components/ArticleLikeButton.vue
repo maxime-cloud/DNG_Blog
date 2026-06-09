@@ -29,30 +29,25 @@ const props = defineProps<{
   initialLiked: boolean
 }>()
 
-const { likeArticle, unlikeArticle } = useLike()
+const { data: likeStatus } = useArticleLikes(props.slug)
+const count = computed(() => likeStatus.value?.count ?? props.initialCount)
+const liked = computed(() => likeStatus.value?.liked ?? props.initialLiked)
 
-const liked = ref(props.initialLiked)
-const count = ref(props.initialCount)
+const { likeArticle, unlikeArticle } = useLike()
 const loading = ref(false)
 
 async function toggle() {
   if (loading.value) return
 
-  const prevLiked = liked.value
-  const prevCount = count.value
-  liked.value = !liked.value
-  count.value += liked.value ? 1 : -1
   loading.value = true
-
   try {
-    if (liked.value) {
+    if (!liked.value) {
       await likeArticle(props.slug)
     } else {
       await unlikeArticle(props.slug)
     }
-  } catch {
-    liked.value = prevLiked
-    count.value = prevCount
+  } catch (error) {
+    console.error('Erreur lors du like:', error)
   } finally {
     loading.value = false
   }

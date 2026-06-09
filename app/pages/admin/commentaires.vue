@@ -56,7 +56,8 @@ const statusBadgeColor: Record<string, string> = {
   PENDING: 'warning',
   APPROVED: 'success',
   REJECTED: 'error',
-  SPAM: 'neutral'
+  SPAM: 'neutral',
+  DELETED: 'error'
 }
 
 const columns = [

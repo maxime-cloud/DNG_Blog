@@ -100,6 +100,14 @@ export const useFavorite = () => {
     if (!isLoggedIn.value) toggleAnonymousFavorite(articleId, false)
   }
 
+  const getFavoriteStatus = async (articleId: string): Promise<boolean> => {
+    if (isLoggedIn.value) {
+      const res = await $fetch<{ favorited: boolean }>(`/api/users/me/favorites/${articleId}`)
+      return res.favorited
+    }
+    return getAnonymousFavorites().includes(articleId)
+  }
+
   const getFavorites = async (params?: FavoritesParams): Promise<FavoritesResponse> => {
     const res = await $fetch<FavoritesResponse>('/api/users/me/favorites', { query: params })
     // For anonymous users, the API might return empty list or we merge with local
@@ -111,5 +119,5 @@ export const useFavorite = () => {
     return getAnonymousFavorites().includes(articleId)
   }
 
-  return { addFavorite, removeFavorite, getFavorites, isFavorited, getAnonymousFavorites }
+  return { addFavorite, removeFavorite, getFavorites, isFavorited, getFavoriteStatus, getAnonymousFavorites }
 }

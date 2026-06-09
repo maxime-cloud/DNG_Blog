@@ -133,6 +133,7 @@ enum CommentStatus {
   APPROVED
   REJECTED
   SPAM
+  DELETED
 }
 
 enum NewsletterStatus {

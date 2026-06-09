@@ -103,7 +103,7 @@ function formatNumber(n: number) {
 <template>
   <NoAdminPage>
     <BaseLayaoutContent>
-      <div class="px-4 pt-10 pb-10">
+      <div class="px-4 pt-10 pb-10 min-h-[80vh]">
         <!-- Breadcrumb -->
         <nav class="flex items-center gap-2 text-xs text-zinc-500 mb-6">
           <NuxtLink
