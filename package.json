@@ -33,7 +33,7 @@
     "marked": "^18.0.3",
     "node-cron": "^3.0.3",
     "nodemailer": "^8.0.7",
-    "nuxt": "^4.4.7",
+    "nuxt": "^4.4.8",
     "pg": "^8.19.0",
     "sanitize-html": "^2.17.3",
     "tailwindcss": "^4.1.18",
@@ -64,5 +64,5 @@
   "prisma": {
     "seed": "tsx prisma/seed.ts"
   },
-  "packageManager": "pnpm@10.29.3"
+  "packageManager": "pnpm@11.11.0"
 }

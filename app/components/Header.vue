@@ -128,8 +128,12 @@
         </UModal>
 
         <UDrawer
+          v-model:open="mobileMenuOpen"
           class="lg:hidden"
           direction="right"
+          :ui="{
+            content: 'bg-CustomColor-900 rounded-none border-l border-dashed border-dashcolor/50 shadow-[-6px_0px_24px_0px_rgb(0,0,0,0.51)]'
+          }"
         >
           <CUButton
             class="lg:hidden"
@@ -138,7 +142,112 @@
             logo-name="i-lucide-menu"
           />
 
-          <template #content />
+          <template #content>
+            <div class="flex flex-col h-full bg-CustomColor-900">
+              <div class="p-6 border-b border-dashed border-dashcolor/30 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                  <AppLogo />
+                  <span class="font-semibold text-xl">StackTrace</span>
+                </div>
+                <CUButton
+                  variant="ghost"
+                  logo-name="i-lucide-x"
+                  size="md"
+                  @click="mobileMenuOpen = false"
+                />
+              </div>
+
+              <div class="flex-1 overflow-y-auto p-6 space-y-4">
+                <CUButton
+                  v-for="page in pages"
+                  :key="page.name"
+                  :to="page.link"
+                  class="w-full border-0 justify-start"
+                  :variant="route.path === page.link ? 'solid' : 'ghost'"
+                  :label="page.name"
+                  size="md"
+                  @click="mobileMenuOpen = false"
+                />
+
+                <div class="pt-4 border-t border-dashed border-dashcolor/30 flex flex-col gap-4">
+                  <CUButton
+                    class="w-full"
+                    label="Rechercher"
+                    logo-name="i-lucide-search"
+                    size="md"
+                    @click="searchOpen = true; mobileMenuOpen = false"
+                  />
+                </div>
+              </div>
+
+              <div class="p-6 border-t border-dashed border-dashcolor/30">
+                <div
+                  v-if="store.isAuthenticated"
+                  class="flex flex-col gap-2"
+                >
+                  <div class="flex items-center gap-3 mb-4 p-2 border border-dashed border-dashcolor/30">
+                    <UAvatar
+                      :src="store.user?.image ?? '/user-avatar.png'"
+                      :alt="store.user?.name"
+                      size="sm"
+                      class="rounded-none"
+                    />
+                    <div class="flex flex-col">
+                      <span class="text-sm font-medium">{{ store.user?.name }}</span>
+                      <span class="text-xs text-zinc-500">{{ store.user?.email }}</span>
+                    </div>
+                  </div>
+                  <CUButton
+                    to="/users/me"
+                    class="w-full justify-start border-0"
+                    label="Compte"
+                    logo-name="i-lucide-user"
+                    @click="mobileMenuOpen = false"
+                  />
+                  <CUButton
+                    to="/users/me/favorite"
+                    class="w-full justify-start border-0"
+                    label="Favoris"
+                    logo-name="i-lucide-bookmark"
+                    @click="mobileMenuOpen = false"
+                  />
+                  <CUButton
+                    v-if="isAuthor"
+                    to="/users/me/stats"
+                    class="w-full justify-start border-0"
+                    label="Statistiques"
+                    logo-name="i-lucide-bar-chart-3"
+                    @click="mobileMenuOpen = false"
+                  />
+                  <CUButton
+                    variant="soft"
+                    color="red"
+                    class="w-full justify-start border-0 mt-2"
+                    label="Déconnexion"
+                    logo-name="i-lucide-log-out"
+                    @click="store.logout(); mobileMenuOpen = false"
+                  />
+                </div>
+                <div
+                  v-else
+                  class="flex flex-col gap-3"
+                >
+                  <CUButton
+                    class="w-full"
+                    label="Connexion"
+                    logo-name="i-lucide-log-in"
+                    @click="openConnexion = true; mobileMenuOpen = false"
+                  />
+                  <CUButton
+                    variant="outline"
+                    class="w-full"
+                    label="S'inscrire"
+                    @click="openRegister = true; mobileMenuOpen = false"
+                  />
+                </div>
+              </div>
+            </div>
+          </template>
         </UDrawer>
       </div>
     </nav>
@@ -157,6 +266,7 @@ const route = useRoute()
 const openRegister = ref(false)
 const openConnexion = ref(false)
 const searchOpen = ref(false)
+const mobileMenuOpen = ref(false)
 
 const isAuthor = computed(() => ['author', 'admin'].includes(store.user?.role ?? ''))
 
