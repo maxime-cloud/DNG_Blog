@@ -132,6 +132,14 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
 
+useSeoMeta({
+  title: 'StackTrace — Tutoriels Web, Linux & DevOps',
+  description: 'Apprenez le développement web moderne, maîtrisez Linux et accélérez votre workflow DevOps avec les tutoriels experts de StackTrace.',
+  ogTitle: 'StackTrace — Le blog des développeurs',
+  ogDescription: 'Tutoriels techniques, astuces Linux et guides DevOps pour monter en compétence.',
+  ogImage: '/OG.png'
+})
+
 const heroContainer = ref<HTMLElement | null>(null)
 let ctx: gsap.Context | null = null
 

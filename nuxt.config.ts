@@ -9,9 +9,18 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxt/fonts',
     '@nuxt/content',
-    '@vueuse/motion/nuxt'
+    '@vueuse/motion/nuxt',
+    '@nuxtjs/sitemap',
+    '@nuxtjs/robots',
+    'nuxt-schema-org',
+    'nuxt-og-image'
   ],
   ssr: true,
+  site: {
+    url: 'https://stack-trace.site',
+    name: 'StackTrace',
+    description: 'Le guide ultime du développement web, Linux et DevOps.'
+  },
 
   colorMode: {
     preference: 'dark',

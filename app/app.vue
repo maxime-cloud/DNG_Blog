@@ -10,17 +10,11 @@ useHead({
   }
 })
 
-const title = 'Nuxt Starter Template'
-const description
-  = 'A production-ready starter template powered by Nuxt UI. Build beautiful, accessible, and performant applications in minutes, not hours.'
-
 useSeoMeta({
-  title,
-  description,
-  ogTitle: title,
-  ogDescription: description,
-  ogImage: 'https://ui.nuxt.com/assets/templates/nuxt/starter-light.png',
-  twitterImage: 'https://ui.nuxt.com/assets/templates/nuxt/starter-light.png',
+  titleTemplate: (title) => title ? `${title} — StackTrace` : 'StackTrace — Blog Tech & Linux',
+  description: 'Le guide ultime du développement web moderne, Linux et DevOps.',
+  ogImage: '/OG.png',
+  twitterImage: '/OG.png',
   twitterCard: 'summary_large_image'
 })
 

@@ -229,8 +229,21 @@ useSeoMeta({
   title: () => article.value?.title ?? 'Article',
   description: () => article.value?.description ?? article.value?.title ?? '',
   ogTitle: () => article.value?.title ?? 'Article',
-  ogImage: () => article.value?.coverImage ?? undefined
+  ogImage: () => article.value?.coverImage ?? '/OG.png'
 })
+
+useSchemaOrg([
+  defineArticle({
+    headline: () => article.value?.title ?? 'Article',
+    description: () => article.value?.description ?? '',
+    image: () => article.value?.coverImage ?? '/OG.png',
+    datePublished: () => article.value?.publishedAt ?? undefined,
+    author: {
+      name: () => article.value?.author?.name ?? 'Admin',
+      url: () => article.value?.author?.websiteUrl ?? undefined
+    }
+  })
+])
 </script>
 
 <template>
