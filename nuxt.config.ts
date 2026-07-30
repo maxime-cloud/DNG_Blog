@@ -13,7 +13,8 @@ export default defineNuxtConfig({
     '@nuxtjs/sitemap',
     '@nuxtjs/robots',
     'nuxt-schema-org',
-    'nuxt-og-image'
+    'nuxt-og-image',
+    '@vercel/analytics'
   ],
   ssr: true,
   site: {

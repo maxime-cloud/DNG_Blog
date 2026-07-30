@@ -24,6 +24,7 @@
     "@tanstack/vue-query": "^5.100.10",
     "@unovis/ts": "^1.6.5",
     "@unovis/vue": "^1.6.5",
+    "@vercel/analytics": "^2.0.1",
     "@vueuse/motion": "^3.0.3",
     "@vueuse/nuxt": "14.2.1",
     "better-auth": "^1.4.19",
