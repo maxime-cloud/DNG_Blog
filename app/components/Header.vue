@@ -92,6 +92,7 @@
           </template>
         </UPopover>
         <UModal
+          scrollable
           v-if="!store.isAuthenticated"
           v-model:open="openRegister"
           :ui="{
@@ -107,6 +108,7 @@
           </template>
         </UModal>
         <UModal
+          scrollable
           v-if="!store.isAuthenticated"
           v-model:open="openConnexion"
           :ui="{
