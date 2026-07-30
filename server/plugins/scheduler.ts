@@ -1,6 +1,14 @@
 import cron from 'node-cron'
 
 export default defineNitroPlugin(() => {
+  // ⛔ NE PAS exécuter les tâches planifiées pendant le build ou le pré-rendu
+  if (process.env.NITRO_PRERENDER || process.env.NODE_ENV !== 'production') {
+    console.log('[Scheduler] Désactivé durant la phase de compilation / pré-rendu.')
+    return
+  }
+
+  console.log('[Scheduler] Démarré avec succès en production.')
+
   // Every minute: auto-publish scheduled articles
   cron.schedule('* * * * *', async () => {
     try {
