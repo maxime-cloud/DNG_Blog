@@ -91,12 +91,26 @@
             />
           </template>
         </UPopover>
-        <UModal
+        <NuxtLink>
+          <button class="md:block hidden">
+            S'inscrire
+          </button>
+        </NuxtLink>
+        <NuxtLink>
+          <CUButton
+            class="md:flex hidden"
+            label="Connexion"
+            size="md"
+            logo-position="right"
+            logo-name="i-lucide-log-in"
+          />
+        </NuxtLink>
+        <!-- <UModal
           v-if="!store.isAuthenticated"
           v-model:open="openRegister"
           :ui="{
             overlay: 'bg-CustomColor-900/60 backdrop-blur-xs',
-            content: 'ring-0 flex justify-center bg-transparent items-center overflow-scroll'
+            content: 'ring-0 flex justify-center bg-transparent items-center'
           }"
         >
           <button class="md:block hidden cursor-pointer">
@@ -105,27 +119,21 @@
           <template #content>
             <RegisterForm @close-signup="openRegister = false" />
           </template>
-        </UModal>
-        <UModal
+        </UModal> -->
+        <!-- <UModal
           v-if="!store.isAuthenticated"
           v-model:open="openConnexion"
           :ui="{
             overlay: 'bg-CustomColor-900/60 backdrop-blur-xs',
-            content: 'ring-0 flex justify-center bg-transparent items-center overflow-scroll'
+            content: 'ring-0 flex justify-center bg-transparent items-center'
           }"
         >
-          <CUButton
-            class="md:flex hidden"
-            label="Connexion"
-            size="md"
-            logo-position="right"
-            logo-name="i-lucide-log-in"
-          />
+          
 
           <template #content>
             <LoginForm @close-login="openConnexion = false" />
           </template>
-        </UModal>
+        </UModal> -->
 
         <UDrawer
           v-model:open="mobileMenuOpen"
