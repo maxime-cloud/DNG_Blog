@@ -91,45 +91,44 @@
             />
           </template>
         </UPopover>
-        <template>
-          <UModal scrollable
-            v-if="!store.isAuthenticated"
-            v-model:open="openRegister"
-            :ui="{
-              overlay: 'bg-CustomColor-900/60 backdrop-blur-xs',
-              content: 'ring-0 flex justify-center bg-transparent items-center'
-            }"
-          >
-            <button class="md:block hidden cursor-pointer">
-              S'inscrire
-            </button>
-            <template #content>
-              <RegisterForm @close-signup="openRegister = false" />
-            </template>
-          </UModal>
-        </template>
-        <template>
-          <UModal scrollable
-            v-if="!store.isAuthenticated"
-            v-model:open="openConnexion"
-            :ui="{
-              overlay: 'bg-CustomColor-900/60 backdrop-blur-xs',
-              content: 'ring-0 flex justify-center bg-transparent items-center'
-            }"
-          >
-            <CUButton
-              class="md:flex hidden"
-              label="Connexion"
-              size="md"
-              logo-position="right"
-              logo-name="i-lucide-log-in"
-            />
-  
-            <template #content>
-              <LoginForm @close-login="openConnexion = false" />
-            </template>
-          </UModal>
-        </template>
+        <UModal
+          v-if="!store.isAuthenticated"
+          v-model:open="openRegister"
+          scrollable
+          :ui="{
+            overlay: 'bg-CustomColor-900/60 backdrop-blur-xs',
+            content: 'ring-0 flex justify-center bg-transparent items-center'
+          }"
+        >
+          <button class="md:block hidden cursor-pointer">
+            S'inscrire
+          </button>
+          <template #content>
+            <RegisterForm @close-signup="openRegister = false" />
+          </template>
+        </UModal>
+        <UModal
+          v-if="!store.isAuthenticated"
+          v-model:open="openConnexion"
+          scrollable
+          :ui="{
+            overlay: 'bg-CustomColor-900/60 backdrop-blur-xs',
+            content: 'ring-0 flex justify-center bg-transparent items-center'
+          }"
+        >
+          <CUButton
+            class="md:flex hidden"
+            label="Connexion"
+            size="md"
+            logo-position="right"
+            logo-name="i-lucide-log-in"
+          />
+
+          <template #content>
+            <LoginForm @close-login="openConnexion = false" />
+          </template>
+        </UModal>
+
         <UDrawer
           v-model:open="mobileMenuOpen"
           class="lg:hidden"
