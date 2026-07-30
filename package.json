@@ -6,7 +6,7 @@
     "build": "NODE_OPTIONS=--max-old-space-size=4096 nuxt build",
     "dev": "nuxt dev",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
+    "postinstall": "prisma generate && nuxt prepare",
     "lint": "eslint .",
     "typecheck": "nuxt typecheck"
   },
