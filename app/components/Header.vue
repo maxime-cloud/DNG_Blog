@@ -94,7 +94,6 @@
         <UModal
           v-if="!store.isAuthenticated"
           v-model:open="openRegister"
-          scrollable
           :ui="{
             overlay: 'bg-CustomColor-900/60 backdrop-blur-xs',
             content: 'ring-0 flex justify-center bg-transparent items-center'
@@ -110,7 +109,6 @@
         <UModal
           v-if="!store.isAuthenticated"
           v-model:open="openConnexion"
-          scrollable
           :ui="{
             overlay: 'bg-CustomColor-900/60 backdrop-blur-xs',
             content: 'ring-0 flex justify-center bg-transparent items-center'
