@@ -96,9 +96,8 @@
           v-model:open="openRegister"
           :ui="{
             overlay: 'bg-CustomColor-900/60 backdrop-blur-xs',
-            content: 'ring-0 flex justify-center bg-transparent items-center'
+            content: 'ring-0 flex justify-center bg-transparent items-center overflow-scroll'
           }"
-          scrollable
         >
           <button class="md:block hidden cursor-pointer">
             S'inscrire
@@ -112,9 +111,8 @@
           v-model:open="openConnexion"
           :ui="{
             overlay: 'bg-CustomColor-900/60 backdrop-blur-xs',
-            content: 'ring-0 flex justify-center bg-transparent items-center'
+            content: 'ring-0 flex justify-center bg-transparent items-center overflow-scroll'
           }"
-          scrollable
         >
           <CUButton
             class="md:flex hidden"
