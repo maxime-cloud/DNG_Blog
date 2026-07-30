@@ -24,13 +24,22 @@
             spam.</span>
         </p>
       </div>
-      <CUButton
+      <!-- <CUButton
         label="Fermer"
         class="w-full justify-center"
         size="lg"
         logo-position="right"
         @click="emits('close')"
-      />
+      /> -->
+      <NuxtLink to="/">
+        <CUButton
+          label="Fermer"
+          class="w-full justify-center"
+          size="lg"
+          logo-position="right"
+          @click="emits('close')"
+        />
+      </NuxtLink>
     </div>
   </div>
 </template>

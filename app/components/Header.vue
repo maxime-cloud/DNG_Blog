@@ -91,12 +91,12 @@
             />
           </template>
         </UPopover>
-        <NuxtLink>
+        <NuxtLink to="/register">
           <button class="md:block hidden">
             S'inscrire
           </button>
         </NuxtLink>
-        <NuxtLink>
+        <NuxtLink to="/login">
           <CUButton
             class="md:flex hidden"
             label="Connexion"
@@ -128,7 +128,6 @@
             content: 'ring-0 flex justify-center bg-transparent items-center'
           }"
         >
-          
 
           <template #content>
             <LoginForm @close-login="openConnexion = false" />
