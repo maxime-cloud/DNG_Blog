@@ -94,11 +94,11 @@
         <UModal
           v-if="!store.isAuthenticated"
           v-model:open="openRegister"
-          scrollable
           :ui="{
             overlay: 'bg-CustomColor-900/60 backdrop-blur-xs',
             content: 'ring-0 flex justify-center bg-transparent items-center'
           }"
+          scrollable
         >
           <button class="md:block hidden cursor-pointer">
             S'inscrire
@@ -110,11 +110,11 @@
         <UModal
           v-if="!store.isAuthenticated"
           v-model:open="openConnexion"
-          scrollable
           :ui="{
             overlay: 'bg-CustomColor-900/60 backdrop-blur-xs',
             content: 'ring-0 flex justify-center bg-transparent items-center'
           }"
+          scrollable
         >
           <CUButton
             class="md:flex hidden"
