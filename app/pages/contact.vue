@@ -10,8 +10,8 @@ useSeoMeta({ title: 'Contact', description: 'Contactez-nous pour toute question.
         <p class="text-[#F3F4F6]/70 mb-8 leading-relaxed">
           Pour toute demande, suggestion ou partenariat, vous pouvez nous contacter via l'email suivant :
         </p>
-        <a href="mailto:contact@dngblog.com" class="text-primary font-semibold hover:underline text-lg">
-          contact@dngblog.com
+        <a href="mailto:contact@stack-trace.site" class="text-primary font-semibold hover:underline text-lg">
+          contact@stack-trace.site
         </a>
       </div>
     </BaseLayaoutContent>
