@@ -3,7 +3,8 @@ import { defineEventHandler, createError, getRouterParam } from 'h3'
 export default defineEventHandler(async (event) => {
   try {
     const session = await getAuthSession(event)
-    if (session) checkBanned(session)
+    if (!session) throw createError({ statusCode: 401, statusMessage: 'Connectez-vous pour liker' })
+    checkBanned(session)
 
     const slug = getRouterParam(event, 'slug')
     if (!slug)
@@ -19,18 +20,16 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'Article introuvable'
       })
 
-    if (session) {
-      const existing = await prisma.articleLike.findFirst({
-        where: { userId: session.user.id, articleId: article.id }
-      })
-      if (!existing) {
-        await prisma.articleLike.create({
-          data: { userId: session.user.id, articleId: article.id }
-        })
-      }
-    } else {
+    const existing = await prisma.articleLike.findUnique({
+      where: { userId_articleId: { userId: session.user.id, articleId: article.id } }
+    })
+
+    if (!existing) {
       await prisma.articleLike.create({
-        data: { articleId: article.id, userId: null }
+        data: { 
+          article: { connect: { id: article.id } },
+          user: { connect: { id: session.user.id } }
+        }
       })
     }
 

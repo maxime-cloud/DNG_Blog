@@ -97,7 +97,7 @@
             label="Github"
             size="md"
             logo-position="left"
-            logo-name="i-simple-icons-google"
+            logo-name="i-simple-icons-github"
           />
         </NuxtLink>
         <NuxtLink to="/auth/login" v-if="!store.isAuthenticated">

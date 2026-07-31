@@ -40,15 +40,15 @@ export default defineEventHandler(async (event) => {
       data: {
         content: sanitizedContent,
         status: 'APPROVED',
-        articleId: article.id,
-        userId: session.user.id,
-        ...(parsed.data.parentId && { parentId: Number(parsed.data.parentId) })
+        article: { connect: { id: article.id } },
+        user: { connect: { id: session.user.id } },
+        ...(parsed.data.parentId && { parent: { connect: { id: Number(parsed.data.parentId) } } })
       },
       select: {
         id: true,
         content: true,
         status: true,
-        parentId: true,
+        parent: { select: { id: true } },
         articleId: true,
         createdAt: true,
         updatedAt: true,
