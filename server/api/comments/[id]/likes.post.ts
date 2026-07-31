@@ -1,6 +1,4 @@
 import { defineEventHandler, createError, getRouterParam } from 'h3'
-import { prisma } from '~/lib/prisma'
-import { getAuthSession, checkBanned } from '~/server/utils/auth'
 
 export default defineEventHandler(async (event) => {
   try {
