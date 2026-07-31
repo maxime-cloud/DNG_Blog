@@ -25,7 +25,7 @@
               <p
                 class="hero-subtitle text-sm sm:text-[16px] lg:text-lg text-center text-[#F3F4F6]/70"
               >
-                Tutoriels pratiques et solutions concrètes pour développeurs et sysadmins.
+                Des configurations pas-à-pas et des résolutions de bugs concrètes pour vous simplifier la vie
               </p>
               <div class="flex-1 flex gap-4">
                 <NuxtLink
@@ -134,10 +134,10 @@
 import { gsap } from 'gsap'
 
 useSeoMeta({
-  title: 'StackTrace — Tutoriels Web, Linux & DevOps',
-  description: 'Apprenez le développement web moderne, maîtrisez Linux et accélérez votre workflow DevOps avec les tutoriels experts de StackTrace.',
-  ogTitle: 'StackTrace — Le blog des développeurs',
-  ogDescription: 'Tutoriels techniques, astuces Linux et guides DevOps pour monter en compétence.',
+  title: 'StackTrace — La tech sans prise de tête pour les pros du digital',
+  description: "Le média tech pratique pour les professionnels du digital. Découvrez nos tutoriels d'installation, guides de configuration et résolutions de bugs.",
+  ogTitle: 'StackTrace — La tech sans prise de tête pour les pros du digital 🚀',
+  ogDescription: 'Démos, tutoriels et résolutions de bugs pour vous simplifier la vie.',
   ogImage: '/OG.png'
 })
 
