@@ -1,60 +1,55 @@
-# Nuxt Starter Template
+# StackTrace
 
 [![Nuxt UI](https://img.shields.io/badge/Made%20with-Nuxt%20UI-00DC82?logo=nuxt&labelColor=020420)](https://ui.nuxt.com)
 
-Use this template to get started with [Nuxt UI](https://ui.nuxt.com) quickly.
+Le blog technique de StackTrace.
 
-- [Live demo](https://starter-template.nuxt.dev/)
-- [Documentation](https://ui.nuxt.com/docs/getting-started/installation/nuxt)
+<img alt="StackTrace OG" src="/OG.png" width="830" height="466">
 
-<a href="https://starter-template.nuxt.dev/" target="_blank">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://ui.nuxt.com/assets/templates/nuxt/starter-dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="https://ui.nuxt.com/assets/templates/nuxt/starter-light.png">
-    <img alt="Nuxt Starter Template" src="https://ui.nuxt.com/assets/templates/nuxt/starter-light.png" width="830" height="466">
-  </picture>
-</a>
+## 🚀 Installation
 
-> The starter template for Vue is on https://github.com/nuxt-ui-templates/starter-vue.
+1. Clonez le dépôt :
+   ```bash
+   git clone <votre-url-depot>
+   cd DNGBlog
+   ```
 
-## Quick Start
+2. Installez les dépendances :
+   ```bash
+   pnpm install
+   ```
 
-```bash [Terminal]
-npm create nuxt@latest -- -t github:nuxt-ui-templates/starter
-```
+## ⚙️ Configuration
 
-## Deploy your own
+1. Copiez le fichier d'exemple des variables d'environnement :
+   ```bash
+   cp .env.example .env
+   ```
+2. Remplissez les variables manquantes dans le fichier `.env` généré.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-name=starter&repository-url=https%3A%2F%2Fgithub.com%2Fnuxt-ui-templates%2Fstarter&demo-image=https%3A%2F%2Fui.nuxt.com%2Fassets%2Ftemplates%2Fnuxt%2Fstarter-dark.png&demo-url=https%3A%2F%2Fstarter-template.nuxt.dev%2F&demo-title=Nuxt%20Starter%20Template&demo-description=A%20minimal%20template%20to%20get%20started%20with%20Nuxt%20UI.)
+## 💾 Base de données
 
-## Setup
-
-Make sure to install the dependencies:
-
+Initialisez et migrez la base de données :
 ```bash
-pnpm install
+pnpm dlx prisma migrate deploy
+pnpm dlx prisma generate
 ```
 
-## Development Server
+## 🛠️ Développement
 
-Start the development server on `http://localhost:3000`:
-
+Lancez le serveur de développement :
 ```bash
 pnpm dev
 ```
 
-## Production
+## 🚀 Production
 
-Build the application for production:
-
+Build de l'application :
 ```bash
 pnpm build
 ```
 
-Locally preview production build:
-
+Prévisualisation locale du build :
 ```bash
 pnpm preview
 ```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

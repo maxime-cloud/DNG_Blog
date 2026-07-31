@@ -1,6 +1,3 @@
-import { defineEventHandler, readBody, createError, getRouterParam } from 'h3'
-import DOMPurify from 'isomorphic-dompurify'
-
 export default defineEventHandler(async (event) => {
   try {
     const session = await requireAuth(event)
@@ -36,10 +33,9 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    const sanitizedContent = DOMPurify.sanitize(parsed.data.content, {
-      ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'code'],
-      ALLOWED_ATTR: []
-    })
+    // Regex-based sanitization allowing only: <b>, <i>, <em>, <strong>, <code>
+    const sanitizedContent = parsed.data.content
+      .replace(/<(?!\/?(b|i|em|strong|code)\b)[^>]+>/gi, '')
 
     const updated = await prisma.comment.update({
       where: { id },

@@ -4,10 +4,10 @@
 .nuxt
 .nitro
 .cache
-.claude
-.github
-.kiro
-.gemini
+.claude/
+.github/
+.kiro/
+.gemini/
 dist
 # Node dependencies
 node_modules
