@@ -79,6 +79,7 @@
             size="md"
             logo-position="right"
             logo-name="i-lucide-arrow-right"
+            @click="() => router.push('/articles')"
           />
         </SectionTitle>
       </div>
@@ -99,6 +100,7 @@
             size="md"
             logo-position="right"
             logo-name="i-lucide-arrow-right"
+            @click="() => router.push('/categories')"
           />
         </SectionTitle>
       </div>
@@ -117,6 +119,7 @@
             size="md"
             logo-position="right"
             logo-name="i-lucide-arrow-right"
+            @click="() => router.push('/articles')"
           />
         </SectionTitle>
       </div>
@@ -144,6 +147,7 @@ useSeoMeta({
 const heroContainer = ref<HTMLElement | null>(null)
 let ctx: gsap.Context | null = null
 
+const router = useRouter()
 onMounted(() => {
   if (!heroContainer.value) return
 
