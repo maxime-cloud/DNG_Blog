@@ -6,7 +6,7 @@ import { prisma } from './prisma'
 import { sendPasswordResetEmail, sendEmailVerificationEmail } from './mailer'
 
 // const prisma = new PrismaClient();
-const allowedOrigins = process.env.TRUSTED_ORIGINS ? process.env.TRUSTED_ORIGINS.split(",")
+const allowedOrigins = process.env.TRUSTED_ORIGINS.split(",")
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
