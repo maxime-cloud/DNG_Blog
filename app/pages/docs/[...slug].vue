@@ -5,6 +5,12 @@ const route = useRoute()
 const slug = computed(() =>
   Array.isArray(route.params.slug) ? route.params.slug : [route.params.slug]
 )
+
+// Guard clause to ignore empty slugs, as index.vue handles /docs
+if (slug.value.length === 0 || (slug.value.length === 1 && !slug.value[0])) {
+  throw createError({ statusCode: 404, statusMessage: 'Not Found' })
+}
+
 const path = computed(() => '/docs/' + slug.value.join('/'))
 
 const { data: page } = await useAsyncData(`docs-${path.value}`, () =>
