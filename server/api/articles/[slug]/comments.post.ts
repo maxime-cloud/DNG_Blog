@@ -1,6 +1,4 @@
 import { defineEventHandler, readBody, createError, getRouterParam } from 'h3'
-import sanitizeHtml from 'sanitize-html'
-import { commentSchema } from '../../../utils/validation'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -31,6 +29,7 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'Article introuvable'
       })
 
+    const sanitizeHtml = (await import('sanitize-html')).default
     const sanitizedContent = sanitizeHtml(parsed.data.content, {
       allowedTags: ['b', 'i', 'em', 'strong', 'code'],
       allowedAttributes: {}
