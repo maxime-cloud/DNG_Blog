@@ -6,7 +6,7 @@
     "build": "prisma generate && nuxt build",
     "dev": "nuxt dev",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
+    
     "lint": "eslint .",
     "typecheck": "nuxt typecheck"
   },
