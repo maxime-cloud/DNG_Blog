@@ -1,10 +1,12 @@
 import { defineEventHandler, readBody, createError } from 'h3'
+import { prisma } from '~/lib/prisma'
+import { requireRole } from '~/server/utils/auth'
 
 const CHANGELOG_TYPES = ['FEATURE', 'FIX', 'CONTENT', 'DESIGN', 'PERF', 'SECURITY'] as const
 
 export default defineEventHandler(async (event) => {
   try {
-    await requireRole(event, 'admin')
+    const session = await requireRole(event, 'admin')
 
     const body = await readBody(event)
     const { title, description, type, publishedAt } = body
@@ -33,6 +35,7 @@ export default defineEventHandler(async (event) => {
         title: title.trim(),
         description: description.trim(),
         type,
+        authorId: session.user.id,
         publishedAt: publishedAt ? new Date(publishedAt) : new Date()
       }
     })
