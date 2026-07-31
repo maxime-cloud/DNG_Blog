@@ -1,6 +1,4 @@
 import { defineEventHandler, readBody, createError } from 'h3'
-import { prisma } from '~/lib/prisma'
-import { requireRole } from '~/server/utils/auth'
 
 const CHANGELOG_TYPES = ['FEATURE', 'FIX', 'CONTENT', 'DESIGN', 'PERF', 'SECURITY'] as const
 
