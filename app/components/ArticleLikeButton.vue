@@ -33,13 +33,13 @@ const { data: likeStatus } = useArticleLikes(props.slug)
 const count = computed(() => likeStatus.value?.count ?? props.initialCount)
 const liked = computed(() => likeStatus.value?.liked ?? props.initialLiked)
 
-const { likeArticle, unlikeArticle } = useLike()
-const loading = ref(false)
+const { mutateAsync: likeArticle, isPending: liking } = useLikeArticle()
+const { mutateAsync: unlikeArticle, isPending: unliking } = useUnlikeArticle()
+const loading = computed(() => liking.value || unliking.value)
 
 async function toggle() {
   if (loading.value) return
 
-  loading.value = true
   try {
     if (!liked.value) {
       await likeArticle(props.slug)
@@ -48,8 +48,6 @@ async function toggle() {
     }
   } catch (error) {
     console.error('Erreur lors du like:', error)
-  } finally {
-    loading.value = false
   }
 }
 </script>
