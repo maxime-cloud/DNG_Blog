@@ -3,7 +3,7 @@
     class="px-4 w-full z-50 bg-CustomColor-900 fixed flex flex-col items-center  border-b border-dashed border-dashcolor shadow-md"
     :class="{
       'md:h-16 md:backdrop-blur-sm md:bg-CustomColor-900/20 md:border-b-0 md:shadow-none': y >= activeNav,
-      'border-b-0': y !== 0 || route.path === '/'
+      'md:border-b-0': y !== 0 || route.path === '/'
     }"
   >
     <nav

@@ -1,4 +1,5 @@
 import { defineEventHandler, readBody, createError, getRouterParam } from 'h3'
+import DOMPurify from 'isomorphic-dompurify'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -29,10 +30,9 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'Article introuvable'
       })
 
-    const { default: sanitizeHtml } = await import('sanitize-html')
-    const sanitizedContent = sanitizeHtml(parsed.data.content, {
-      allowedTags: ['b', 'i', 'em', 'strong', 'code'],
-      allowedAttributes: {}
+    const sanitizedContent = DOMPurify.sanitize(parsed.data.content, {
+      ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'code'],
+      ALLOWED_ATTR: []
     })
 
     const comment = await prisma.comment.create({
@@ -63,3 +63,4 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 500, statusMessage: 'Erreur serveur' })
   }
 })
+

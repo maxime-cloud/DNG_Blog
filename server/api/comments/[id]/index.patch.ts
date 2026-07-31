@@ -1,5 +1,5 @@
 import { defineEventHandler, readBody, createError, getRouterParam } from 'h3'
-import sanitizeHtml from 'sanitize-html'
+import DOMPurify from 'isomorphic-dompurify'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -36,9 +36,9 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    const sanitizedContent = sanitizeHtml(parsed.data.content, {
-      allowedTags: ['b', 'i', 'em', 'strong', 'code'],
-      allowedAttributes: {}
+    const sanitizedContent = DOMPurify.sanitize(parsed.data.content, {
+      ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'code'],
+      ALLOWED_ATTR: []
     })
 
     const updated = await prisma.comment.update({
