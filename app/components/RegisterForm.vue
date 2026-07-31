@@ -21,7 +21,7 @@
 
       <CUButton
         loading-auto
-        label="Continue with Google"
+        label="S'inscrire avec Google"
         logo-name="i-simple-icons-google"
         logo-position="left"
         size="lg"
@@ -30,7 +30,7 @@
       />
       <CUButton
         loading-auto
-        label="Continuer avec Github"
+        label="S'inscrire avec Github"
         logo-name="i-simple-icons-github"
         logo-position="left"
         size="lg"
