@@ -16,13 +16,16 @@ export interface SearchResult {
 export function useDocs() {
   async function fetchDocsNav(): Promise<any> {
     try {
-      console.log('[useDocs] Calling queryCollectionNavigation("docs")')
-      // @ts-ignore — 'docs' collection defined in content.config.ts; types regenerated at build
+      // @ts-ignore
       const nav = await queryCollectionNavigation('docs')
-      console.log('[useDocs] queryCollectionNavigation success:', JSON.stringify(nav, null, 2))
       return nav
-    } catch (error) {
-      console.error('[useDocs] fetchDocsNav error:', error)
+    } catch (error: any) {
+      console.error('[useDocs] fetchDocsNav error details:', {
+        message: error.message,
+        stack: error.stack,
+        cause: error.cause,
+        data: error.data
+      })
       throw error
     }
   }
