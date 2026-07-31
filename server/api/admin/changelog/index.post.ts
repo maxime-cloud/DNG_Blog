@@ -35,7 +35,9 @@ export default defineEventHandler(async (event) => {
         title: title.trim(),
         description: description.trim(),
         type,
-        authorId: session.user.id,
+        author: {
+          connect: { id: session.user.id }
+        },
         publishedAt: publishedAt ? new Date(publishedAt) : new Date()
       }
     })

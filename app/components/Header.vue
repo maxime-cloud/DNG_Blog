@@ -91,6 +91,15 @@
             />
           </template>
         </UPopover>
+        <NuxtLink to="https://github.com/maxime-cloud/stack-trace">
+          <CUButton
+            class="md:flex hidden"
+            label="Github"
+            size="md"
+            logo-position="left"
+            logo-name="i-simple-icons-google"
+          />
+        </NuxtLink>
         <NuxtLink to="/auth/login" v-if="!store.isAuthenticated">
           <CUButton
             class="md:flex hidden"
