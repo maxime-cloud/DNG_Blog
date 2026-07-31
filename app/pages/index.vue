@@ -13,13 +13,14 @@
               <h1
                 class="hero-title text-[24px] sm:text-[32px] lg:text-[40px] font-bold text-center"
               >
-                Tutoriels techniques en
+                La tech
+                <!-- Tutoriels techniques en -->
                 <span
                   class="hero-highlight bg-[#DEDEDE] bg-[#0F0F0F] opacity-85 text-[#414141] px-1"
-                >Développement Web</span>, <br class="block sm:hidden md:block">
+                >sans prise de tête pour les pros</span>, <br class="block sm:hidden md:block">
                 <span
                   class="hero-highlight bg-[#DEDEDE] bg-[#0F0F0F] opacity-85 text-[#414141] px-1"
-                >Réseau et Linux</span>
+                >du digital</span>
               </h1>
               <p
                 class="hero-subtitle text-sm sm:text-[16px] lg:text-lg text-center text-[#F3F4F6]/70"
