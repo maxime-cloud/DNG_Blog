@@ -17,7 +17,7 @@
                 <!-- Tutoriels techniques en -->
                 <span
                   class="hero-highlight bg-[#DEDEDE] bg-[#0F0F0F] opacity-85 text-[#414141] px-1"
-                >sans prise de tête pour les pros</span>, <br class="block sm:hidden md:block">
+                >sans prise de tête pour les pros</span> <br class="block sm:hidden md:block">
                 <span
                   class="hero-highlight bg-[#DEDEDE] bg-[#0F0F0F] opacity-85 text-[#414141] px-1"
                 >du digital</span>
