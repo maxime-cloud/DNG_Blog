@@ -91,11 +91,6 @@
             />
           </template>
         </UPopover>
-        <NuxtLink to="/auth/register" class="h-full w-full flex item-center justify-center">
-          <button class="md:block hidden">
-            S'inscrire
-          </button>
-        </NuxtLink>
         <NuxtLink to="/auth/login">
           <CUButton
             class="md:flex hidden"
