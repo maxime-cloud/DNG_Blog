@@ -21,12 +21,21 @@
 
       <CUButton
         loading-auto
+        label="Continue with Google"
+        logo-name="i-simple-icons-google"
+        logo-position="left"
+        size="lg"
+        class="w-full mb-4"
+        @click="signInWith('google')"
+      />
+      <CUButton
+        loading-auto
         label="Continuer avec Github"
         logo-name="i-simple-icons-github"
         logo-position="left"
         size="lg"
         class="w-full mb-4"
-        @click="signInWithGithub"
+        @click="signInWith('github')"
       />
 
       <div class="flex items-center justify-between mb-4">
@@ -195,10 +204,10 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   )
 }
 
-async function signInWithGithub() {
+async function signInWith(provider: string) {
   error.value = null
   await authClient.signIn.social({
-    provider: 'github',
+    provider: provider,
     /**
      * A URL to redirect after the user authenticates with the provider
      * @default "/"
@@ -207,7 +216,7 @@ async function signInWithGithub() {
     /**
      * A URL to redirect if an error occurs during the sign in process
      */
-    errorCallbackURL: '/auth/register/?errorprovider=github',
+    errorCallbackURL: `/auth/register/?errorprovider=${provider}`,
     /**
      * A URL to redirect if the user is newly registered
      */
