@@ -1,14 +1,14 @@
 <template>
   <header
-    class="px-4 w-full z-50 bg-CustomColor-900 fixed flex flex-col items-center border-b border-b border-dashed border-dashcolor shadow-md"
+    class="px-4 w-full z-50 bg-CustomColor-900 fixed flex flex-col items-center  border-b border-dashed border-dashcolor shadow-md"
     :class="{
-      'h-16 backdrop-blur-sm bg-CustomColor-900/20 border-b-0 shadow-none': y >= activeNav,
+      'md:h-16 md:backdrop-blur-sm md:bg-CustomColor-900/20 md:border-b-0 md:shadow-none': y >= activeNav,
       'border-b-0': y !== 0 || route.path === '/'
     }"
   >
     <nav
       :class="{
-        'border-solid shadowNav rounded-full translate-y-8 duration-300 border-x': y >= activeNav,
+        'md:border-solid md:shadowNav md:rounded-full md:translate-y-8 md:duration-300 md:border-x': y >= activeNav,
         'border-x': route.path !== '/'
       }"
       class="transition-all border-x bg-CustomColor-900 px-8 sticky top-0 border-dashed max-w-7xl w-full h-12 lg:h-16 border-dashcolor flex gap-4 items-center"
