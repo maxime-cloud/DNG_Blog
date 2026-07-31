@@ -36,8 +36,9 @@ export default defineNuxtConfig({
 
   content: {
     database: {
-      type: 'pglite',
-      dataDir: '.nuxt/content-db'
+      // type: 'pglite',
+      // dataDir: '.nuxt/content-db'
+      type: 'wasm', // Indique à Nuxt d'embarquer SQLite en format WASM universel
     },
     build: {
       markdown: {
