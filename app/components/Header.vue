@@ -38,6 +38,15 @@
           logo-name="i-lucide-search"
           @click="searchOpen = true"
         />
+        <NuxtLink to="https://github.com/maxime-cloud/stack-trace" target="_blank">
+          <CUButton
+            class="md:flex hidden"
+            label="Github"
+            size="md"
+            logo-position="left"
+            logo-name="i-simple-icons-github"
+          />
+        </NuxtLink>
         <UPopover
           v-if="store.isAuthenticated"
           :ui="{
@@ -91,15 +100,6 @@
             />
           </template>
         </UPopover>
-        <NuxtLink to="https://github.com/maxime-cloud/stack-trace">
-          <CUButton
-            class="md:flex hidden"
-            label="Github"
-            size="md"
-            logo-position="left"
-            logo-name="i-simple-icons-github"
-          />
-        </NuxtLink>
         <NuxtLink to="/auth/login" v-if="!store.isAuthenticated">
           <CUButton
             class="md:flex hidden"
