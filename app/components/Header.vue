@@ -91,7 +91,7 @@
             />
           </template>
         </UPopover>
-        <NuxtLink to="/auth/login">
+        <NuxtLink to="/auth/login" v-if="!store.isAuthenticated">
           <CUButton
             class="md:flex hidden"
             label="Connexion"
