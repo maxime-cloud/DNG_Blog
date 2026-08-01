@@ -163,37 +163,6 @@ function changePage(p: number) {
           <p v-if="meta" class="text-xs text-zinc-500 mt-1">
             {{ meta.total }} article{{ meta.total > 1 ? 's' : '' }}
           </p>
-        </div>
-
-        <!-- Search + sort -->
-        <div class="flex flex-col sm:flex-row gap-3 mb-6">
-          <div class="relative flex-1">
-            <CUInput
-              v-model="searchInput"
-              placeholder="Rechercher un article..."
-              :leading-icon="'i-lucide-search'"
-              class="w-full"
-            />
-            <button
-              v-if="searchInput"
-              class="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 hover:text-zinc-300"
-              @click="clearSearch"
-            >
-              <UIcon name="i-lucide-x" class="w-4 h-4" />
-            </button>
-          </div>
-
-          <USelect
-            v-model="filters.sort"
-            :options="sortOptions"
-            value-key="value"
-            label-key="label"
-            :ui="{
-              base: 'bg-CustomColor-900 border-[0.1px] border-dashcolor/50 rounded-none shadow-[-6px_7px_24px_0px_rgb(0,0,0,0.51)] shadow-[0px_-4px_4px_0px_rgb(0,0,0,0.51)]'
-            }"
-            @change="filters.page = 1"
-          />
-        </div>
 
         <!-- Category filters -->
         <div class="flex flex-wrap gap-2 mb-4">
