@@ -163,7 +163,7 @@ function changePage(p: number) {
           <p v-if="meta" class="text-xs text-zinc-500 mt-1">
             {{ meta.total }} article{{ meta.total > 1 ? 's' : '' }}
           </p>
-
+        </div>
         <!-- Category filters -->
         <div class="flex flex-wrap gap-2 mb-4">
           <CUButton
