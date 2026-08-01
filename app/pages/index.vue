@@ -7,9 +7,9 @@
       >
         <div class="flex-1 relative bgHero flex flex-col">
           <div
-            class="flex-1 min-h-[80vh] max-h-[80vh] flex flex-col justify-center items-center relative bgPoint hero-bg"
+            class="flex-1 min-h-[80vh] max-h-[80vh] flex flex-col sm:justify-center items-center relative bgPoint hero-bg"
           >
-            <div class="flex flex-col justify-center items-center gap-4 z-10">
+            <div class="hidden sm:flex flex-col justify-center items-center gap-4 z-10">
               <h1
                 class="hero-title text-[24px] sm:text-[32px] lg:text-[40px] font-bold text-center"
               >
@@ -17,7 +17,7 @@
                 <!-- Tutoriels techniques en -->
                 <span
                   class="hero-highlight bg-[#DEDEDE] bg-[#0F0F0F] opacity-85 text-[#414141] px-1"
-                >sans prise de tête pour les pros</span> <br class="block sm:hidden md:block">
+                >sans prise de tête pour les pros</span> <br class="block">
                 <span
                   class="hero-highlight bg-[#DEDEDE] bg-[#0F0F0F] opacity-85 text-[#414141] px-1"
                 >du digital</span>
@@ -33,14 +33,9 @@
                   class="hero-cta"
                 >
                   <CUButton
-                    class="hidden md:flex"
+                    class="hidden sm:flex"
                     label="Articles récents"
                     size="xl"
-                  />
-                  <CUButton
-                    class="md:hidden"
-                    label="Articles récents"
-                    size="md"
                   />
                 </NuxtLink>
                 <NuxtLink
@@ -48,12 +43,46 @@
                   class="hero-cta"
                 >
                   <CUButton
-                    class="hidden md:flex"
+                    class="hidden sm:flex"
                     label="Parcourir les articles"
                     size="xl"
                     logo-position="right"
                     logo-name="i-lucide-arrow-right"
                   />
+                </NuxtLink>
+              </div>
+            </div>
+            <div class="sm:hidden flex flex-col gap-4 z-10 px-4 pt-10">
+              <h1
+                class="hero-title text-[40px] font-bold"
+              >
+                La tech <br> sans prise de tête pour
+                <!-- Tutoriels techniques en -->
+                <br>
+                <span
+                  class="hero-highlight bg-[#DEDEDE] bg-[#0F0F0F] opacity-85 text-[#414141] px-1"
+                >les pros du digital</span>
+              </h1>
+              <p
+                class="hero-subtitle text-[16px] text-[#F3F4F6]/70"
+              >
+                Des configurations pas-à-pas <br> et des résolutions de bugs concrètes <br> pour vous simplifier la vie
+              </p>
+              <div class="flex-1 flex gap-4">
+                <NuxtLink
+                  to="#recent"
+                  class="hero-cta"
+                >
+                  <CUButton
+                    class="md:hidden"
+                    label="Articles récents"
+                    size="lg"
+                  />
+                </NuxtLink>
+                <NuxtLink
+                  to="/articles"
+                  class="hero-cta"
+                >
                   <CUButton
                     class="md:hidden"
                     label="Parcourir les articles"
