@@ -54,7 +54,7 @@
             </div>
             <div class="sm:hidden flex flex-col gap-4 z-10 px-4 pt-10">
               <h1
-                class="hero-title text-[40px] font-bold"
+                class="hero-title text-[32px] font-bold"
               >
                 La tech <br> sans prise de tête pour
                 <!-- Tutoriels techniques en -->
