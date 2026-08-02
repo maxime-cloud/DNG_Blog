@@ -1,7 +1,5 @@
 # StackTrace
 
-[![Nuxt UI](https://img.shields.io/badge/Made%20with-Nuxt%20UI-00DC82?logo=nuxt&labelColor=020420)](https://ui.nuxt.com)
-
 Le blog technique de StackTrace.
 
 <img alt="StackTrace OG" src="/public/OG.png" width="830" height="466">
