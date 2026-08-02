@@ -4,7 +4,7 @@
 
 Le blog technique de StackTrace.
 
-<img alt="StackTrace OG" src="/OG.png" width="830" height="466">
+<img alt="StackTrace OG" src="/public/OG.png" width="830" height="466">
 
 ## 🚀 Installation
 
